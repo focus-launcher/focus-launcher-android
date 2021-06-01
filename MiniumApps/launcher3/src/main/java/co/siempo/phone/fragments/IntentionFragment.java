@@ -44,7 +44,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import co.siempo.phone.R;
-import co.siempo.phone.activities.ContributeActivity;
 import co.siempo.phone.activities.DashboardActivity;
 import co.siempo.phone.activities.EnableTempoActivity;
 import co.siempo.phone.activities.HelpActivity;
@@ -316,18 +315,6 @@ public class IntentionFragment extends CoreFragment implements View.OnClickListe
                 LinearLayout linTempo = customView.findViewById(R.id.linTempo);
                 LinearLayout linWallpaper = customView.findViewById(R.id.linWallpaper);
                 LinearLayout linDistractingApp = customView.findViewById(R.id.linDistractingApp);
-                LinearLayout linContribute = customView.findViewById(R.id.linContribute);
-
-                linContribute.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (getActivity() != null) {
-                            UIUtils.clearDim(root);
-                            mPopupWindow.dismiss();
-                            startActivity(new Intent(getActivity(), ContributeActivity.class));
-                        }
-                    }
-                });
 
                 linTempo.setOnClickListener(new View.OnClickListener() {
                     @Override

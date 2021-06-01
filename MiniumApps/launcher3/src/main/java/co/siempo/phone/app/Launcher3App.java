@@ -31,6 +31,9 @@ import co.siempo.phone.utils.PackageUtil;
 import co.siempo.phone.utils.PrefSiempo;
 
 /**
+ * Seems to be the main application class for the launcher
+ *
+ * @author Shahab
  * Created by Shahab on 2/16/2017.
  */
 @EApplication

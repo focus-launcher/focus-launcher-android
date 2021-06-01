@@ -84,7 +84,6 @@ public class AlphaSettingsActivity extends CoreActivity {
     private LinearLayout ln_permissions;
     private ImageView icon_permissions, icon_in_app;
     private Toolbar toolbar;
-    private LinearLayout linInAppProduct;
     private RelativeLayout rel_location;
     private Switch switch_location;
     private TextView longitude, latitude;
@@ -142,7 +141,6 @@ public class AlphaSettingsActivity extends CoreActivity {
         ln_permissions = findViewById(R.id.ln_permissions);
         rel_location = findViewById(R.id.rel_location);
         switch_location = findViewById(R.id.switch_location);
-        linInAppProduct = findViewById(R.id.linInAppProduct);
         icon_SuppressedNotifications = findViewById(R.id.icon_SuppressedNotifications);
         icon_permissions = findViewById(R.id.icon_permissions);
         icon_in_app = findViewById(R.id.icon_in_app);
@@ -203,15 +201,6 @@ public class AlphaSettingsActivity extends CoreActivity {
                     PrefSiempo.getInstance(context).write(PrefSiempo.JUNK_RESTRICTED,
                             true);
                 }
-            }
-        });
-        linInAppProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AlphaSettingsActivity.this, InAppItemListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-
             }
         });
         rel_location.setOnClickListener(new View.OnClickListener() {

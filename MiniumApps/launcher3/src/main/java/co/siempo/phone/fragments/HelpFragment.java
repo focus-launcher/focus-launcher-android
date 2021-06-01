@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import co.siempo.phone.BuildConfig;
 import co.siempo.phone.R;
-import co.siempo.phone.activities.ContributeActivity;
 import co.siempo.phone.activities.CoreActivity;
 import co.siempo.phone.activities.HelpActivity;
 import co.siempo.phone.event.CheckVersionEvent;
@@ -153,9 +152,6 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.relFeedback:
                 txtSendFeedback();
-                break;
-            case R.id.relContribute:
-                startActivity(new Intent(getActivity(), ContributeActivity.class));
                 break;
             case R.id.relVersion:
                 checkUpgradeVersion();

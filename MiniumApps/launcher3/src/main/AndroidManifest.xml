@@ -172,9 +172,6 @@
             android:name=".activities.HelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ContributeActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.IntentionEditActivity"
             android:windowSoftInputMode="stateAlwaysVisible" />
 
@@ -307,13 +304,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EmailRequestActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.EnableTempoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.InAppItemListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ChooseBackgroundActivity"

@@ -159,11 +159,6 @@ public class DashboardActivity extends CoreActivity {
                         .USER_SEEN_EMAIL_REQUEST, true);
             }
         }
-        if (!PrefSiempo.getInstance(this).read(PrefSiempo
-                .USER_SEEN_EMAIL_REQUEST, false)) {
-            Intent intent = new Intent(this, EmailRequestActivity.class);
-            startActivity(intent);
-        }
          /*   if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !permissionUtil.hasGiven
                     (PermissionUtil.WRITE_EXTERNAL_STORAGE_PERMISSION))) {
                 Intent intent = new Intent(this, EmailRequestActivity.class);

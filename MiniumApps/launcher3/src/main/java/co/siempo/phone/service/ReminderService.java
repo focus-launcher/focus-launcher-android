@@ -12,10 +12,10 @@ import android.support.v4.app.NotificationCompat;
 
 import co.siempo.phone.R;
 import co.siempo.phone.activities.ChooseBackgroundActivity;
-import co.siempo.phone.activities.ContributeActivity;
-import co.siempo.phone.activities.DashboardActivity;
-import co.siempo.phone.launcher.FakeLauncherActivity;
 
+/**
+What the heck does this do?
+ */
 public class ReminderService extends IntentService {
     private static  int NOTIFICATION_ID = 1;
 
@@ -62,21 +62,13 @@ public class ReminderService extends IntentService {
 
 
         //  .setContentIntent(pendingIntent);
-        if(intent.getStringExtra("type").equals("2")){
+        if(intent.getStringExtra("type").equals("1")){
             Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://wefunder.com/siempo"));
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     NOTIFICATION_ID,
                     intent1,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
-
-        }
-        if(intent.getStringExtra("type").equals("1")) {
-            PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                    NOTIFICATION_ID,
-                    new Intent(this, ContributeActivity.class),
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-                mBuilder.setContentIntent(pendingIntent);
 
         }
         if(intent.getStringExtra("type").equals("0")) {
