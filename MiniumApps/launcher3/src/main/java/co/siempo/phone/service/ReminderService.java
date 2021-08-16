@@ -12,9 +12,6 @@ import android.support.v4.app.NotificationCompat;
 
 import io.focuslauncher.R;
 import co.siempo.phone.activities.ChooseBackgroundActivity;
-import co.siempo.phone.activities.ContributeActivity;
-import co.siempo.phone.activities.DashboardActivity;
-import co.siempo.phone.launcher.FakeLauncherActivity;
 
 public class ReminderService extends IntentService {
     private static  int NOTIFICATION_ID = 1;
@@ -69,14 +66,6 @@ public class ReminderService extends IntentService {
                     intent1,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
-
-        }
-        if(intent.getStringExtra("type").equals("1")) {
-            PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                    NOTIFICATION_ID,
-                    new Intent(this, ContributeActivity.class),
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-                mBuilder.setContentIntent(pendingIntent);
 
         }
         if(intent.getStringExtra("type").equals("0")) {

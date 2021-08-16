@@ -50,8 +50,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.android.vending.billing.IInAppBillingService;
-
 import org.androidannotations.annotations.EActivity;
 
 import java.io.File;
@@ -96,19 +94,6 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
     int onStartCount = 0;
     SharedPreferences launcherPrefs;
     UserPresentBroadcastReceiver userPresentBroadcastReceiver;
-    IInAppBillingService mService;
-    ServiceConnection mServiceConn = new ServiceConnection() {
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mService = null;
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name,
-                                       IBinder service) {
-            mService = IInAppBillingService.Stub.asInterface(service);
-        }
-    };
     private IntentFilter mFilter;
     private InnerRecevier mRecevier;
     private String state = "";
@@ -149,7 +134,6 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
         boolean read = PrefSiempo.getInstance(this).read(PrefSiempo.IS_DARK_THEME, false);
         setTheme(read ? R.style.SiempoAppThemeDark : R.style.SiempoAppTheme);
         super.onCreate(savedInstanceState);
-        connectInAppService();
         this.setVolumeControlStream(AudioManager.STREAM_SYSTEM);
         windowManager = (WindowManager) getBaseContext().getSystemService(Context.WINDOW_SERVICE);
 
@@ -235,17 +219,6 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
 //        PendingIntent pendingIntent2 = PendingIntent.getService(this, 2, intent2, 0);
 //        alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent2);
 
-        }
-    }
-
-    void connectInAppService() {
-        try {
-            Intent serviceIntent =
-                    new Intent("com.android.vending.billing.InAppBillingService.BIND");
-            serviceIntent.setPackage("com.android.vending");
-            bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -395,9 +368,6 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mService != null) {
-            unbindService(mServiceConn);
-        }
         if (userPresentBroadcastReceiver != null) {
             unregisterReceiver(userPresentBroadcastReceiver);
         }

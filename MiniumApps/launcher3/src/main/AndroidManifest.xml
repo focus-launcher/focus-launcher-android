@@ -45,7 +45,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-    <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -174,9 +173,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="co.siempo.phone.activities.HelpActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="co.siempo.phone.activities.ContributeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="co.siempo.phone.activities.IntentionEditActivity"
@@ -312,9 +308,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="co.siempo.phone.activities.EnableTempoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="co.siempo.phone.activities.InAppItemListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="co.siempo.phone.activities.ChooseBackgroundActivity"

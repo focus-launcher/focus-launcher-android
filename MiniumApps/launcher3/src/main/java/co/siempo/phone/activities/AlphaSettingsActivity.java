@@ -82,9 +82,8 @@ public class AlphaSettingsActivity extends CoreActivity {
     private Switch switch_alphaRestriction;
     private ImageView icon_SuppressedNotifications;
     private LinearLayout ln_permissions;
-    private ImageView icon_permissions, icon_in_app;
+    private ImageView icon_permissions;
     private Toolbar toolbar;
-    private LinearLayout linInAppProduct;
     private RelativeLayout rel_location;
     private Switch switch_location;
     private TextView longitude, latitude;
@@ -142,10 +141,8 @@ public class AlphaSettingsActivity extends CoreActivity {
         ln_permissions = findViewById(R.id.ln_permissions);
         rel_location = findViewById(R.id.rel_location);
         switch_location = findViewById(R.id.switch_location);
-        linInAppProduct = findViewById(R.id.linInAppProduct);
         icon_SuppressedNotifications = findViewById(R.id.icon_SuppressedNotifications);
         icon_permissions = findViewById(R.id.icon_permissions);
-        icon_in_app = findViewById(R.id.icon_in_app);
         icon_permissions.setImageDrawable(new IconDrawable(context, "fa-bell").colorRes(R.color.text_primary).sizeDp(18));
         try {
             icon_SuppressedNotifications.setImageDrawable(new IconDrawable(context, "fa-exclamation").colorRes(R.color.text_primary).sizeDp(18));
@@ -155,9 +152,6 @@ public class AlphaSettingsActivity extends CoreActivity {
 //            Crashlytics.logException(e);
         }
         icon_UserId.setImageDrawable(new IconDrawable(context, "fa-user-secret")
-                .colorRes(R.color.text_primary)
-                .sizeDp(18));
-        icon_in_app.setImageDrawable(new IconDrawable(context, "fa-shopping-cart")
                 .colorRes(R.color.text_primary)
                 .sizeDp(18));
         txt_UserId.setText(String.format("UserId: %s", CoreApplication.getInstance().getDeviceId()));
@@ -203,15 +197,6 @@ public class AlphaSettingsActivity extends CoreActivity {
                     PrefSiempo.getInstance(context).write(PrefSiempo.JUNK_RESTRICTED,
                             true);
                 }
-            }
-        });
-        linInAppProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AlphaSettingsActivity.this, InAppItemListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-
             }
         });
         rel_location.setOnClickListener(new View.OnClickListener() {
