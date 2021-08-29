@@ -8,7 +8,7 @@
     android:background="@color/transparent">
 
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtTopDockDate"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"

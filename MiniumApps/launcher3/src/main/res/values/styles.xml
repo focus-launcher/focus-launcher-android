@@ -215,7 +215,8 @@
     </style>
 
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="android:colorForeground">@android:color/primary_text_dark
         </item>
     </style>

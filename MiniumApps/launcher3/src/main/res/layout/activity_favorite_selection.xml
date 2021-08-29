@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="co.siempo.phone.activities.FavoritesSelectionActivity">
+              tools:context="io.focuslauncher.phone.activities.FavoritesSelectionActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -122,7 +122,7 @@
     <!--android:textColor="@color/white"-->
     <!--android:textSize="20sp"/>-->
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtValidateAllOtherApps"
         android:layout_width="match_parent"
         android:layout_height="56dp"

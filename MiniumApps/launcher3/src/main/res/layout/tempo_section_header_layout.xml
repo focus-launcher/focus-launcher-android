@@ -12,7 +12,7 @@
     tools:ignore="UseCompoundDrawables">
 
 
-    <co.siempo.phone.customviews.RobotoRegularTextView
+    <io.focuslauncher.phone.customviews.RobotoRegularTextView
         android:id="@+id/txt_headerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

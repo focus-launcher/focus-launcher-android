@@ -18,7 +18,7 @@
         android:src="@drawable/abc_btn_check_material"
         tools:ignore="ContentDescription,PrivateResource" />
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txt_app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

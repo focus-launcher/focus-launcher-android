@@ -50,7 +50,7 @@
                     android:layout_marginRight="@dimen/dp_16"
                     >
 
-                    <co.siempo.phone.customviews.RobotoMediumTextView
+                    <io.focuslauncher.phone.customviews.RobotoMediumTextView
                         android:id="@+id/txtSelectTools"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

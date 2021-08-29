@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="co.siempo.phone.pause.PauseActivity"
+        tools:context="io.focuslauncher.phone.pause.PauseActivity"
         tools:ignore="UselessParent">
 
         <android.support.v7.widget.Toolbar
@@ -51,7 +51,7 @@
                             android:src="@drawable/ic_tempo_dailog"/>
 
 
-                        <co.siempo.phone.customviews.RobotoRegularTextView
+                        <io.focuslauncher.phone.customviews.RobotoRegularTextView
                             android:id="@+id/txtAllowApps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                             android:textSize="16sp"
                             />
 
-                        <co.siempo.phone.customviews.RobotoRegularTextView
+                        <io.focuslauncher.phone.customviews.RobotoRegularTextView
                             android:id="@+id/txtAllowAppsText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                     android:paddingLeft="50dp"
                     tools:ignore="RtlSymmetry">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtAllowPicking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                             android:clickable="false"/>
                     </LinearLayout>
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtAllowPickingtxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

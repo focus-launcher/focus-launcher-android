@@ -37,7 +37,7 @@
                 android:orientation="vertical">
 
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtToolsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -58,7 +58,7 @@
                     android:layout_marginBottom="@dimen/dp_2"
                     android:layout_marginTop="@dimen/dp_2">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtToolsMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -70,7 +70,7 @@
                         android:textSize="16sp"
                         android:visibility="visible"/>
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtFavoriteMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -82,7 +82,7 @@
                         android:visibility="visible"/>
 
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtJunkMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -118,7 +118,7 @@
                     android:textColor="@color/white"
                     android:textSize="14sp"/>
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtNext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -5,7 +5,7 @@
                 android:id="@+id/applayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="co.siempo.phone.activities.AppAssignmentActivity">
+                tools:context="io.focuslauncher.phone.activities.AppAssignmentActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -78,7 +78,7 @@
         android:layout_below="@+id/search_bar_app"
         app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtErrorMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
         android:textSize="@dimen/sp_20"
         android:visibility="invisible"/>
 
-    <co.siempo.phone.customviews.RobotoMediumTextView
+    <io.focuslauncher.phone.customviews.RobotoMediumTextView
         android:id="@+id/txtViewAllapps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

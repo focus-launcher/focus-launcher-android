@@ -62,7 +62,7 @@
             android:orientation="vertical"
             tools:ignore="InefficientWeight">
 
-            <co.siempo.phone.customviews.RobotoCondensedTextView
+            <io.focuslauncher.phone.customviews.RobotoCondensedTextView
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 android:textSize="13sp"
                 tools:text="Send as a message"/>
 
-            <co.siempo.phone.customviews.RobotoCondensedTextView
+            <io.focuslauncher.phone.customviews.RobotoCondensedTextView
                 android:id="@+id/textDefaultApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -7,7 +7,7 @@
     tools:background="@color/material.core.cyan">
 
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txt_settingsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

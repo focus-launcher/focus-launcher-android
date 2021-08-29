@@ -25,7 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context="co.siempo.phone.pause.PauseActivity">
+                tools:context="io.focuslauncher.phone.pause.PauseActivity">
 
                 <RelativeLayout
                     android:id="@+id/relAllowSpecificApps"
@@ -35,7 +35,7 @@
                     android:clickable="true"
                     android:paddingLeft="50dp">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtDisableNotificationControls"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                         android:layout_marginRight="8dp" />
 
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtDisableIntentions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     android:clickable="true"
                     android:paddingLeft="50dp">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtDarkTheme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                         android:layout_marginRight="8dp" />
 
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtDarkThemeText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                     android:clickable="true"
                     android:paddingLeft="50dp">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtCustomBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                     android:clickable="true"
                     android:paddingLeft="50dp">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtIconJunkFoodVisibility"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                     android:paddingLeft="50dp"
                     android:visibility="visible">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtNotificationVisibility"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -250,7 +250,7 @@
                     android:paddingLeft="50dp"
                     android:visibility="visible">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtScreenOverlayVisibility"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

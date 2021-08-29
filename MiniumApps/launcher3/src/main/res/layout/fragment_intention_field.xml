@@ -65,7 +65,7 @@
         android:paddingTop="@dimen/margin.2"
         android:visibility="visible">
 
-        <co.siempo.phone.customviews.RobotoRegularTextView
+        <io.focuslauncher.phone.customviews.RobotoRegularTextView
             android:id="@+id/txtIntention"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

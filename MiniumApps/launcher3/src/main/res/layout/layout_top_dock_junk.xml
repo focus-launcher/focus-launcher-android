@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content">
 
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtIntentionLabelJunkPane"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -18,7 +18,7 @@
         android:textSize="@dimen/sp_15"
         android:visibility="gone"/>
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtIntention"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_46"

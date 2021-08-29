@@ -6,7 +6,7 @@
                 android:layout_height="wrap_content">
 
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtTopDockDate"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -67,7 +67,7 @@
         >
 
 
-        <co.siempo.phone.customviews.SearchLayout
+        <io.focuslauncher.phone.customviews.SearchLayout
             android:id="@+id/edtSearchListView"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -85,7 +85,7 @@
     </android.support.v7.widget.CardView>
 
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtIntentionLabelJunkPane"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -100,7 +100,7 @@
 
         android:visibility="gone"/>
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtIntention"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_46"

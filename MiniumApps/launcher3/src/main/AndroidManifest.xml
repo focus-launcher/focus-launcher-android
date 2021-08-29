@@ -82,7 +82,7 @@
                      tools:ignore="QueryAllPackagesPermission"/>
 
     <application
-        android:name="co.siempo.phone.app.Launcher3App_"
+        android:name="io.focuslauncher.phone.app.Launcher3App_"
         android:allowBackup="false"
         android:fullBackupOnly="false"
         android:icon="@mipmap/ic_launcher"
@@ -94,15 +94,15 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <service
-            android:name="co.siempo.phone.service.CategoriesApp"
-            android:exported="false"></service>
+            android:name="io.focuslauncher.phone.service.CategoriesApp"
+            android:exported="false"/>
         <!-- Fabric configuration -->
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="6a700e064d3ba9dbf81d871dd3c0b3081ab158f7" />
 
         <activity
-            android:name="co.siempo.phone.launcher.FakeLauncherActivity"
+            android:name="io.focuslauncher.phone.launcher.FakeLauncherActivity"
             android:enabled="false"
             android:screenOrientation="portrait"
             android:theme="@style/AlertDialogTheme">
@@ -115,7 +115,7 @@
         </activity>
 
         <service
-            android:name="co.siempo.phone.service.SiempoNotificationListener_"
+            android:name="io.focuslauncher.phone.service.SiempoNotificationListener_"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
@@ -123,12 +123,12 @@
             </intent-filter>
         </service>
         <service
-            android:name="co.siempo.phone.service.ReminderService"
+            android:name="io.focuslauncher.phone.service.ReminderService"
             android:enabled="true"
             android:exported="false" />
 
         <receiver
-            android:name="co.siempo.phone.receivers.CallReceiver"
+            android:name="io.focuslauncher.phone.receivers.CallReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
@@ -137,7 +137,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="co.siempo.phone.msg.SmsReceiver"
+            android:name="io.focuslauncher.phone.msg.SmsReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
@@ -148,63 +148,63 @@
         </receiver>
 
         <activity
-            android:name="co.siempo.phone.ui.UpdateActivity_"
+            android:name="io.focuslauncher.phone.ui.UpdateActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.AlphaSettingsActivity_"
+            android:name="io.focuslauncher.phone.activities.AlphaSettingsActivity_"
             android:screenOrientation="portrait" />
 
         <service
-            android:name="co.siempo.phone.service.StatusBarService"
+            android:name="io.focuslauncher.phone.service.StatusBarService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name="co.siempo.phone.activities.SuppressNotificationActivity"
+            android:name="io.focuslauncher.phone.activities.SuppressNotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.SiempoPermissionActivity_"
+            android:name="io.focuslauncher.phone.activities.SiempoPermissionActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.SettingsActivity_"
+            android:name="io.focuslauncher.phone.activities.SettingsActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.NotificationActivity"
+            android:name="io.focuslauncher.phone.activities.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.HelpActivity"
+            android:name="io.focuslauncher.phone.activities.HelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.IntentionEditActivity"
+            android:name="io.focuslauncher.phone.activities.IntentionEditActivity"
             android:windowSoftInputMode="stateAlwaysVisible" />
 
-        <receiver android:name="co.siempo.phone.service.AlarmBroadcast">
+        <receiver android:name="io.focuslauncher.phone.service.AlarmBroadcast">
             <intent-filter>
                 <action android:name="co.siempo.phone.ACTION_ALARM" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name="co.siempo.phone.service.AlarmService" />
+        <service android:name="io.focuslauncher.phone.service.AlarmService" />
         <service
-            android:name="co.siempo.phone.service.OverlayService"
+            android:name="io.focuslauncher.phone.service.OverlayService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/app_name" />
 
         <service
-            android:name="co.siempo.phone.service.ScreenFilterService"
+            android:name="io.focuslauncher.phone.service.ScreenFilterService"
             android:enabled="true" >
         </service>
 
-        <receiver android:name="co.siempo.phone.receivers.BootReceiver">
+        <receiver android:name="io.focuslauncher.phone.receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="co.siempo.phone.activities.DashboardActivity"
+            android:name="io.focuslauncher.phone.activities.DashboardActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:enabled="true"
@@ -227,25 +227,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="co.siempo.phone.activities.NoteListActivity"
+            android:name="io.focuslauncher.phone.activities.NoteListActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/CoreTheme" />
         <activity
-            android:name="co.siempo.phone.activities.NotesEditActivity"
+            android:name="io.focuslauncher.phone.activities.NotesEditActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:parentActivityName="co.siempo.phone.activities.NotesEditActivity"
+            android:parentActivityName="io.focuslauncher.phone.activities.NotesEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CoreTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="co.siempo.phone.activities.NotesEditActivity" />
+                android:value="io.focuslauncher.phone.activities.NotesEditActivity" />
         </activity>
 
         <receiver
-            android:name="co.siempo.phone.receivers.NoteEventReceiver"
+            android:name="io.focuslauncher.phone.receivers.NoteEventReceiver"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver">
@@ -257,7 +257,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="co.siempo.phone.receivers.ScreenOffAdminReceiver"
+            android:name="io.focuslauncher.phone.receivers.ScreenOffAdminReceiver"
             android:description="@string/device_admin_description"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
@@ -277,44 +277,44 @@
             android:name="com.evernote.client.android.login.EvernoteLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.AppAssignmentActivity"
+            android:name="io.focuslauncher.phone.activities.AppAssignmentActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" /> <!-- <activity -->
         <!-- android:name=".fragments.PaneFragment" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name="co.siempo.phone.activities.JunkfoodFlaggingActivity"
+            android:name="io.focuslauncher.phone.activities.JunkfoodFlaggingActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name="co.siempo.phone.activities.FavoritesSelectionActivity"
+            android:name="io.focuslauncher.phone.activities.FavoritesSelectionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name="co.siempo.phone.activities.ToolPositioningActivity"
+            android:name="io.focuslauncher.phone.activities.ToolPositioningActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.FavoriteAppsPositionActivity"
+            android:name="io.focuslauncher.phone.activities.FavoriteAppsPositionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.ToolSelectionActivity"
+            android:name="io.focuslauncher.phone.activities.ToolSelectionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.PrivacyPolicyActivity"
+            android:name="io.focuslauncher.phone.activities.PrivacyPolicyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.EnableTempoActivity"
+            android:name="io.focuslauncher.phone.activities.EnableTempoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.ChooseBackgroundActivity"
+            android:name="io.focuslauncher.phone.activities.ChooseBackgroundActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="co.siempo.phone.activities.UpdateBackgroundActivity"
+            android:name="io.focuslauncher.phone.activities.UpdateBackgroundActivity"
             android:screenOrientation="portrait" />
     </application>
 

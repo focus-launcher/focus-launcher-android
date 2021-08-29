@@ -6,7 +6,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="co.siempo.phone.activities.ToolPositioningActivity">
+              tools:context="io.focuslauncher.phone.activities.ToolPositioningActivity">
 
 
     <android.support.v7.widget.Toolbar

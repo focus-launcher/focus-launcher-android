@@ -23,7 +23,7 @@
             android:layout_marginTop="9dp"
             android:gravity="center_vertical"/>
 
-        <co.siempo.phone.customviews.RobotoCondensedTextView
+        <io.focuslauncher.phone.customviews.RobotoCondensedTextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,7 +38,7 @@
             android:textSize="@dimen/sp_16"
             tools:text="John Doe"/>
 
-        <co.siempo.phone.customviews.RobotoRegularTextView
+        <io.focuslauncher.phone.customviews.RobotoRegularTextView
             android:id="@+id/txtNumber"
             android:layout_width="wrap_content"
             android:layout_height="22dp"

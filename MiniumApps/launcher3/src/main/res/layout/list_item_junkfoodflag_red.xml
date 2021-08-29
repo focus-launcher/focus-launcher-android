@@ -10,7 +10,7 @@
     android:showDividers="none"
     tools:ignore="UseCompoundDrawables">
 
-    <co.siempo.phone.customviews.RobotoCondensedTextView
+    <io.focuslauncher.phone.customviews.RobotoCondensedTextView
         android:id="@+id/txtTitleRed"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -39,7 +39,7 @@
             android:layout_height="40dp"
             tools:ignore="ContentDescription,PrivateResource" />
 
-        <co.siempo.phone.customviews.RobotoCondensedTextView
+        <io.focuslauncher.phone.customviews.RobotoCondensedTextView
             android:id="@+id/txtAppName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

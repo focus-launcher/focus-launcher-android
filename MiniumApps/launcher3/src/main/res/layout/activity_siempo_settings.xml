@@ -40,7 +40,7 @@
                     android:contentDescription="@null"
                     android:padding="6dp" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txt_launcher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                     android:contentDescription="@null"
                     android:padding="6dp" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txt_changeDefaultApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                     android:contentDescription="@null"
                     android:padding="6dp" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txt_KeyBoardNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                     android:contentDescription="@null"
                     android:padding="6dp" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txt_Faq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -212,7 +212,7 @@
                     android:contentDescription="@null"
                     android:padding="6dp" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txt_Feedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -241,7 +241,7 @@
                     android:contentDescription="@null"
                     android:padding="6dp" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txt_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

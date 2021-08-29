@@ -32,7 +32,7 @@
                 android:scaleType="fitCenter"
                 tools:ignore="ContentDescription" />
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:id="@+id/txtAppName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:gravity="center_vertical"
                 tools:ignore="ContentDescription" />
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_toLeftOf="@+id/imgUserImage"
                 android:orientation="vertical">
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:id="@+id/txtUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     android:textSize="@dimen/sp_16"
                     tools:text="User Name" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

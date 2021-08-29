@@ -9,7 +9,7 @@
     android:focusableInTouchMode="false"
     android:orientation="vertical">
 
-    <co.siempo.phone.customviews.RobotoMediumTextView
+    <io.focuslauncher.phone.customviews.RobotoMediumTextView
         android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:textStyle="bold"
         tools:ignore="RtlHardcoded" />
 
-    <co.siempo.phone.customviews.RobotoRegularTextView
+    <io.focuslauncher.phone.customviews.RobotoRegularTextView
         android:id="@+id/bodyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
