@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <co.siempo.phone.customviews.RobotoCondensedTextView
+            <io.focuslauncher.phone.customviews.RobotoCondensedTextView
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -52,7 +52,7 @@
                 tools:ignore="HardcodedText"
                 tools:text="Send as a message"/>
 
-            <co.siempo.phone.customviews.RobotoCondensedTextView
+            <io.focuslauncher.phone.customviews.RobotoCondensedTextView
                 android:id="@+id/textDefaultApp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -16,7 +16,7 @@
         android:paddingTop="15dp"
         tools:ignore="RtlHardcoded,RtlSymmetry">
 
-        <co.siempo.phone.customviews.RobotoMediumTextView
+        <io.focuslauncher.phone.customviews.RobotoMediumTextView
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:paddingTop="@dimen/dp_5"
             tools:ignore="RtlHardcoded,RtlSymmetry">
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -49,7 +49,7 @@
                 android:textSize="10sp"
                 tools:ignore="HardcodedText,SmallSp" />
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_10"
@@ -64,7 +64,7 @@
                 android:background="@drawable/ic_browser"
                 tools:ignore="ContentDescription" />
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_10"
@@ -85,7 +85,7 @@
             android:visibility="gone"
             tools:ignore="RtlHardcoded,RtlSymmetry">
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -128,7 +128,7 @@
                 android:textSize="10sp"
                 tools:ignore="HardcodedText,SmallSp" />
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_10"

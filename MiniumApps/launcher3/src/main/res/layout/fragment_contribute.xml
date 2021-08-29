@@ -10,7 +10,7 @@
         style="@style/toolbar_style"
         app:titleTextColor="?attr/toolbar_text_color" />
 
-    <co.siempo.phone.customviews.RobotoMediumTextView
+    <io.focuslauncher.phone.customviews.RobotoMediumTextView
         android:id="@+id/txtMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:id="@+id/text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -69,7 +69,7 @@
                 android:background="@null"
                 android:button="@drawable/checkbox_selector"
                 />
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:id="@+id/txtSubscribe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
             </EditText>
         </android.support.design.widget.TextInputLayout>
 
-        <co.siempo.phone.customviews.RobotoRegularTextView
+        <io.focuslauncher.phone.customviews.RobotoRegularTextView
             android:id="@+id/txtErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -114,7 +114,7 @@
             android:textSize="12sp"
             android:visibility="gone"/>
 
-        <co.siempo.phone.customviews.RobotoMediumTextView
+        <io.focuslauncher.phone.customviews.RobotoMediumTextView
             android:id="@+id/txtEmailThanks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

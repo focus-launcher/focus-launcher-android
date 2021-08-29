@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<co.siempo.phone.util.FitsSystemWindowConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.focuslauncher.phone.util.FitsSystemWindowConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="co.siempo.phone.activities.DashboardActivity">
+    tools:context="io.focuslauncher.phone.activities.DashboardActivity">
 
     <ImageView
         android:id="@+id/imgBackground"
@@ -18,14 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="co.siempo.phone.activities.DashboardActivity">
+        tools:context="io.focuslauncher.phone.activities.DashboardActivity">
 
 
-        <co.siempo.phone.ui.SiempoViewPager
+        <io.focuslauncher.phone.ui.SiempoViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
 
     </RelativeLayout>
-</co.siempo.phone.util.FitsSystemWindowConstraintLayout>
+</io.focuslauncher.phone.util.FitsSystemWindowConstraintLayout>

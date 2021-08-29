@@ -35,7 +35,7 @@
                 <!--android:layout_gravity="center_vertical"-->
                 <!--android:background="@drawable/ic_tempo_dailog" />-->
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -58,7 +58,7 @@
                 android:paddingBottom="@dimen/dp_15"
                 android:visibility="gone">
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -80,7 +80,7 @@
                 android:paddingBottom="@dimen/dp_15"
                 android:visibility="gone">
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -108,7 +108,7 @@
                 <!--android:layout_gravity="center_vertical"-->
                 <!--android:background="@drawable/ic_settings_tempo" />-->
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -135,7 +135,7 @@
                 <!--android:layout_gravity="center_vertical"-->
                 <!--android:background="@drawable/ic_help_tempo" />-->
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -157,7 +157,7 @@
                 android:paddingBottom="@dimen/dp_15"
                 android:visibility="gone">
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"

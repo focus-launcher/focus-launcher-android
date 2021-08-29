@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:gravity="center" />
 
-        <co.siempo.phone.colorpicker.ColorPickerPalette
+        <io.focuslauncher.phone.colorpicker.ColorPickerPalette
             android:id="@+id/color_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

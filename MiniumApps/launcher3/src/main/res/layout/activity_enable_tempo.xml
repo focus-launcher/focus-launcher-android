@@ -14,7 +14,7 @@
         app:titleTextColor="?attr/toolbar_text_color"
         >
 
-        <co.siempo.phone.customviews.RobotoMediumTextView
+        <io.focuslauncher.phone.customviews.RobotoMediumTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/enable_tempo"
@@ -33,7 +33,7 @@
             android:background="@color/white"
             app:cardElevation="4dp">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="2sp"
@@ -53,7 +53,7 @@
             android:layout_below="@+id/txtMessage"
             android:gravity="center">
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:id="@+id/on_the_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

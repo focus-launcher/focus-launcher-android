@@ -23,7 +23,7 @@
             android:layout_height="32dp"
             tools:ignore="ContentDescription,PrivateResource" />
 
-        <co.siempo.phone.customviews.RobotoRegularTextView
+        <io.focuslauncher.phone.customviews.RobotoRegularTextView
             android:id="@+id/txt_app_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

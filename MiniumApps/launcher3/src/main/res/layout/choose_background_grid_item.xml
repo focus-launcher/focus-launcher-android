@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <co.siempo.phone.customviews.SquareImageView
+    <io.focuslauncher.phone.customviews.SquareImageView
         android:id="@+id/gridImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <co.siempo.phone.customviews.RobotoRegularTextView
+    <io.focuslauncher.phone.customviews.RobotoRegularTextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -42,7 +42,7 @@
                     android:orientation="vertical">
 
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtPermissionTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -55,7 +55,7 @@
                         android:visibility="visible" />
 
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtDrawPermission"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -128,7 +128,7 @@
                 android:paddingBottom="16dp">
 
 
-                <co.siempo.phone.customviews.RobotoMediumTextView
+                <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:id="@+id/on_the_next"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

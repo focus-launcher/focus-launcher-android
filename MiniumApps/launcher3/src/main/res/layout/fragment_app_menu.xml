@@ -32,7 +32,7 @@
                 android:focusable="true"
                 android:paddingLeft="50dp">
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                         android:clickable="false" />
                 </LinearLayout>
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtRandom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 android:paddingLeft="50dp"
                 android:visibility="gone">
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtReduceOveruseScreen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                         android:clickable="false" />
                 </LinearLayout>
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtReduceOveruseScreenDes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                 android:paddingLeft="50dp"
                 android:visibility="visible">
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtReduceOveruseFlagged"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                         android:clickable="false" />
                 </LinearLayout>
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtReduceOveruseFlaggedDes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
                 android:clickable="true"
                 android:paddingLeft="50dp">
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtJunkFoodmize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                         android:clickable="false" />
                 </LinearLayout>
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtDisableIntentions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -265,7 +265,7 @@
                 android:clickable="true"
                 android:paddingLeft="50dp">
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtChooseFlagapp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
                         android:visibility="gone" />
                 </LinearLayout>
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtChooseFlagappDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

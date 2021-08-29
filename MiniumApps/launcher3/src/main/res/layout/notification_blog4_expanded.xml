@@ -39,14 +39,14 @@
         android:orientation="vertical"
         android:paddingLeft="6dp">
 
-        <co.siempo.phone.customviews.RobotoMediumTextView
+        <io.focuslauncher.phone.customviews.RobotoMediumTextView
             android:id="@+id/content_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Notification Sample App"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <co.siempo.phone.customviews.RobotoRegularTextView
+        <io.focuslauncher.phone.customviews.RobotoRegularTextView
             android:id="@+id/content_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
     </LinearLayout>
 
-    <co.siempo.phone.customviews.RobotoRegularTextView
+    <io.focuslauncher.phone.customviews.RobotoRegularTextView
         android:id="@+id/timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

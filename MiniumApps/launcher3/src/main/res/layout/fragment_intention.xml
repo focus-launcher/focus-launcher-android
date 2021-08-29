@@ -80,7 +80,7 @@
             android:paddingTop="@dimen/dp_10"
             android:visibility="visible">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                 android:textSize="12sp"
                 android:visibility="invisible"/>
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtIntention"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

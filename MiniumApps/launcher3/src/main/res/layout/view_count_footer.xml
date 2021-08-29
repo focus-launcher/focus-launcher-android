@@ -4,7 +4,7 @@
     android:layout_height="32dp"
     android:orientation="horizontal">
 
-    <co.siempo.phone.customviews.RobotoMediumTextView
+    <io.focuslauncher.phone.customviews.RobotoMediumTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

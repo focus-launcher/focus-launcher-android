@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:weightSum="3"
-                tools:context="co.siempo.phone.fragments.IntentionFragment">
+                tools:context="io.focuslauncher.phone.fragments.IntentionFragment">
 
 
     <ImageView
@@ -52,7 +52,7 @@
                     android:layout_marginRight="@dimen/dp_16"
                     android:elevation="@dimen/dp_5">
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                         android:id="@+id/txtSelectTools"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

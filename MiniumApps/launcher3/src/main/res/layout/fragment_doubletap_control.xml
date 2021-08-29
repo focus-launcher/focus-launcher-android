@@ -37,7 +37,7 @@
             android:clickable="true"
             android:paddingLeft="50dp">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtSleep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_marginRight="8dp" />
 
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtSleepDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             android:clickable="true"
             android:paddingLeft="50dp">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtDnD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 android:layout_marginRight="8dp" />
 
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtDnDDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

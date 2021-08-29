@@ -35,7 +35,7 @@
                 android:orientation="vertical">
 
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtToolsMessage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

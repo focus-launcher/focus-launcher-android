@@ -3,7 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="co.siempo.phone.fragments.PaneFragment">
+                tools:context="io.focuslauncher.phone.fragments.PaneFragment">
 
     <LinearLayout
         android:id="@+id/linMain"
@@ -61,7 +61,7 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <co.siempo.phone.ui.SiempoViewPager
+            <io.focuslauncher.phone.ui.SiempoViewPager
                 android:id="@+id/pagerPane"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

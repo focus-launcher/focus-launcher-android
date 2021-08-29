@@ -39,7 +39,7 @@
 
         </LinearLayout>
 
-        <co.siempo.phone.customviews.RobotoMediumTextView
+        <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
@@ -109,7 +109,7 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <co.siempo.phone.customviews.RobotoRegularTextView
+                    <io.focuslauncher.phone.customviews.RobotoRegularTextView
                             android:id="@+id/txtErrorMessage"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -168,7 +168,7 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/viewFlipperEmail">
 
-        <co.siempo.phone.customviews.RobotoMediumTextView
+        <io.focuslauncher.phone.customviews.RobotoMediumTextView
                 android:id="@+id/we_respect_"
                 android:layout_width="273dp"
                 android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -196,7 +196,7 @@
                     android:textColor="#8A000000"
                     android:textSize="14sp"/>
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:id="@+id/txtPrivacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                     android:textColor="@color/dialog_blue"
                     android:textSize="14sp"/>
 
-            <co.siempo.phone.customviews.RobotoMediumTextView
+            <io.focuslauncher.phone.customviews.RobotoMediumTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"

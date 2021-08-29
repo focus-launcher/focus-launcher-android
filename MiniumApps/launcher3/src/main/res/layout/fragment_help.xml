@@ -27,7 +27,7 @@
             android:layout_marginLeft="5dp"
             android:padding="16dp">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtFaq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:padding="16dp">
 
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtPrivacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             android:layout_marginLeft="5dp"
             android:padding="16dp">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtTermsOfCondition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             android:layout_marginLeft="5dp"
             android:padding="16dp">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtSendFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             android:padding="16dp"
             android:visibility="gone">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtContribute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
             android:padding="16dp"
             android:visibility="visible">
 
-            <co.siempo.phone.customviews.RobotoRegularTextView
+            <io.focuslauncher.phone.customviews.RobotoRegularTextView
                 android:id="@+id/txtLeaveReview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtVersion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                     android:textColor="?attr/txt_content_title"
                     android:textSize="@dimen/text.size.large" />
 
-                <co.siempo.phone.customviews.RobotoRegularTextView
+                <io.focuslauncher.phone.customviews.RobotoRegularTextView
                     android:id="@+id/txtVersionValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

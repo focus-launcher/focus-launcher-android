@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <co.siempo.phone.customviews.RobotoMediumTextView
+    <io.focuslauncher.phone.customviews.RobotoMediumTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_15"
