@@ -1,52 +1,36 @@
 {
   "project_info": {
-    "project_number": "1064532358213",
-    "firebase_url": "https://siempo-d5e5d.firebaseio.com",
-    "project_id": "siempo-d5e5d",
-    "storage_bucket": "siempo-d5e5d.appspot.com"
+    "project_number": "357041437927",
+    "project_id": "focuslauncher-phone",
+    "storage_bucket": "focuslauncher-phone.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064532358213:android:c918ea2acae9e657",
+        "mobilesdk_app_id": "1:357041437927:android:8297813354d901277db642",
         "android_client_info": {
-          "package_name": "co.siempo.phone"
+          "package_name": "io.focuslauncher"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1064532358213-f56gd9ap53h1rhcpk3eqi2li7r7ks3bn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "co.siempo.phone",
-            "certificate_hash": "2bcc160d2e041d1ba40a8254a41171705272ab5d"
-          }
-        },
-        {
-          "client_id": "1064532358213-gdnlesoj9plnqn7pvdhb76g4oedumm2k.apps.googleusercontent.com",
+          "client_id": "357041437927-etsr0373k34801ffi0j5408q2p8i8rba.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAx5BweTxZez_vvtJAVLJyYdLdxBS1s5-4"
+          "current_key": "AIzaSyCabncyJESZEvo_wMURivVtYviRGlpWjpQ"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1064532358213-gdnlesoj9plnqn7pvdhb76g4oedumm2k.apps.googleusercontent.com",
+              "client_id": "357041437927-etsr0373k34801ffi0j5408q2p8i8rba.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

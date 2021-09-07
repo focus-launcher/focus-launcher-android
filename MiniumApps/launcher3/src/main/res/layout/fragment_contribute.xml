@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/toolbar_style"
         app:titleTextColor="?attr/toolbar_text_color" />
@@ -42,7 +42,7 @@
                 android:textSize="@dimen/sp_12"
                 android:visibility="gone" />
 
-            <android.support.v7.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinnerContribute"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                 android:textSize="@dimen/sp_15" />
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:textColorHint="@color/colorAccent">
 
             </EditText>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <io.focuslauncher.phone.customviews.RobotoRegularTextView
             android:id="@+id/txtErrorMessage"

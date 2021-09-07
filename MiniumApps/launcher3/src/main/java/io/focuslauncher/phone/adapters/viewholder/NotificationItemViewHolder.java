@@ -2,7 +2,7 @@ package io.focuslauncher.phone.adapters.viewholder;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;

@@ -15,7 +15,7 @@
  */
 package io.focuslauncher.phone.adapters;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 /**

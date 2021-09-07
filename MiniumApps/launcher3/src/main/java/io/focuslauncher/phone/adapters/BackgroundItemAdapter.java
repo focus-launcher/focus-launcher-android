@@ -3,7 +3,7 @@ package io.focuslauncher.phone.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v4.widget.CircularProgressDrawable;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

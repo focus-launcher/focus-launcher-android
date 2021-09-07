@@ -7,7 +7,7 @@
               android:orientation="vertical"
               tools:context="io.focuslauncher.phone.activities.FavoritesSelectionActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/toolbar_style"
         app:titleTextColor="?attr/toolbar_text_color"/>
@@ -19,7 +19,7 @@
         android:elevation="@dimen/dp_5"
         android:padding="@dimen/dp_8">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     android:src="@drawable/ic_close_blue"
                     android:visibility="invisible"/>
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
 
