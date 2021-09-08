@@ -1,7 +1,7 @@
 package io.focuslauncher.phone.fragments;
 
 import android.graphics.Color;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;

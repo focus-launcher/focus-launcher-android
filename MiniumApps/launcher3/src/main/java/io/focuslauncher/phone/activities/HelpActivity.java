@@ -1,7 +1,7 @@
 package io.focuslauncher.phone.activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import io.focuslauncher.R;
 import io.focuslauncher.phone.fragments.HelpFragment;

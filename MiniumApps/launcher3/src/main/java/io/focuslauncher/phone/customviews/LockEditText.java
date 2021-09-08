@@ -9,7 +9,7 @@ import android.view.KeyEvent;
  * Created by rajeshjadi on 11/1/18.
  */
 
-public class LockEditText extends android.support.v7.widget.AppCompatEditText {
+public class LockEditText extends androidx.appcompat.widget.AppCompatEditText {
     /* Must use this constructor in order for the layout files to instantiate the class properly */
     public LockEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
