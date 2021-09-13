@@ -230,7 +230,7 @@ public class ChipsTextView extends View {
 
         TypedValue outValue = new TypedValue();
         r.getValue(R.dimen.default_chips_line_spacing, outValue, true);
-        config.lineSpacing = ta.getFloat(R.styleable.ChipsTextView_lineSpacing, outValue.getFloat());
+        config.lineSpacing = ta.getFloat(R.styleable.ChipsTextView_chipLineSpacing, outValue.getFloat());
 
         config.truncated = ta.getBoolean(R.styleable.ChipsTextView_truncated, false);
         if (config.truncated) {

@@ -19,9 +19,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -47,6 +48,7 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.OnFailureListener;
 import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -225,7 +227,7 @@ public class DashboardActivity extends CoreActivity implements InstallStateUpdat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         linMain = findViewById(R.id.linMain);
-        appUpdateManager = AppUpdateManagerFactory.create(this)
+        appUpdateManager = AppUpdateManagerFactory.create(this);
         registerAppUpdateListener();
         imgBackground = findViewById(R.id.imgBackground);
         //linMain.setPadding(0, getStatusBarHeight(), 0, 0);
@@ -837,6 +839,11 @@ public class DashboardActivity extends CoreActivity implements InstallStateUpdat
                 }else{
                     Log.e(TAG, "App update not available");
                 }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "App update onFailure: "+e.getMessage());
             }
         });
     }

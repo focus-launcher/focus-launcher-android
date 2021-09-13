@@ -21,18 +21,17 @@ import android.provider.AlarmClock;
 import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.LruCache;
-
 import com.androidnetworking.AndroidNetworking;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import io.focuslauncher.R;
 import io.focuslauncher.phone.event.AppInstalledEvent;
 import io.focuslauncher.phone.log.Tracer;
@@ -54,7 +52,6 @@ import io.focuslauncher.phone.utils.PackageUtil;
 import io.focuslauncher.phone.utils.PrefSiempo;
 import io.focuslauncher.phone.utils.UIUtils;
 import de.greenrobot.event.EventBus;
-
 import static io.focuslauncher.phone.main.MainListItemLoader.TOOLS_ADDITIONAL_MESSAGE;
 import static io.focuslauncher.phone.main.MainListItemLoader.TOOLS_ASSISTANT;
 import static io.focuslauncher.phone.main.MainListItemLoader.TOOLS_AUTHENTICATION;
@@ -232,6 +229,7 @@ public abstract class CoreApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        FirebaseAnalytics.getInstance(this);
         userManager = (UserManager) getSystemService(Context.USER_SERVICE);
         launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
         sInstance = this;

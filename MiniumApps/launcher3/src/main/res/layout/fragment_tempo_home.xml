@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/toolbar_style"
             app:navigationIcon="@drawable/ic_arrow_back_blue_24dp"

@@ -3,7 +3,7 @@ package io.focuslauncher.phone.adapters;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.support.v13.app.FragmentPagerAdapter;
+import androidx.legacy.app.FragmentPagerAdapter;
 
 import io.focuslauncher.phone.fragments.IntentionFragment;
 import io.focuslauncher.phone.fragments.PaneFragment;

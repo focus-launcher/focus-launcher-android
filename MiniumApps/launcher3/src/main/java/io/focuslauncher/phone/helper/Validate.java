@@ -1,7 +1,7 @@
 package io.focuslauncher.phone.helper;
 
 import android.annotation.SuppressLint;
-import android.support.design.widget.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 
