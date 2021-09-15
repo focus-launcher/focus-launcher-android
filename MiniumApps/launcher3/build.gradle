@@ -16,7 +16,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 5
+        versionCode 6
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         defaultConfig {
             vectorDrawables.useSupportLibrary = true
@@ -53,7 +53,7 @@ android {
         }
         beta {
             dimension "type"
-            versionName "1.0.5"
+            versionName "1.0.6"
         }
     }
 
@@ -64,6 +64,9 @@ android {
 
     dexOptions {
         jumboMode true
+    }
+    viewBinding {
+        enabled = true
     }
 
     // workaround for "duplicate files during packaging of APK" issueOnPrefer
@@ -161,6 +164,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-config-ktx:20.0.4'
     implementation 'com.google.firebase:firebase-messaging:21.1.0'
     implementation 'com.google.firebase:firebase-config-ktx:20.0.4'
+
+    implementation 'com.google.android.play:core-ktx:1.8.1'
 }
 greendao {
     schemaVersion "${databaseVersion}".toInteger()
