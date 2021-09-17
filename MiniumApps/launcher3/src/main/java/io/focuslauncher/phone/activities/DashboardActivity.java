@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import android.text.TextUtils;
@@ -37,6 +40,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallState;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.OnFailureListener;
+import com.google.android.play.core.tasks.OnSuccessListener;
+import com.google.android.play.core.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,8 +99,9 @@ import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 
-public class DashboardActivity extends CoreActivity {
+public class DashboardActivity extends CoreActivity implements InstallStateUpdatedListener {
 
+    public static final int APP_UPDATE_REQUEST_CODE = 401;
     public static final String IS_FROM_HOME = "isFromHome";
     public static final String CLASS_NAME = DashboardActivity.class.getSimpleName();
     public static String isTextLenghGreater = "";
@@ -118,6 +133,7 @@ public class DashboardActivity extends CoreActivity {
     private ImageView imgBackground;
     private Intent starterIntent;
 
+    private AppUpdateManager appUpdateManager;
     /**
      * @return True if {@link android.service.notification.NotificationListenerService} is enabled.
      */
@@ -211,8 +227,8 @@ public class DashboardActivity extends CoreActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         linMain = findViewById(R.id.linMain);
-
-
+        appUpdateManager = AppUpdateManagerFactory.create(this);
+        registerAppUpdateListener();
         imgBackground = findViewById(R.id.imgBackground);
         //linMain.setPadding(0, getStatusBarHeight(), 0, 0);
         swipeCount = PrefSiempo.getInstance(DashboardActivity.this).read(PrefSiempo.TOGGLE_LEFTMENU, 0);
@@ -582,6 +598,12 @@ public class DashboardActivity extends CoreActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        checkForAppUpdate();
+    }
+
+    @Override
     protected void onStop() {
         if (notificationDialog != null && notificationDialog.isShowing()) {
             notificationDialog.dismiss();
@@ -705,6 +727,7 @@ public class DashboardActivity extends CoreActivity {
         DashboardActivity.isTextLenghGreater = "";
         currentIndexDashboard = 1;
         currentIndexPaneFragment = 2;
+        unRegisterAppUpdateListener();
     }
 
     /**
@@ -790,5 +813,65 @@ public class DashboardActivity extends CoreActivity {
         }
     }
 
+    private void checkForAppUpdate(){
+        Task<AppUpdateInfo> appUpdateInfo = appUpdateManager.getAppUpdateInfo();
 
+        appUpdateInfo.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo result) {
+                int appUpdateAvailability = result.updateAvailability();
+                if (appUpdateAvailability == UpdateAvailability.UPDATE_AVAILABLE){
+                    if (result.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)){
+                        Log.d(TAG, "update type: FLEXIBLE");
+                        try {
+                            appUpdateManager.startUpdateFlowForResult(result, AppUpdateType.FLEXIBLE, DashboardActivity.this, APP_UPDATE_REQUEST_CODE);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)){
+                        Log.d(TAG, "update type: IMMEDIATE");
+                        try {
+                            appUpdateManager.startUpdateFlowForResult(result, AppUpdateType.IMMEDIATE, DashboardActivity.this, APP_UPDATE_REQUEST_CODE);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }else{
+                    Log.e(TAG, "App update not available");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "App update onFailure: "+e.getMessage());
+            }
+        });
+    }
+
+    private void registerAppUpdateListener() {
+        appUpdateManager.registerListener(this);
+    }
+
+    private void unRegisterAppUpdateListener() {
+        appUpdateManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onStateUpdate(@NonNull InstallState state) {
+        if (state.installStatus() == InstallStatus.DOWNLOADED){
+            appUpdateManager.completeUpdate();
+        } else if (state.installStatus() == InstallStatus.DOWNLOADING){
+            showToast("AppUpdate has been Downloading");
+        } else if (state.installStatus() == InstallStatus.INSTALLED){
+            showToast("New App Update has been Installed");
+        }else if (state.installStatus() == InstallStatus.FAILED){
+            showToast("AppUpdate has been Failed");
+        }else if (state.installStatus() == InstallStatus.CANCELED){
+            showToast("AppUpdate has been Cancelled");
+        }
+    }
+
+    private void showToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }
