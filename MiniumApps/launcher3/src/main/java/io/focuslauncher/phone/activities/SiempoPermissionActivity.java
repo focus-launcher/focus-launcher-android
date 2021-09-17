@@ -37,6 +37,16 @@ import io.focuslauncher.phone.utils.UIUtils;
 @EActivity(R.layout.activity_permission)
 public class SiempoPermissionActivity extends CoreActivity {
 
+    public static String[] PERMISSIONS = {
+            //Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS,
+            //Manifest.permission.RECEIVE_SMS,
+            //Manifest.permission.SEND_SMS,
+            //Manifest.permission.READ_SMS,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
     @ViewById
     Toolbar toolbar;
     @ViewById
@@ -83,7 +93,7 @@ public class SiempoPermissionActivity extends CoreActivity {
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
             UIUtils.toast(SiempoPermissionActivity.this, "Permission denied");
-            askForPermission(Constants.PERMISSIONS);
+            askForPermission(PERMISSIONS);
         }
     };
     CompoundButton.OnClickListener onClickListener = new CompoundButton.OnClickListener() {
