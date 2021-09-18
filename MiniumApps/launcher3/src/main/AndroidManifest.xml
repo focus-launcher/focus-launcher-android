@@ -168,7 +168,7 @@
             android:name="io.focuslauncher.phone.activities.SiempoPermissionActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="io.focuslauncher.phone.activities.SettingsActivity_"
+            android:name="io.focuslauncher.phone.activities.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="io.focuslauncher.phone.activities.NotificationActivity"

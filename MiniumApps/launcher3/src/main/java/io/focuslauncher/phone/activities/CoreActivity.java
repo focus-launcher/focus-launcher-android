@@ -582,7 +582,7 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
         shortcutSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CoreActivity.this, SettingsActivity_.class);
+                Intent intent = new Intent(CoreActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 mBottomSheetDialog.closeOptionsMenu();
                 mBottomSheetDialog.hide();

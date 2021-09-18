@@ -1,78 +1,68 @@
-package io.focuslauncher.phone.activities;
+package io.focuslauncher.phone.activities
 
-import android.os.Handler;
-import android.view.View;
+import android.os.Bundle
+import android.os.Handler
+import android.view.LayoutInflater
+import android.view.View
+import io.focuslauncher.R
+import io.focuslauncher.databinding.ActivityTempoBinding
+import io.focuslauncher.phone.fragments.AppMenuFragment
+import io.focuslauncher.phone.fragments.TempoSettingsFragment_
+import io.focuslauncher.phone.utils.PrefSiempo
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
+open class SettingsActivity : CoreActivity() {
 
-import io.focuslauncher.R;
-import io.focuslauncher.phone.fragments.AppMenuFragment;
-import io.focuslauncher.phone.fragments.TempoSettingsFragment_;
-import io.focuslauncher.phone.utils.PrefSiempo;
+    private var binding: ActivityTempoBinding? = null
 
-@EActivity(R.layout.activity_tempo_settings)
-public class SettingsActivity extends CoreActivity {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityTempoBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding?.root)
 
-    @AfterViews
-    void afterViews() {
-        if (getIntent().hasExtra("FlagApp")) {
-            loadFragment(AppMenuFragment.newInstance(true), R.id.tempoView, "main");
+        if (intent.hasExtra("FlagApp")) {
+            loadFragment(AppMenuFragment.newInstance(true), R.id.tempoView, "main")
         } else {
-            loadFragment(TempoSettingsFragment_.builder().build(), R.id.tempoView, "main");
+            loadFragment(TempoSettingsFragment_.builder().build(), R.id.tempoView, "main")
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        statusBar();
+    override fun onResume() {
+        super.onResume()
+        statusBar()
     }
 
-    private void statusBar()
-    {
-        final boolean isEnable = PrefSiempo.getInstance(this).read(PrefSiempo.DEFAULT_NOTIFICATION_ENABLE, false);
-        if(isEnable)
-        {
-            View decorView =  getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-            decorView.setFitsSystemWindows(true);
-
-            decorView.setOnSystemUiVisibilityChangeListener
-                    (new View.OnSystemUiVisibilityChangeListener() {
-                        @Override
-                        public void onSystemUiVisibilityChange(int visibility) {
-                            if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
-                            {
-                                if(PrefSiempo.getInstance(SettingsActivity.this).read(PrefSiempo.DEFAULT_NOTIFICATION_ENABLE, false))
-                                {
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            View decorView =  getWindow().getDecorView();
-                                            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-                                            decorView.setSystemUiVisibility(uiOptions);
-                                            decorView.setFitsSystemWindows(true);
-                                        }
-                                    },3000);
-                                }
-                            }
-                        }
-                    });
-
-        }else
-        {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
-            decorView.setSystemUiVisibility(uiOptions);
+    private fun statusBar() {
+        val isEnable = PrefSiempo.getInstance(this).read(PrefSiempo.DEFAULT_NOTIFICATION_ENABLE, false)
+        if (isEnable) {
+            val decorView = window.decorView
+            val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+            decorView.systemUiVisibility = uiOptions
+            decorView.fitsSystemWindows = true
+            decorView.setOnSystemUiVisibilityChangeListener { visibility ->
+                if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+                    if (PrefSiempo.getInstance(this@SettingsActivity)
+                            .read(PrefSiempo.DEFAULT_NOTIFICATION_ENABLE, false)
+                    ) {
+                        Handler().postDelayed({
+                            val decorView = window.decorView
+                            val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+                            decorView.systemUiVisibility = uiOptions
+                            decorView.fitsSystemWindows = true
+                        }, 3000)
+                    }
+                }
+            }
+        } else {
+            val decorView = window.decorView
+            val uiOptions = View.SYSTEM_UI_FLAG_VISIBLE
+            decorView.systemUiVisibility = uiOptions
         }
-        statusBarColor();
+        statusBarColor()
     }
 
-    private void statusBarColor() {
+    private fun statusBarColor() {
 
-       /* new Handler().postDelayed(new Runnable() {
+        /* new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Window window = getWindow();
@@ -81,5 +71,4 @@ public class SettingsActivity extends CoreActivity {
             }
         },1000);*/
     }
-
 }

@@ -16,40 +16,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.BounceInterpolator;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
+import android.widget.*;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import io.focuslauncher.R;
-import io.focuslauncher.phone.activities.DashboardActivity;
-import io.focuslauncher.phone.activities.EnableTempoActivity;
-import io.focuslauncher.phone.activities.HelpActivity;
-import io.focuslauncher.phone.activities.IntentionEditActivity;
-import io.focuslauncher.phone.activities.JunkfoodFlaggingActivity;
-import io.focuslauncher.phone.activities.SettingsActivity_;
-import io.focuslauncher.phone.activities.UpdateBackgroundActivity;
+import io.focuslauncher.phone.activities.*;
 import io.focuslauncher.phone.dialog.DialogTempoSetting;
 import io.focuslauncher.phone.helper.ActivityHelper;
 import io.focuslauncher.phone.service.StatusBarService;
@@ -58,6 +35,8 @@ import io.focuslauncher.phone.utils.PackageUtil;
 import io.focuslauncher.phone.utils.PermissionUtil;
 import io.focuslauncher.phone.utils.PrefSiempo;
 import io.focuslauncher.phone.utils.UIUtils;
+
+import java.io.*;
 
 
 public class IntentionFragment extends CoreFragment implements View.OnClickListener {
@@ -348,7 +327,7 @@ public class IntentionFragment extends CoreFragment implements View.OnClickListe
                     public void onClick(View view) {
                         //Code for opening Tempo Settings
                         if (getActivity() != null) {
-                            Intent intent = new Intent(getActivity(), SettingsActivity_.class);
+                            Intent intent = new Intent(getActivity(), SettingsActivity.class);
                             startActivity(intent);
                             UIUtils.clearDim(root);
                             mPopupWindow.dismiss();
