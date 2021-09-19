@@ -47,6 +47,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.firebase.database.*
 import de.greenrobot.event.EventBus
 import io.focuslauncher.databinding.ActivitySiempoAlphaSettingsBinding
+import io.focuslauncher.phone.utils.lifecycleProperty
 import io.focuslauncher.phone.utils.locationManager
 import java.lang.Exception
 import java.util.ArrayList
@@ -63,7 +64,7 @@ open class AlphaSettingsActivity : CoreActivity() {
 
     private var dialog: ProgressDialog? = null
 
-    private var binding: ActivitySiempoAlphaSettingsBinding? = null
+    private var binding: ActivitySiempoAlphaSettingsBinding? by lifecycleProperty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

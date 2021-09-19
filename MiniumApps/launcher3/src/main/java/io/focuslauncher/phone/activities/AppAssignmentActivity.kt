@@ -23,6 +23,7 @@ import io.focuslauncher.phone.models.MainListItem
 import io.focuslauncher.phone.utils.NetworkUtil
 import io.focuslauncher.phone.utils.PrefSiempo
 import io.focuslauncher.phone.utils.Sorting
+import io.focuslauncher.phone.utils.lifecycleProperty
 
 class AppAssignmentActivity : CoreActivity() {
     var appList: MutableList<ResolveInfo> = ArrayList()
@@ -32,7 +33,7 @@ class AppAssignmentActivity : CoreActivity() {
     var set: Set<String> = HashSet()
     var appListAll: MutableList<ResolveInfo> = ArrayList()
     private var resolvedMimeList = ArrayList<ResolveInfo>()
-    private var binding: ActivityAppAssignementBinding? = null
+    private var binding: ActivityAppAssignementBinding? by lifecycleProperty()
     private var appAssignmentAdapter: AppAssignmentAdapter? = null
     private var startTime: Long = 0
     private var className: String? = null

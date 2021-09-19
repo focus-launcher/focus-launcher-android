@@ -10,10 +10,11 @@ import io.focuslauncher.databinding.ActivityTempoSettingsBinding
 import io.focuslauncher.phone.fragments.AppMenuFragment
 import io.focuslauncher.phone.fragments.TempoSettingsFragment
 import io.focuslauncher.phone.utils.PrefSiempo
+import io.focuslauncher.phone.utils.lifecycleProperty
 
 open class SettingsActivity : CoreActivity() {
 
-    private var binding: ActivityTempoSettingsBinding? = null
+    private var binding: ActivityTempoSettingsBinding? by lifecycleProperty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
