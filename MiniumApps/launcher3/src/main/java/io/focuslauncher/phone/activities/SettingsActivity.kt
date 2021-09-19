@@ -5,24 +5,25 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import io.focuslauncher.R
-import io.focuslauncher.databinding.ActivityTempoBinding
+import io.focuslauncher.databinding.ActivitySettingsMainBinding
+import io.focuslauncher.databinding.ActivityTempoSettingsBinding
 import io.focuslauncher.phone.fragments.AppMenuFragment
-import io.focuslauncher.phone.fragments.TempoSettingsFragment_
+import io.focuslauncher.phone.fragments.TempoSettingsFragment
 import io.focuslauncher.phone.utils.PrefSiempo
 
 open class SettingsActivity : CoreActivity() {
 
-    private var binding: ActivityTempoBinding? = null
+    private var binding: ActivityTempoSettingsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTempoBinding.inflate(LayoutInflater.from(this))
+        binding = ActivityTempoSettingsBinding.inflate(LayoutInflater.from(this))
         setContentView(binding?.root)
 
         if (intent.hasExtra("FlagApp")) {
             loadFragment(AppMenuFragment.newInstance(true), R.id.tempoView, "main")
         } else {
-            loadFragment(TempoSettingsFragment_.builder().build(), R.id.tempoView, "main")
+            loadFragment(TempoSettingsFragment(), R.id.tempoView, "main")
         }
     }
 

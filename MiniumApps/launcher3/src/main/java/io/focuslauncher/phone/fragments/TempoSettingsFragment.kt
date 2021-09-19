@@ -1,112 +1,62 @@
-package io.focuslauncher.phone.fragments;
+package io.focuslauncher.phone.fragments
 
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import io.focuslauncher.BuildConfig
+import io.focuslauncher.R
+import io.focuslauncher.databinding.FragmentTempoSettingsBinding
+import io.focuslauncher.phone.activities.CoreActivity
+import io.focuslauncher.phone.helper.ActivityHelper
+import io.focuslauncher.phone.utils.PrefSiempo
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
+open class TempoSettingsFragment : CoreFragment() {
 
-import io.focuslauncher.BuildConfig;
-import io.focuslauncher.R;
-import io.focuslauncher.phone.activities.CoreActivity;
-import io.focuslauncher.phone.helper.ActivityHelper;
-import io.focuslauncher.phone.utils.PrefSiempo;
+    private var binding: FragmentTempoSettingsBinding? = null
 
-@EFragment(R.layout.fragment_tempo_settings)
-public class TempoSettingsFragment extends CoreFragment {
-
-    @ViewById
-    Toolbar toolbar;
-    @ViewById
-    RelativeLayout relHome;
-    @ViewById
-    RelativeLayout relAppMenu;
-    @ViewById
-    RelativeLayout relNotification;
-    @ViewById
-    RelativeLayout relDoubleTap;
-    @ViewById
-    RelativeLayout relAccount;
-    @ViewById
-    RelativeLayout relAlphaSettings;
-    @ViewById
-    TextView titleActionBar;
-
-    public TempoSettingsFragment() {
-        // Required empty public constructor
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentTempoSettingsBinding.inflate(inflater)
+        return binding?.root
     }
 
-    @AfterViews
-    void afterViews() {
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_blue_24dp);
-        toolbar.setTitle(R.string.settings);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-
-
-        if (BuildConfig.FLAVOR.equalsIgnoreCase(context.getString(R.string.alpha))) {
-            relAlphaSettings.setVisibility(View.VISIBLE);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding?.toolbar?.apply {
+            setNavigationIcon(R.drawable.ic_arrow_back_blue_24dp)
+            setTitle(R.string.settings)
+            setNavigationOnClickListener { activity.onBackPressed() }
+        }
+        if (BuildConfig.FLAVOR.equals(context.getString(R.string.alpha), ignoreCase = true)) {
+            binding?.relAlphaSettings?.visibility = View.VISIBLE
         } else {
-            if (PrefSiempo.getInstance(context).read(PrefSiempo
-                    .IS_ALPHA_SETTING_ENABLE, false)) {
-                relAlphaSettings.setVisibility(View.VISIBLE);
+            if (PrefSiempo.getInstance(context).read(PrefSiempo.IS_ALPHA_SETTING_ENABLE, false)) {
+                binding?.relAlphaSettings?.visibility = View.VISIBLE
             } else {
-                relAlphaSettings.setVisibility(View.GONE);
+                binding?.relAlphaSettings?.visibility = View.GONE
             }
         }
 
+        binding?.relHome?.setOnClickListener {
+            (activity as CoreActivity).loadChildFragment(
+                TempoHomeFragment_.builder()
+                    .build(), R.id.tempoView
+            )
+        }
+        binding?.relAppMenu?.setOnClickListener {
+            (activity as CoreActivity).loadChildFragment(AppMenuFragment.newInstance(false), R.id.tempoView)
+        }
 
-    }
-
-
-    @Click
-    void relHome() {
-        ((CoreActivity) getActivity()).loadChildFragment(TempoHomeFragment_.builder()
-                .build(), R.id.tempoView);
-    }
-
-    @Click
-    void relAppMenu() {
-        ((CoreActivity) getActivity()).loadChildFragment(AppMenuFragment.newInstance(false), R.id.tempoView);
-    }
-
-    @Click
-    void relNotification() {
-        ((CoreActivity) getActivity()).loadChildFragment(TempoNotificationFragment_.builder().build(), R.id.tempoView);
-    }
-
-    @Click
-    void relDoubleTap() {
-        ((CoreActivity) getActivity()).loadChildFragment(DoubleTapControlsFragment_.builder().build(), R.id.tempoView);
-    }
-
-    @Click
-    void relAccount() {
-        ((CoreActivity) getActivity()).loadChildFragment(AccountSettingFragment_.builder().build(), R.id.tempoView);
-    }
-
-    @Click
-    void relAlphaSettings() {
-
-        new ActivityHelper(context).openSiempoAlphaSettingsApp();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+        binding?.relNotification?.setOnClickListener {
+            (activity as CoreActivity).loadChildFragment(TempoNotificationFragment_.builder().build(), R.id.tempoView)
+        }
+        binding?.relDoubleTap?.setOnClickListener {
+            (activity as CoreActivity).loadChildFragment(DoubleTapControlsFragment_.builder().build(), R.id.tempoView)
+        }
+        binding?.relAccount?.setOnClickListener {
+            (activity as CoreActivity).loadChildFragment(AccountSettingFragment_.builder().build(), R.id.tempoView)
+        }
+        binding?.relAlphaSettings?.setOnClickListener {
+            ActivityHelper(context).openSiempoAlphaSettingsApp()
+        }
     }
 }

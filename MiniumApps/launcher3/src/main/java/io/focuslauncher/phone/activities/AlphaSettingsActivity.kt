@@ -1,419 +1,360 @@
-package io.focuslauncher.phone.activities;
+package io.focuslauncher.phone.activities
 
-import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.IntentSender;
-import android.location.LocationManager;
-import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-import com.joanzapata.iconify.IconDrawable;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import io.focuslauncher.phone.app.CoreApplication;
-import io.focuslauncher.phone.event.LocationUpdateEvent;
-import io.focuslauncher.phone.event.StartLocationEvent;
-import io.focuslauncher.phone.helper.ActivityHelper;
-import io.focuslauncher.phone.helper.FirebaseHelper;
-import io.focuslauncher.phone.models.UserModel;
-import io.focuslauncher.phone.utils.PermissionUtil;
-import io.focuslauncher.phone.utils.PrefSiempo;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-import io.focuslauncher.R;
-
-import static io.focuslauncher.phone.activities.DashboardActivity.IS_FROM_HOME;
+import android.Manifest
+import org.androidannotations.annotations.EActivity
+import io.focuslauncher.R
+import io.focuslauncher.phone.activities.CoreActivity
+import org.androidannotations.annotations.ViewById
+import io.focuslauncher.phone.utils.PermissionUtil
+import android.app.ProgressDialog
+import com.google.android.gms.location.LocationRequest
+import android.location.LocationManager
+import android.content.BroadcastReceiver
+import android.content.Intent
+import io.focuslauncher.phone.activities.AlphaSettingsActivity
+import io.focuslauncher.phone.utils.PrefSiempo
+import io.focuslauncher.phone.event.StartLocationEvent
+import org.androidannotations.annotations.AfterViews
+import com.joanzapata.iconify.IconDrawable
+import io.focuslauncher.phone.app.CoreApplication
+import io.focuslauncher.phone.helper.ActivityHelper
+import io.focuslauncher.phone.activities.SiempoPermissionActivity_
+import io.focuslauncher.phone.activities.DashboardActivity
+import io.focuslauncher.phone.helper.FirebaseHelper
+import android.content.IntentFilter
+import android.os.Build
+import com.gun0912.tedpermission.TedPermission
+import com.gun0912.tedpermission.PermissionListener
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.SettingsClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsResponse
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.location.LocationSettingsStatusCodes
+import com.google.android.gms.common.api.ResolvableApiException
+import android.content.IntentSender.SendIntentException
+import de.greenrobot.event.Subscribe
+import io.focuslauncher.phone.event.LocationUpdateEvent
+import io.focuslauncher.phone.models.UserModel
+import android.app.Activity
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.*
+import androidx.appcompat.widget.Toolbar
+import com.google.firebase.database.*
+import de.greenrobot.event.EventBus
+import io.focuslauncher.databinding.ActivitySiempoAlphaSettingsBinding
+import io.focuslauncher.phone.utils.locationManager
+import java.lang.Exception
+import java.util.ArrayList
+import java.util.HashMap
 
 /**
  * Created by hardik on 17/8/17.
  */
+open class AlphaSettingsActivity : CoreActivity() {
 
-@EActivity(R.layout.activity_siempo_alpha_settings)
-public class AlphaSettingsActivity extends CoreActivity {
-    private static final int REQUEST_CHECK_SETTINGS = 0x1;
-    private static final String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
-    @ViewById
-    ImageView icon_UserId;
-    @ViewById
-    TextView txt_UserId;
-    PermissionUtil permissionUtil;
-    ProgressDialog dialog;
-    private Context context;
-    private long startTime = 0;
-    private LinearLayout ln_suppressedNotifications;
-    private RelativeLayout rel_restrictions;
-    private Switch switch_alphaRestriction;
-    private ImageView icon_SuppressedNotifications;
-    private LinearLayout ln_permissions;
-    private ImageView icon_permissions;
-    private Toolbar toolbar;
-    private RelativeLayout rel_location;
-    private Switch switch_location;
-    private TextView longitude, latitude;
-    private LocationRequest locationRequest;
-    private LocationManager locationManager;
+    private var permissionUtil: PermissionUtil? = null
+    private var locationRequest: LocationRequest? = null
+    private var startTime: Long = 0
 
-    private BroadcastReceiver gpsLocationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+    private var dialog: ProgressDialog? = null
+
+    private var binding: ActivitySiempoAlphaSettingsBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySiempoAlphaSettingsBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding?.root)
+        initView()
+        onClickEvents()
+    }
+
+    private val gpsLocationReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+
+            val locationManager = context.locationManager
             //If Action is Location
-            if (intent.getAction().matches(BROADCAST_ACTION)) {
-                if (locationManager == null) {
-                    locationManager = (LocationManager) context.getSystemService(Context
-                            .LOCATION_SERVICE);
-                }
+            if (intent.action?.matches(Regex(BROADCAST_ACTION)) == true) {
                 //Check if GPS is turned ON or OFF
-                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
-                } else {
+                if (locationManager != null
+                    && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                ) {
                     //If GPS turned OFF show Location Dialog
-                    if (dialog != null && dialog.isShowing()) {
-                        dialog.dismiss();
+                    if (dialog != null && dialog!!.isShowing) {
+                        dialog!!.dismiss()
                     }
-                    switch_location.setChecked(false);
-                    longitude.setVisibility(View.GONE);
-                    latitude.setVisibility(View.GONE);
-                    PrefSiempo.getInstance(context).write(PrefSiempo.LOCATION_STATUS,
-                            false);
-                    EventBus.getDefault().post(new StartLocationEvent(false));
+                    binding?.switchLocation?.isChecked = false
+                    binding?.longitude!!.visibility = View.GONE
+                    binding?.latitude!!.visibility = View.GONE
+                    PrefSiempo.getInstance(context).write(
+                        PrefSiempo.LOCATION_STATUS,
+                        false
+                    )
+                    EventBus.getDefault().post(StartLocationEvent(false))
                 }
             }
         }
-    };
-
-    @AfterViews
-    void afterViews() {
-        initView();
-        onClickEvents();
     }
 
-    public void initView() {
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_blue_24dp);
-        toolbar.setTitle(R.string.alpha_settings);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        context = AlphaSettingsActivity.this;
-        ln_suppressedNotifications = findViewById(R.id.ln_suppressedNotifications);
-        rel_restrictions = findViewById(R.id.rel_restrictions);
-        switch_alphaRestriction = findViewById(R.id.switch_alphaRestriction);
-        ln_permissions = findViewById(R.id.ln_permissions);
-        rel_location = findViewById(R.id.rel_location);
-        switch_location = findViewById(R.id.switch_location);
-        icon_SuppressedNotifications = findViewById(R.id.icon_SuppressedNotifications);
-        icon_permissions = findViewById(R.id.icon_permissions);
-        icon_permissions.setImageDrawable(new IconDrawable(context, "fa-bell").colorRes(R.color.text_primary).sizeDp(18));
-        try {
-            icon_SuppressedNotifications.setImageDrawable(new IconDrawable(context, "fa-exclamation").colorRes(R.color.text_primary).sizeDp(18));
-        } catch (Exception e) {
-            //Todo log exception to fabric
-            e.printStackTrace();
-//            Crashlytics.logException(e);
+    fun initView() {
+        binding?.toolbar?.apply {
+            setNavigationIcon(R.drawable.ic_arrow_back_blue_24dp)
+            setTitle(R.string.alpha_settings)
+            setNavigationOnClickListener { onBackPressed() }
         }
-        icon_UserId.setImageDrawable(new IconDrawable(context, "fa-user-secret")
+        binding?.iconPermissions?.setImageDrawable(
+            IconDrawable(this, "fa-bell")
                 .colorRes(R.color.text_primary)
-                .sizeDp(18));
-        txt_UserId.setText(String.format("UserId: %s", CoreApplication.getInstance().getDeviceId()));
-        if (PrefSiempo.getInstance(this).read(PrefSiempo.JUNK_RESTRICTED, false)) {
-            switch_alphaRestriction.setChecked(true);
-        } else {
-            switch_alphaRestriction.setChecked(false);
+                .sizeDp(18)
+        )
+        try {
+            binding?.iconSuppressedNotifications?.setImageDrawable(
+                IconDrawable(
+                    this,
+                    "fa-exclamation"
+                ).colorRes(R.color.text_primary).sizeDp(18)
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        longitude = findViewById(R.id.longitude);
-        latitude = findViewById(R.id.latitude);
-        dialog = new ProgressDialog(AlphaSettingsActivity.this);
-        permissionUtil = new PermissionUtil(this);
+        binding?.iconUserId?.setImageDrawable(
+            IconDrawable(this, "fa-user-secret")
+                .colorRes(R.color.text_primary)
+                .sizeDp(18)
+        )
+        binding?.txtUserId?.text = String.format("UserId: %s", CoreApplication.getInstance().deviceId)
+        binding?.switchAlphaRestriction?.isChecked =
+            PrefSiempo.getInstance(this).read(PrefSiempo.JUNK_RESTRICTED, false)
+        dialog = ProgressDialog(this@AlphaSettingsActivity)
+        permissionUtil = PermissionUtil(this)
     }
 
-    public void onClickEvents() {
-        ln_suppressedNotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ActivityHelper(context).openSiempoSuppressNotificationsSettings();
+    fun onClickEvents() {
+        binding?.lnSuppressedNotifications?.setOnClickListener { ActivityHelper(this).openSiempoSuppressNotificationsSettings() }
+        binding?.lnPermissions?.setOnClickListener {
+            val intent = Intent(this@AlphaSettingsActivity, SiempoPermissionActivity_::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.putExtra(DashboardActivity.IS_FROM_HOME, false)
+            startActivity(intent)
+        }
+        binding?.relRestrictions?.setOnClickListener {
+            if (binding?.switchAlphaRestriction?.isChecked == true) {
+                binding?.switchAlphaRestriction?.isChecked = false
+                PrefSiempo.getInstance(this).write(
+                    PrefSiempo.JUNK_RESTRICTED,
+                    false
+                )
+            } else {
+                binding?.switchAlphaRestriction?.isChecked = true
+                PrefSiempo.getInstance(this).write(
+                    PrefSiempo.JUNK_RESTRICTED,
+                    true
+                )
             }
-        });
-
-        ln_permissions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AlphaSettingsActivity.this, SiempoPermissionActivity_.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra(IS_FROM_HOME, false);
-                startActivity(intent);
+        }
+        binding?.relLocation?.setOnClickListener {
+            if (binding?.switchLocation?.isChecked == true) {
+                binding?.switchLocation?.isChecked = false
+                binding?.longitude!!.visibility = View.GONE
+                binding?.latitude!!.visibility = View.GONE
+                PrefSiempo.getInstance(this).write(
+                    PrefSiempo.LOCATION_STATUS,
+                    false
+                )
+                EventBus.getDefault().post(StartLocationEvent(false))
+            } else {
+                checkPermissionAndFindLocation()
+                PrefSiempo.getInstance(this).write(
+                    PrefSiempo.LOCATION_STATUS,
+                    true
+                )
             }
-        });
-        rel_restrictions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (switch_alphaRestriction.isChecked()) {
-                    switch_alphaRestriction.setChecked(false);
-                    PrefSiempo.getInstance(context).write(PrefSiempo.JUNK_RESTRICTED,
-                            false);
-                } else {
-                    switch_alphaRestriction.setChecked(true);
-                    PrefSiempo.getInstance(context).write(PrefSiempo.JUNK_RESTRICTED,
-                            true);
-                }
-            }
-        });
-        rel_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (switch_location.isChecked()) {
-                    switch_location.setChecked(false);
-                    longitude.setVisibility(View.GONE);
-                    latitude.setVisibility(View.GONE);
-                    PrefSiempo.getInstance(context).write(PrefSiempo.LOCATION_STATUS,
-                            false);
-                    EventBus.getDefault().post(new StartLocationEvent(false));
-                } else {
-                    checkPermissionAndFindLocation();
-                    PrefSiempo.getInstance(context).write(PrefSiempo.LOCATION_STATUS,
-                            true);
-                }
-            }
-        });
-        boolean loc_switch_state = PrefSiempo.getInstance(context).read(PrefSiempo.LOCATION_STATUS,
-                false);
+        }
+        val loc_switch_state = PrefSiempo.getInstance(this).read(
+            PrefSiempo.LOCATION_STATUS,
+            false
+        )
         if (!loc_switch_state) {
-            switch_location.setChecked(false);
-            EventBus.getDefault().post(new StartLocationEvent(false));
+            binding?.switchLocation?.isChecked = false
+            EventBus.getDefault().post(StartLocationEvent(false))
         } else {
-            switch_location.setChecked(true);
-            checkPermissionAndFindLocation();
+            binding?.switchLocation?.isChecked = true
+            checkPermissionAndFindLocation()
         }
-
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        FirebaseHelper.getInstance().logScreenUsageTime(AlphaSettingsActivity.this.getClass().getSimpleName(), startTime);
-        unregisterReceiver(gpsLocationReceiver);
+    override fun onPause() {
+        super.onPause()
+        FirebaseHelper.getInstance().logScreenUsageTime(this@AlphaSettingsActivity.javaClass.simpleName, startTime)
+        unregisterReceiver(gpsLocationReceiver)
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (locationManager == null) {
-            locationManager = (LocationManager) context.getSystemService(Context
-                    .LOCATION_SERVICE);
-        }
-        registerReceiver(gpsLocationReceiver, new IntentFilter(BROADCAST_ACTION));
-        startTime = System.currentTimeMillis();
-        if (!permissionUtil.hasGiven(PermissionUtil.LOCATION_PERMISSION) || (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager
-                .isProviderEnabled(LocationManager.NETWORK_PROVIDER))) {
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
+    override fun onResume() {
+        super.onResume()
+        val locationManager = locationManager
+        registerReceiver(gpsLocationReceiver, IntentFilter(BROADCAST_ACTION))
+        startTime = System.currentTimeMillis()
+        if (permissionUtil?.hasGiven(PermissionUtil.LOCATION_PERMISSION) == false
+            || locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) == false
+            && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        ) {
+            if (dialog != null && dialog!!.isShowing) {
+                dialog!!.dismiss()
             }
-            switch_location.setChecked(false);
-            EventBus.getDefault().post(new StartLocationEvent(false));
-            PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, false);
-            EventBus.getDefault().post(new StartLocationEvent(false));
-            longitude.setVisibility(View.GONE);
-            latitude.setVisibility(View.GONE);
+            binding?.switchLocation?.isChecked = false
+            EventBus.getDefault().post(StartLocationEvent(false))
+            PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, false)
+            EventBus.getDefault().post(StartLocationEvent(false))
+            binding?.longitude!!.visibility = View.GONE
+            binding?.latitude!!.visibility = View.GONE
         }
     }
 
     //For Checking Location Permission
-    private void checkPermissionAndFindLocation() {
-
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !permissionUtil.hasGiven
-                (PermissionUtil.LOCATION_PERMISSION))) {
+    private fun checkPermissionAndFindLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !permissionUtil!!.hasGiven(PermissionUtil.LOCATION_PERMISSION)) {
             try {
                 TedPermission.with(this)
-                        .setPermissionListener(new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted() {
-                                showLocation();
-                            }
+                    .setPermissionListener(object : PermissionListener {
+                        override fun onPermissionGranted() {
+                            showLocation()
+                        }
 
-                            @Override
-                            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-
-                            }
-                        })
-                        .setDeniedMessage(R.string.msg_permission_denied)
-                        .setPermissions(new String[]{
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest
-                                        .permission
-                                        .ACCESS_FINE_LOCATION, Manifest.permission.INTERNET})
-                        .check();
-            } catch (Exception e) {
-                e.printStackTrace();
+                        override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {}
+                    })
+                    .setDeniedMessage(R.string.msg_permission_denied)
+                    .setPermissions(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.INTERNET
+                    )
+                    .check()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         } else {
-            showLocation();
+            showLocation()
         }
     }
 
     //Fetching Location
-    private void showLocation() {
+    private fun showLocation() {
         if (locationRequest == null) {
-            locationRequest = LocationRequest.create();
-
+            locationRequest = LocationRequest.create()
         }
-        LocationSettingsRequest settingsRequest = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest).build();
-
-        SettingsClient client = LocationServices.getSettingsClient(this);
+        val settingsRequest = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest).build()
+        val client = LocationServices.getSettingsClient(this)
         //Location Request Dialog
-        Task<LocationSettingsResponse> task = client
-                .checkLocationSettings(settingsRequest);
-
-        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-            @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                if (dialog != null) {
-                    dialog.show();
-                    dialog.setMessage("Fetching Location");
-                    dialog.setCancelable(false);
-                }
-                EventBus.getDefault().post(new StartLocationEvent(true));
+        val task = client
+            .checkLocationSettings(settingsRequest)
+        task.addOnSuccessListener(this) {
+            if (dialog != null) {
+                dialog!!.show()
+                dialog!!.setMessage("Fetching Location")
+                dialog!!.setCancelable(false)
             }
-        });
-        task.addOnFailureListener(this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                int statusCode = ((ApiException) e).getStatusCode();
-                if (statusCode
-                        == LocationSettingsStatusCodes
-                        .RESOLUTION_REQUIRED) {
-                    try {
-                        ResolvableApiException resolvable =
-                                (ResolvableApiException) e;
-                        resolvable.startResolutionForResult
-                                (AlphaSettingsActivity.this,
-                                        REQUEST_CHECK_SETTINGS);
-                    } catch (IntentSender.SendIntentException sendEx) {
-                        sendEx.printStackTrace();
-                    }
+            EventBus.getDefault().post(StartLocationEvent(true))
+        }
+        task.addOnFailureListener(this) { e ->
+            val statusCode = (e as ApiException).statusCode
+            if (statusCode
+                == LocationSettingsStatusCodes.RESOLUTION_REQUIRED
+            ) {
+                try {
+                    val resolvable = e as ResolvableApiException
+                    resolvable.startResolutionForResult(
+                        this@AlphaSettingsActivity,
+                        REQUEST_CHECK_SETTINGS
+                    )
+                } catch (sendEx: SendIntentException) {
+                    sendEx.printStackTrace()
                 }
             }
-        });
+        }
     }
 
     //Updating Location Lat,Long values
     @Subscribe(sticky = true)
-    public void LocationUpdateEvent(LocationUpdateEvent event) {
-        boolean switch_status = PrefSiempo.getInstance(this).read(PrefSiempo.LOCATION_STATUS, false);
+    fun LocationUpdateEvent(event: LocationUpdateEvent?) {
+        val switch_status = PrefSiempo.getInstance(this).read(PrefSiempo.LOCATION_STATUS, false)
         if (switch_status) {
-            if (dialog != null && dialog.isShowing() && event != null) {
-                dialog.dismiss();
+            if (dialog != null && dialog!!.isShowing && event != null) {
+                dialog!!.dismiss()
             }
-            longitude.setText("longitude: " + event.getLongitude());
-            latitude.setText("latitude: " + event.getLatitude());
-
-            String userEmail = PrefSiempo.getInstance(this).read(PrefSiempo
-                    .USER_EMAILID, "");
-            storeDataToFirebase(CoreApplication.getInstance().getDeviceId(), userEmail, event.getLatitude(), event.getLongitude());
-            switch_location.setChecked(true);
-            longitude.setVisibility(View.VISIBLE);
-            latitude.setVisibility(View.VISIBLE);
+            binding?.longitude!!.text = "longitude: " + event!!.longitude
+            binding?.latitude!!.text = "latitude: " + event.latitude
+            val userEmail = PrefSiempo.getInstance(this).read(PrefSiempo.USER_EMAILID, "")
+            storeDataToFirebase(CoreApplication.getInstance().deviceId, userEmail, event.latitude, event.longitude)
+            binding?.switchLocation?.isChecked = true
+            binding?.longitude!!.visibility = View.VISIBLE
+            binding?.latitude!!.visibility = View.VISIBLE
         }
-        EventBus.getDefault().removeStickyEvent(event);
+        EventBus.getDefault().removeStickyEvent(event)
     }
 
-    private void storeDataToFirebase(String userId, String emailId, double latitude, double longitude) {
+    private fun storeDataToFirebase(userId: String, emailId: String, latitude: Double, longitude: Double) {
         try {
-
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
-            UserModel user = new UserModel(userId, emailId, latitude, longitude);
-            String key = mDatabase.child(userId).getKey();
+            val mDatabase = FirebaseDatabase.getInstance().getReference("users")
+            val user = UserModel(userId, emailId, latitude, longitude)
+            val key = mDatabase.child(userId).key
             if (key != null) {
-                Map map = new HashMap();
-                map.put("emailId",emailId);
-                map.put("userId",userId);
-                map.put("latitude", latitude);
-                map.put("longitude", longitude);
-                mDatabase.child(userId).updateChildren(map);
+                val map: MutableMap<String, Any> = HashMap()
+                map["emailId"] = emailId
+                map["userId"] = userId
+                map["latitude"] = latitude
+                map["longitude"] = longitude
+                mDatabase.child(userId).updateChildren(map)
             } else {
-                mDatabase.child(userId).setValue(user);
-                mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("Firebase", dataSnapshot.getKey() + "  " + dataSnapshot.getValue(UserModel.class)
-                                .toString());
+                mDatabase.child(userId).setValue(user)
+                mDatabase.child(userId).addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        Log.d(
+                            "Firebase", dataSnapshot.key + "  " + dataSnapshot.getValue(
+                                UserModel::class.java
+                            )
+                                .toString()
+                        )
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        Log.w("Firebase RealTime", "Failed to read value.", error.toException());
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w("Firebase RealTime", "Failed to read value.", error.toException())
                     }
-                });
+                })
             }
-            Log.d("Key", mDatabase.child(userId).getKey());
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("Key", mDatabase.child(userId).key)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            // Check for the integer request code originally supplied to startResolutionForResult().
-            case REQUEST_CHECK_SETTINGS:
-                switch (resultCode) {
-                    case RESULT_OK:
-                        PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, true);
-                        showLocation();
-                        break;
-                    case RESULT_CANCELED:
-                        if (dialog != null && dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
-                        switch_location.setChecked(false);
-                        PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, false);
-                        EventBus.getDefault().post(new StartLocationEvent(false));
-                        break;
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_CHECK_SETTINGS -> when (resultCode) {
+                RESULT_OK -> {
+                    PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, true)
+                    showLocation()
                 }
-                break;
+                RESULT_CANCELED -> {
+                    if (dialog != null && dialog!!.isShowing) {
+                        dialog!!.dismiss()
+                    }
+                    binding?.switchLocation?.isChecked = false
+                    PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, false)
+                    EventBus.getDefault().post(StartLocationEvent(false))
+                }
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    companion object {
+        private const val REQUEST_CHECK_SETTINGS = 0x1
+        private const val BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED"
     }
 }
-

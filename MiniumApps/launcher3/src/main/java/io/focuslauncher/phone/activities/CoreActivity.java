@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.viewbinding.ViewBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
