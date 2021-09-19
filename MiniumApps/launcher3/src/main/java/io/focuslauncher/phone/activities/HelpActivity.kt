@@ -1,34 +1,26 @@
-package io.focuslauncher.phone.activities;
+package io.focuslauncher.phone.activities
 
-import android.os.Bundle;
-import androidx.annotation.Nullable;
+import android.os.Bundle
+import io.focuslauncher.R
+import io.focuslauncher.phone.fragments.HelpFragment
+import io.focuslauncher.phone.helper.FirebaseHelper
 
-import io.focuslauncher.R;
-import io.focuslauncher.phone.fragments.HelpFragment;
-import io.focuslauncher.phone.helper.FirebaseHelper;
+class HelpActivity : CoreActivity() {
+    private var startTime: Long = 0
 
-
-public class HelpActivity extends CoreActivity {
-    private String TAG = "HelpActivity";
-    private long startTime;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
-        loadFragment(new HelpFragment(), R.id.helpView, "main");
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_help)
+        loadFragment(HelpFragment(), R.id.helpView, "main")
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startTime = System.currentTimeMillis();
+    override fun onResume() {
+        super.onResume()
+        startTime = System.currentTimeMillis()
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        FirebaseHelper.getInstance().logScreenUsageTime(this.getClass().getSimpleName(), startTime);
+    override fun onPause() {
+        super.onPause()
+        FirebaseHelper.getInstance().logScreenUsageTime(this.javaClass.simpleName, startTime)
     }
-
 }
