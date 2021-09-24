@@ -28,8 +28,8 @@ public class NotificationHelper extends ContextWrapper {
     public NotificationHelper(Context ctx, String packageName) {
         super(ctx);
 
-        String channelId = CoreApplication.getInstance().getListApplicationName().get(packageName);
-        CharSequence channelName = CoreApplication.getInstance().getListApplicationName().get(packageName);
+        String channelId = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
+        CharSequence channelName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
 
 
         int importance;

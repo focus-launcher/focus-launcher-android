@@ -92,7 +92,7 @@ public class ToolSelectionActivity extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tool_selection);
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
 //        topItems = (ArrayList<MainListItem>) getIntent().getExtras().getSerializable("TopList");
 //        bottomItems = (ArrayList<MainListItem>) getIntent().getExtras().getSerializable("BottomList");
 

@@ -68,7 +68,7 @@ public class JunkFoodPaneFragment extends CoreFragment {
             Collections.shuffle(CoreApplication.getInstance().getJunkFoodList());
             items = CoreApplication.getInstance().getJunkFoodList();*/
             if (mAdapter != null) {
-                mAdapter.setMainListItemList(items, CoreApplication.getInstance().isHideIconBranding());
+                mAdapter.setMainListItemList(items, CoreApplication.Companion.getInstance().isHideIconBranding());
             }
         // }
     }
@@ -77,8 +77,8 @@ public class JunkFoodPaneFragment extends CoreFragment {
     @Subscribe(sticky = true, threadMode = ThreadMode.MainThread)
     public void onEvent(NotifyJunkFoodView junkFoodView) {
         if (junkFoodView != null && junkFoodView.isNotify()) {
-            items = CoreApplication.getInstance().getJunkFoodList();
-            mAdapter.setMainListItemList(items, CoreApplication.getInstance().isHideIconBranding());
+            items = CoreApplication.Companion.getInstance().getJunkFoodList();
+            mAdapter.setMainListItemList(items, CoreApplication.Companion.getInstance().isHideIconBranding());
             EventBus.getDefault().removeStickyEvent(junkFoodView);
         }
 
@@ -98,7 +98,7 @@ public class JunkFoodPaneFragment extends CoreFragment {
             }
             itemDecoration = new ItemOffsetDecoration(context, R.dimen.dp_10);
             recyclerView.addItemDecoration(itemDecoration);
-            mAdapter = new JunkFoodPaneAdapter(getActivity(), items, CoreApplication.getInstance().isHideIconBranding());
+            mAdapter = new JunkFoodPaneAdapter(getActivity(), items, CoreApplication.Companion.getInstance().isHideIconBranding());
             recyclerView.setAdapter(mAdapter);
 
 
@@ -113,9 +113,9 @@ public class JunkFoodPaneFragment extends CoreFragment {
             if (recyclerView != null) {
                 recyclerView.scrollToPosition(0);
             }
-            if (CoreApplication.getInstance().isRandomize()) {
-                Collections.shuffle(CoreApplication.getInstance().getJunkFoodList());
-                items = CoreApplication.getInstance().getJunkFoodList();
+            if (CoreApplication.Companion.getInstance().isRandomize()) {
+                Collections.shuffle(CoreApplication.Companion.getInstance().getJunkFoodList());
+                items = CoreApplication.Companion.getInstance().getJunkFoodList();
             }
         }if(getActivity() != null)
         {

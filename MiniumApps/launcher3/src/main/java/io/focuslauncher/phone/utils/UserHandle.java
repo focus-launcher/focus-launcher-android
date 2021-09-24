@@ -64,7 +64,7 @@ public class UserHandle {
             try {
                 serial = Long.parseLong(serialText);
             } catch (NumberFormatException e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
         }
 

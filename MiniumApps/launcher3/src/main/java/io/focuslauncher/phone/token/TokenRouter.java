@@ -213,7 +213,7 @@ public class TokenRouter {
                 route();
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }
@@ -232,7 +232,7 @@ public class TokenRouter {
         try {
             activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + TokenManager.getInstance().get(TokenItemType.CONTACT).getExtra2())));
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
             UIUtils.alert(activity, activity.getString(R.string.app_not_found));
         }

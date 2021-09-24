@@ -114,14 +114,14 @@ public class FeedbackFragment extends CoreFragment {
                                     ", Model - " + android.os.Build.MODEL +
                                     ", OS Version - " + android.os.Build.VERSION.SDK_INT +
                                     ", Display - " + getScreenResolution(getActivity()) + "\n" +
-                                    "App AlarmData : UserID - " + CoreApplication.getInstance().getDeviceId() +
+                                    "App AlarmData : UserID - " + CoreApplication.Companion.getInstance().getDeviceId() +
                                     ", Version - " + version;
 
 
 
 
                             //Creating SendMail object
-                            SendMail sm = new SendMail(getActivity(), getActivity().getResources().getString(R.string.feedback_email), getString(R.string.feedback_success_message) + CoreApplication.getInstance().getDeviceId(), body);
+                            SendMail sm = new SendMail(getActivity(), getActivity().getResources().getString(R.string.feedback_email), getString(R.string.feedback_success_message) + CoreApplication.Companion.getInstance().getDeviceId(), body);
 
                             //Executing sendmail to send email
                             sm.execute();

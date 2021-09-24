@@ -98,9 +98,9 @@ public class TempoUpdateEmailFragment extends CoreFragment {
                                 new MailChimpOperation(MailChimpOperation.EmailType.EMAIL_REG).execute(val_email);
                                 if (PrefSiempo.getInstance(context).read(PrefSiempo
                                         .USER_EMAILID, "").equalsIgnoreCase("")) {
-                                    storeDataToFirebase(true, CoreApplication.getInstance().getDeviceId(), val_email);
+                                    storeDataToFirebase(true, CoreApplication.Companion.getInstance().getDeviceId(), val_email);
                                 } else {
-                                    storeDataToFirebase(false, CoreApplication.getInstance().getDeviceId(), val_email);
+                                    storeDataToFirebase(false, CoreApplication.Companion.getInstance().getDeviceId(), val_email);
                                 }
                             }
                         } catch (Exception e) {

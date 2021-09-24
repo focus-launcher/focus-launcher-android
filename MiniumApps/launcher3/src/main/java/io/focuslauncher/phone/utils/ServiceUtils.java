@@ -84,7 +84,7 @@ public class ServiceUtils {
                 return ENABLED_NOTIFICATION_LISTENERS;
             }
         } catch (Throwable t) {
-            CoreApplication.getInstance().logException(t);
+            CoreApplication.Companion.getInstance().logException(t);
             Tracer.e(t, "getEnabledNotificationListeners()");
         }
         ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";

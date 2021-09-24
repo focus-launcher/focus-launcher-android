@@ -43,6 +43,7 @@ import io.focuslauncher.BuildConfig;
 import io.focuslauncher.R;
 import io.focuslauncher.phone.app.CoreApplication;
 import io.focuslauncher.phone.app.Launcher3App;
+import io.focuslauncher.phone.app.Launcher3App_;
 
 
 public class UIUtils {
@@ -326,7 +327,7 @@ public class UIUtils {
         try {
             applicationInfo = packageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             //  e.printStackTrace();
         }
         return applicationInfo != null && applicationInfo.enabled;
@@ -334,12 +335,12 @@ public class UIUtils {
     }
 
     public static boolean isAppInstalledAndEnabled(String packageName) {
-        PackageManager packageManager = Launcher3App.getInstance().getApplicationContext().getPackageManager();
+        PackageManager packageManager = Launcher3App_.getInstance().getApplicationContext().getPackageManager();
         ApplicationInfo applicationInfo = null;
         try {
             applicationInfo = packageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             //  e.printStackTrace();
         }
         return applicationInfo != null && applicationInfo.enabled;
@@ -352,7 +353,7 @@ public class UIUtils {
         try {
             applicationInfo = packageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
         return applicationInfo != null;
@@ -365,7 +366,7 @@ public class UIUtils {
         try {
             applicationInfo = packageManager.getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
         return applicationInfo.enabled;
@@ -406,7 +407,7 @@ public class UIUtils {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
         return BuildConfig.VERSION_CODE;

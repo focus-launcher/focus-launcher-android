@@ -116,7 +116,7 @@ public class ToolPositioningActivity extends CoreActivity implements OnToolItemL
     protected void onResume() {
         super.onResume();
         startTime = System.currentTimeMillis();
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
         initView();
     }
 
@@ -185,7 +185,7 @@ public class ToolPositioningActivity extends CoreActivity implements OnToolItemL
         }
         itemDecoration = new ItemOffsetDecoration(this, R.dimen.dp_10);
         recyclerView.addItemDecoration(itemDecoration);
-        mAdapter = new ToolPositioningAdapter(this, items, this, this, CoreApplication.getInstance().isHideIconBranding());
+        mAdapter = new ToolPositioningAdapter(this, items, this, this, CoreApplication.Companion.getInstance().isHideIconBranding());
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter, this);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);

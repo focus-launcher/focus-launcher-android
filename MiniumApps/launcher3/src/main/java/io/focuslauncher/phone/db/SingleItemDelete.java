@@ -30,7 +30,7 @@ public class SingleItemDelete implements DeleteStrategy {
                 DBUtility.getNotificationDao().delete(notificationSms);
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
     }

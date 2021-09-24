@@ -73,7 +73,7 @@ public class DataUtils {
                 root.put(NOTES_ARRAY_NAME, notes);
 
             } catch (JSONException e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 e.printStackTrace();
                 return false;
             }
@@ -95,7 +95,7 @@ public class DataUtils {
                             return false;
 
                     } catch (IOException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                         return false; // If file creation threw exception -> return false
                     }
@@ -117,7 +117,7 @@ public class DataUtils {
                     return false;
 
             } catch (IOException e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 e.printStackTrace();
                 return false; // If file creation threw exception -> return false
             }
@@ -135,7 +135,7 @@ public class DataUtils {
             successful = true;
 
         } catch (IOException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             // If something went wrong in try block -> set successful to false
             successful = false;
             e.printStackTrace();
@@ -148,7 +148,7 @@ public class DataUtils {
                     bufferedWriter.close();
 
                 } catch (IOException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
             }
@@ -210,7 +210,7 @@ public class DataUtils {
             root = new JSONObject(text.toString());
 
         } catch (IOException | JSONException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
 
         } finally {
@@ -220,7 +220,7 @@ public class DataUtils {
                     bufferedReader.close();
 
                 } catch (IOException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
             }
@@ -232,7 +232,7 @@ public class DataUtils {
                 notes = root.getJSONArray(NOTES_ARRAY_NAME);
 
             } catch (JSONException e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 e.printStackTrace();
             }
         }
@@ -261,7 +261,7 @@ public class DataUtils {
                     newNotes.put(from.get(i));
 
                 } catch (JSONException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
             }
@@ -333,7 +333,7 @@ public class DataUtils {
             Tracer.i("New note: " + newNoteObject);
 
         } catch (JSONException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
 

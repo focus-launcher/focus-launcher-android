@@ -51,7 +51,7 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
         this.context = context;
         this.mainListItemList = mainListItemList;
         this.isHideIconBranding = isHideIconBranding;
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
     }
 
     @Override
@@ -90,8 +90,8 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
                     holder.text.setText(item.getTitle());
                 } else {
                     Log.d("Test", "hideIcon branding false...");
-                    holder.text.setText(CoreApplication.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
-                    Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(appMenu.getApplicationName());
+                    holder.text.setText(CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
+                    Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(appMenu.getApplicationName());
                     if (bitmap != null) {
                         Log.d("Test", "bitmap  null");
                         holder.icon.setVisibility(View.GONE);
@@ -104,7 +104,7 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
                             try {
                                 appInfo = context.getPackageManager().getApplicationInfo(appMenu.getApplicationName(), PackageManager.GET_META_DATA);
                                 BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                                CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                                CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                             } catch (PackageManager.NameNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -148,7 +148,7 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
                                             openAppAssignmentScreen(item);
                                         } else {
 //                                If a 3rd party app is already assigned to this tool
-                                            FirebaseHelper.getInstance().logSiempoMenuUsage(0, item.getTitle(), CoreApplication.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
+                                            FirebaseHelper.getInstance().logSiempoMenuUsage(0, item.getTitle(), CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
                                             if (id == 13) {
                                                 try {
                                                     Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -168,14 +168,14 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
                                 }
                             }
                         } else {
-                            if (CoreApplication.getInstance()
+                            if (CoreApplication.Companion.getInstance()
                                     .getApplicationByCategory(id).size() == 0) {
                                 openAppAssignmentScreen(item);
-                            } else if (CoreApplication.getInstance().getApplicationByCategory(id).size() == 1
+                            } else if (CoreApplication.Companion.getInstance().getApplicationByCategory(id).size() == 1
                                     && !PrefSiempo.getInstance(context).read(PrefSiempo.JUNKFOOD_APPS,
                                     new HashSet<String>()).contains(appMenu.getApplicationName().trim())) {
 //                            If a 3 rd party app is already assigned to this tool
-                                ResolveInfo resolveInfo = CoreApplication.getInstance().getApplicationByCategory(id).get(0);
+                                ResolveInfo resolveInfo = CoreApplication.Companion.getInstance().getApplicationByCategory(id).get(0);
                                 if (null != resolveInfo) {
                                     String strPackageName = resolveInfo.activityInfo.packageName;
                                     if (UIUtils.isAppEnabled(context, strPackageName) && strPackageName.equalsIgnoreCase(appMenu.getApplicationName())) {
@@ -192,7 +192,7 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
                                         } else {
                                             new ActivityHelper(context).openAppWithPackageName(strPackageName);
                                         }
-                                        FirebaseHelper.getInstance().logSiempoMenuUsage(0, item.getTitle(), CoreApplication.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
+                                        FirebaseHelper.getInstance().logSiempoMenuUsage(0, item.getTitle(), CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
                                     } else {
                                         openAppAssignmentScreen(item);
                                     }
@@ -256,7 +256,7 @@ public class ToolsMenuAdapter extends RecyclerView.Adapter<ToolsMenuAdapter.View
     public void setMainListItemList(List<MainListItem> mainListItemList, boolean isBottomDoc, boolean isHideIconBranding) {
         this.mainListItemList = mainListItemList;
         this.isHideIconBranding = isHideIconBranding;
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
         notifyDataSetChanged();
     }
 

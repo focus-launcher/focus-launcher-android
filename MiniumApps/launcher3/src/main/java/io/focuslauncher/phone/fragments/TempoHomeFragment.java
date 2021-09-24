@@ -341,7 +341,7 @@ public class TempoHomeFragment extends CoreFragment {
                         .setPermissionListener(new PermissionListener() {
                             @Override
                             public void onPermissionGranted() {
-                                CoreApplication.getInstance().downloadSiempoImages();
+                                CoreApplication.Companion.getInstance().downloadSiempoImages();
                                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                 intent.setType("image/*");
                                 startActivityForResult(intent, 10);
@@ -363,7 +363,7 @@ public class TempoHomeFragment extends CoreFragment {
                 e.printStackTrace();
             }
         } else {
-            CoreApplication.getInstance().downloadSiempoImages();
+            CoreApplication.Companion.getInstance().downloadSiempoImages();
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             startActivityForResult(intent, 10);

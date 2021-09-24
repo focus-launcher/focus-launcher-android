@@ -36,7 +36,7 @@ public class ActivityHelper {
             intent.putExtra(NoteListActivity.EXTRA_OPEN_LATEST, openLast);
             getContext().startActivity(intent);
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }
@@ -85,7 +85,7 @@ public class ActivityHelper {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
         } catch (android.content.ActivityNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
     }
@@ -102,7 +102,7 @@ public class ActivityHelper {
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 UIUtils.alert(context, context.getString(R.string.app_not_found));
                 return false;
             }
@@ -120,7 +120,7 @@ public class ActivityHelper {
             context.startActivity(i);
         } catch (Exception e) {
             Tracer.e(e, e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
@@ -129,7 +129,7 @@ public class ActivityHelper {
         try {
             AlphaSettingsActivity_.intent(getContext()).start();
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }

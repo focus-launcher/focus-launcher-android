@@ -106,7 +106,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     private void saveMessage(String address, String body, Date date, Context context) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             TableNotificationSms notificationSms = DBUtility.getNotificationDao().queryBuilder()
                     .where(TableNotificationSmsDao.Properties._contact_title.eq(address),
@@ -151,7 +151,7 @@ public class SmsReceiver extends BroadcastReceiver {
         } catch (Exception e) {
             Tracer.d("SmsReceiver: onReceive saveMessage" + e.getMessage());
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 

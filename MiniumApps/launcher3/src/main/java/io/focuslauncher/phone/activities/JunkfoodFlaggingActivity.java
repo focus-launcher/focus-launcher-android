@@ -167,7 +167,7 @@ public class JunkfoodFlaggingActivity extends CoreActivity implements AdapterVie
             PrefSiempo.getInstance(this).write(PrefSiempo.IS_JUNKFOOD_FIRSTTIME, false);
             showFirstTimeDialog();
         }
-        List<String> installedPackageListLocal = CoreApplication.getInstance().getPackagesList();
+        List<String> installedPackageListLocal = CoreApplication.Companion.getInstance().getPackagesList();
         Log.d("Junkfood", "" + installedPackageListLocal.size());
         installedPackageListLocal.remove(Constants.SETTINGS_APP_PACKAGE);
         installedPackageList = new ArrayList<>();
@@ -190,9 +190,8 @@ public class JunkfoodFlaggingActivity extends CoreActivity implements AdapterVie
 
     private List<String> getToolsAppList() {
         Set<AppMenu> assignedToolListSet = new HashSet<>();
-        if (null != CoreApplication.getInstance() && null != CoreApplication
-                .getInstance().getToolsSettings()) {
-            for (Map.Entry<Integer, AppMenu> entry : CoreApplication.getInstance().getToolsSettings().entrySet()) {
+        if (null != CoreApplication.Companion.getInstance() && null != CoreApplication.Companion.getInstance().getToolsSettings()) {
+            for (Map.Entry<Integer, AppMenu> entry : CoreApplication.Companion.getInstance().getToolsSettings().entrySet()) {
                 assignedToolListSet.add(entry.getValue());
             }
         }
@@ -236,7 +235,7 @@ public class JunkfoodFlaggingActivity extends CoreActivity implements AdapterVie
                         favoriteList.removeAll(adapterlist);
                         getToolsAppList().removeAll(adapterlist);
 
-                        HashMap<Integer, AppMenu> newMap = CoreApplication.getInstance().getToolsSettings();
+                        HashMap<Integer, AppMenu> newMap = CoreApplication.Companion.getInstance().getToolsSettings();
                         for(int i=0;i<newMap.size();i++){
                             if(newMap!=null && newMap.get(i)!=null && !TextUtils.isEmpty(newMap.get(i).getApplicationName())){
                                 if(adapterlist.contains(newMap.get(i).getApplicationName())){
@@ -346,7 +345,7 @@ public class JunkfoodFlaggingActivity extends CoreActivity implements AdapterVie
             listAllApps.setAdapter(junkfoodFlaggingAdapter);
             for (String resolveInfo : installedPackageList) {
                 if (!resolveInfo.equalsIgnoreCase(getPackageName())) {
-                    String applicationname = CoreApplication.getInstance()
+                    String applicationname = CoreApplication.Companion.getInstance()
                             .getListApplicationName().get(resolveInfo);
                     if (!TextUtils.isEmpty(applicationname)) {
                         if (adapterlist.contains(resolveInfo)) {
@@ -639,7 +638,7 @@ public class JunkfoodFlaggingActivity extends CoreActivity implements AdapterVie
             try {
                 for (String resolveInfo : installedPackageList) {
                     if (!resolveInfo.equalsIgnoreCase(getPackageName())) {
-                        String applicationname = CoreApplication.getInstance()
+                        String applicationname = CoreApplication.Companion.getInstance()
                                 .getListApplicationName().get(resolveInfo);
                         if (!TextUtils.isEmpty(applicationname)) {
                             if (adapterlist.contains(resolveInfo)) {

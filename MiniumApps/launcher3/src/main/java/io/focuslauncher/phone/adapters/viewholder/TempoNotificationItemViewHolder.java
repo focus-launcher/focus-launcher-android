@@ -73,7 +73,7 @@ public class TempoNotificationItemViewHolder extends RecyclerView.ViewHolder {
     public void displayImage(String packageName, PackageManager packageManager, String errormessage) {
         if (TextUtils.isEmpty(errormessage)) {
 
-            Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+            Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
             if (bitmap != null) {
                 imv_appicon.setImageBitmap(bitmap);
             } else {
@@ -82,11 +82,11 @@ public class TempoNotificationItemViewHolder extends RecyclerView.ViewHolder {
                 try {
                     appInfo = context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
                     BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                    CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                    CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
-                Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(packageName);
+                Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(packageName);
                 if (drawable != null) {
                     imv_appicon.setImageDrawable(drawable);
                 } else {

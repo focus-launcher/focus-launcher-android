@@ -49,7 +49,7 @@ public class FavoritesPaneAdapter extends RecyclerView.Adapter<FavoritesPaneAdap
         this.isHideIconBranding = isHideIconBranding;
         this.isBottomDoc = isBottomDoc;
         mProvider = new DrawableProvider(context);
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class FavoritesPaneAdapter extends RecyclerView.Adapter<FavoritesPaneAdap
             // based on user selected language, and in case of package nme
             // not available showing the default item name
             if (!TextUtils.isEmpty(item.getPackageName())) {
-                String applicationName = CoreApplication.getInstance()
+                String applicationName = CoreApplication.Companion.getInstance()
                         .getApplicationNameFromPackageName(item.getPackageName());
                 holder.text.setText(applicationName);
             } else {
@@ -103,7 +103,7 @@ public class FavoritesPaneAdapter extends RecyclerView.Adapter<FavoritesPaneAdap
                 holder.imgAppIcon.setVisibility(View.VISIBLE);
                 holder.txtAppTextImage.setVisibility(View.GONE);
                 holder.imgUnderLine.setVisibility(View.GONE);
-                Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(item.getPackageName());
+                Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(item.getPackageName());
                 if (drawable != null) {
                     holder.imgAppIcon.setImageDrawable(drawable);
                 } else {
@@ -135,7 +135,7 @@ public class FavoritesPaneAdapter extends RecyclerView.Adapter<FavoritesPaneAdap
                 int id = item.getId();
                 if (holder.linearLayout.getVisibility() == View.VISIBLE) {
                     if (!TextUtils.isEmpty(item.getPackageName())) {
-                        FirebaseHelper.getInstance().logSiempoMenuUsage(1, "", CoreApplication.getInstance().getApplicationNameFromPackageName(item.getPackageName().trim()));
+                        FirebaseHelper.getInstance().logSiempoMenuUsage(1, "", CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(item.getPackageName().trim()));
                         new ActivityHelper(context).openAppWithPackageName(item.getPackageName().trim());
                     }
                 }

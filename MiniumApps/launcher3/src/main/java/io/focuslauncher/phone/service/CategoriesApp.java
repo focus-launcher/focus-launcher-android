@@ -73,7 +73,7 @@ public class CategoriesApp extends IntentService {
         @Override
         protected Void doInBackground(Void... errors) {
 
-            List<CategoryAppList> categoryAppList= CoreApplication.getInstance().categoryAppList;
+            List<CategoryAppList> categoryAppList= (List<CategoryAppList>) CoreApplication.Companion.getInstance().categoryAppList;
             String category;
             for (ResolveInfo resolveInfo : installedPackageList) {
                 if(resolveInfo.activityInfo.packageName!=null && !resolveInfo.activityInfo.packageName.equalsIgnoreCase(packageName)){

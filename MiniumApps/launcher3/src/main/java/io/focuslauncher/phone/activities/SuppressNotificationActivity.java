@@ -114,7 +114,7 @@ public class SuppressNotificationActivity extends CoreActivity {
                 suggetionList.clear();
                 for (int i = 0; i < notificationList.size(); i++) {
                     if (!TextUtils.isEmpty(notificationList.get(i).getPackageName())) {
-                        if (CoreApplication.getInstance().getApplicationNameFromPackageName(notificationList.get(i).getPackageName()).toLowerCase().startsWith(s.toString().toLowerCase())) {
+                        if (CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(notificationList.get(i).getPackageName()).toLowerCase().startsWith(s.toString().toLowerCase())) {
                             suggetionList.add(notificationList.get(i));
                         }
                         if (suggetionList.size() == 0) {

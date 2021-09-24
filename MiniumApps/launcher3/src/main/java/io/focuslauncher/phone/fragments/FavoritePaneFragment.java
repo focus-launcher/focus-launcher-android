@@ -83,8 +83,8 @@ public class FavoritePaneFragment extends CoreFragment {
     @Subscribe(sticky = true, threadMode = ThreadMode.MainThread)
     public void onEvent(NotifyFavortieView notifyFavortieView) {
         if (notifyFavortieView != null && notifyFavortieView.isNotify()) {
-            items = CoreApplication.getInstance().getFavoriteItemsList();
-            mAdapter.setMainListItemList(items, CoreApplication.getInstance().isHideIconBranding());
+            items = CoreApplication.Companion.getInstance().getFavoriteItemsList();
+            mAdapter.setMainListItemList(items, CoreApplication.Companion.getInstance().isHideIconBranding());
             checkSize();
             EventBus.getDefault().removeStickyEvent(notifyFavortieView);
         }
@@ -93,7 +93,7 @@ public class FavoritePaneFragment extends CoreFragment {
 
     private void initView() {
         if (getActivity() != null && view != null) {
-            items = CoreApplication.getInstance().getFavoriteItemsList();
+            items = CoreApplication.Companion.getInstance().getFavoriteItemsList();
             recyclerView = view.findViewById(R.id.recyclerView);
             btnSelect = view.findViewById(R.id.btnSelect);
             btnSelect.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class FavoritePaneFragment extends CoreFragment {
             }
             itemDecoration = new ItemOffsetDecoration(context, R.dimen.dp_10);
             recyclerView.addItemDecoration(itemDecoration);
-            mAdapter = new FavoritesPaneAdapter(getActivity(), CoreApplication.getInstance().isHideIconBranding(), false, items);
+            mAdapter = new FavoritesPaneAdapter(getActivity(), CoreApplication.Companion.getInstance().isHideIconBranding(), false, items);
             recyclerView.setAdapter(mAdapter);
 
             checkSize();

@@ -137,7 +137,7 @@ public class NotificationActivity extends CoreActivity {
         pref_blockedList = PrefSiempo.getInstance(this).read(PrefSiempo.BLOCKED_APPLIST, new HashSet<String>());
 
 
-        for (String packageName : CoreApplication.getInstance().getPackagesList()) {
+        for (String packageName : CoreApplication.Companion.getInstance().getPackagesList()) {
             for (String blockedApp : pref_blockedList) {
                 if (!packageName.equalsIgnoreCase(blockedApp)) {
                     pref_helpfulRobots.add(packageName);
@@ -175,20 +175,20 @@ public class NotificationActivity extends CoreActivity {
      */
     public void loadAndDisplayAppList() {
 
-        for (int i = 0; i < CoreApplication.getInstance().getPackagesList().size(); i++) {
-            if (pref_blockedList.contains(CoreApplication.getInstance().getPackagesList().get(i))) {
+        for (int i = 0; i < CoreApplication.Companion.getInstance().getPackagesList().size(); i++) {
+            if (pref_blockedList.contains(CoreApplication.Companion.getInstance().getPackagesList().get(i))) {
                 AppListInfo d = new AppListInfo();
-                d.packageName = CoreApplication.getInstance().getPackagesList().get(i);
+                d.packageName = CoreApplication.Companion.getInstance().getPackagesList().get(i);
                 d.ischecked = !pref_blockedList.contains(d.packageName);
                 blockedList.add(d);
-            } else if (pref_messengerList.contains(CoreApplication.getInstance().getPackagesList().get(i))) {
+            } else if (pref_messengerList.contains(CoreApplication.Companion.getInstance().getPackagesList().get(i))) {
                 AppListInfo d = new AppListInfo();
-                d.packageName = CoreApplication.getInstance().getPackagesList().get(i);
+                d.packageName = CoreApplication.Companion.getInstance().getPackagesList().get(i);
                 d.ischecked = !pref_helpfulRobots.contains(d.packageName);
                 messengerList.add(d);
             } else {
                 AppListInfo d = new AppListInfo();
-                d.packageName = CoreApplication.getInstance().getPackagesList().get(i);
+                d.packageName = CoreApplication.Companion.getInstance().getPackagesList().get(i);
                 if (!TextUtils.isEmpty(d.packageName) && !systemAppList.contains(d.packageName)) {
                     d.ischecked = !pref_helpfulRobots.contains(d.packageName);
                     helpfulRobot_List.add(d);

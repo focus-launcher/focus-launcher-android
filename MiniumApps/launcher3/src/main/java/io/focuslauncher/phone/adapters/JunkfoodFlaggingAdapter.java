@@ -143,9 +143,9 @@ public class JunkfoodFlaggingAdapter extends BaseAdapter implements Filterable {
                 try {
                     //Done as a part of SSA-1454, in order to change the app name
                     // based on user selected language
-                    holder.txtAppName.setText(CoreApplication.getInstance()
+                    holder.txtAppName.setText(CoreApplication.Companion.getInstance()
                             .getApplicationNameFromPackageName(resolveInfo.packageName));
-                    Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(resolveInfo.packageName);
+                    Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(resolveInfo.packageName);
                     if (bitmap != null) {
                         holder.imgAppIcon.setImageBitmap(bitmap);
                     } else {
@@ -153,11 +153,11 @@ public class JunkfoodFlaggingAdapter extends BaseAdapter implements Filterable {
                         try {
                             appInfo = context.getPackageManager().getApplicationInfo(resolveInfo.packageName, PackageManager.GET_META_DATA);
                             BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                            CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                            CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
                         }
-                        Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(resolveInfo.packageName);
+                        Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(resolveInfo.packageName);
                         holder.imgAppIcon.setImageDrawable(drawable);
                     }
                 } catch (Exception e) {
@@ -199,7 +199,7 @@ public class JunkfoodFlaggingAdapter extends BaseAdapter implements Filterable {
             });
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
         return convertView;
     }
@@ -244,7 +244,7 @@ public class JunkfoodFlaggingAdapter extends BaseAdapter implements Filterable {
                 List<AppListInfo> unflageAppList = new ArrayList<>();
                 for (AppListInfo resolveInfo : nlist) {
                     if (!resolveInfo.packageName.equalsIgnoreCase(context.getPackageName())) {
-                        String applicationname = CoreApplication.getInstance()
+                        String applicationname = CoreApplication.Companion.getInstance()
                                 .getListApplicationName().get(resolveInfo.packageName);
                         if (!TextUtils.isEmpty(applicationname)) {
                             if (context.adapterlist.contains(resolveInfo.packageName)) {

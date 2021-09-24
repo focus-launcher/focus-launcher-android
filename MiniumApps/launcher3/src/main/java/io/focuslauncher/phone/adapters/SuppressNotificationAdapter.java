@@ -82,11 +82,11 @@ public class SuppressNotificationAdapter extends RecyclerView.Adapter<SuppressNo
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         Notification notification = notificationList.get(position);
         if (notification.getNotificationType() == NotificationUtility.NOTIFICATION_TYPE_EVENT) {
-//            Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(notification.getPackageName());
+//            Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(notification.getPackageName());
             holder.imgAppIcon.setBackground(null);
             holder.imgAppIcon.setImageBitmap(null);
 
-            Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(notification.getPackageName());
+            Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(notification.getPackageName());
             if (bitmap != null) {
                 holder.imgAppIcon.setImageBitmap(bitmap);
             } else {
@@ -94,15 +94,15 @@ public class SuppressNotificationAdapter extends RecyclerView.Adapter<SuppressNo
                 try {
                     appInfo = mContext.getPackageManager().getApplicationInfo(notification.getPackageName(), PackageManager.GET_META_DATA);
                     BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, mContext.getPackageManager());
-                    CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                    CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
-                Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(notification.getPackageName());
+                Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(notification.getPackageName());
                 holder.imgAppIcon.setImageDrawable(drawable);
             }
 
-            holder.txtAppName.setText(CoreApplication.getInstance().getApplicationNameFromPackageName(notification.getPackageName()));
+            holder.txtAppName.setText(CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(notification.getPackageName()));
             if (notification.getStrTitle() == null || notification.getStrTitle().equalsIgnoreCase("")) {
                 holder.txtUserName.setText("");
                 holder.txtUserName.setVisibility(View.GONE);
@@ -142,12 +142,12 @@ public class SuppressNotificationAdapter extends RecyclerView.Adapter<SuppressNo
                 holder.txtAppName.setText(R.string.phone);
             } else {
                 holder.imgAppIcon.setBackground(null);
-                String strAppName = CoreApplication.getInstance().getListApplicationName().get(defSMSApp);
+                String strAppName = CoreApplication.Companion.getInstance().getListApplicationName().get(defSMSApp);
                 if (strAppName == null) {
-                    strAppName = CoreApplication.getInstance().getApplicationNameFromPackageName(defSMSApp);
+                    strAppName = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(defSMSApp);
                 }
                 holder.txtAppName.setText(strAppName);
-                Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(defSMSApp);
+                Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(defSMSApp);
                 if (bitmap != null) {
                     holder.imgAppIcon.setImageBitmap(bitmap);
                 } else {
@@ -155,11 +155,11 @@ public class SuppressNotificationAdapter extends RecyclerView.Adapter<SuppressNo
                     try {
                         appInfo = mContext.getPackageManager().getApplicationInfo(defSMSApp, PackageManager.GET_META_DATA);
                         BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, mContext.getPackageManager());
-                        CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                        CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }
-                    Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(defSMSApp);
+                    Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(defSMSApp);
                     holder.imgAppIcon.setImageDrawable(drawable);
                 }
             }
@@ -180,7 +180,7 @@ public class SuppressNotificationAdapter extends RecyclerView.Adapter<SuppressNo
                 }
 
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 e.printStackTrace();
             }
         }
@@ -199,7 +199,7 @@ public class SuppressNotificationAdapter extends RecyclerView.Adapter<SuppressNo
 
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
 

@@ -51,7 +51,7 @@ public class FileLogger {
                     out.println(str);
                     out.flush();
                 } catch (IOException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 } finally {
                     if (out != null) {
@@ -106,7 +106,7 @@ public class FileLogger {
                     Log.e("Error", "The Log file can not be written.");
                 }
             } catch (IOException e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 Log.e("Error", "Failed to create The Log file.");
                 e.printStackTrace();
             }
@@ -120,7 +120,7 @@ public class FileLogger {
             LogFormatter.EclipseFormatter formatter = new LogFormatter.EclipseFormatter();
             String formatMsg = formatter.format(LogFormatter.LEVEL.DEBUG, LogConfig.LOG_TAG, message, tr);
             String dataDirPath = Environment.getDataDirectory().getAbsolutePath();
-            File externalFilesDir = CoreApplication.getInstance().getExternalFilesDir(dataDirPath);
+            File externalFilesDir = CoreApplication.Companion.getInstance().getExternalFilesDir(dataDirPath);
             if (dataDirPath != null) {
                 if (externalFilesDir != null) {
                     log2file(externalFilesDir.getAbsolutePath() + File.separator + getFileName(), formatMsg);

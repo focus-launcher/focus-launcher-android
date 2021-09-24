@@ -58,6 +58,7 @@ import java.util.Set;
 import io.focuslauncher.R;
 import io.focuslauncher.phone.app.CoreApplication;
 import io.focuslauncher.phone.app.Launcher3App;
+import io.focuslauncher.phone.app.Launcher3App_;
 import io.focuslauncher.phone.customviews.NotificationHelper;
 import io.focuslauncher.phone.db.DBUtility;
 import io.focuslauncher.phone.db.TableNotificationSms;
@@ -163,7 +164,7 @@ public class PackageUtil {
 
 
         } catch (PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             return false;
         }
     }
@@ -179,8 +180,8 @@ public class PackageUtil {
                 int icon = customNotification.getNotificationSms().get(0).getApp_icon();
                 if (Build.VERSION.SDK_INT >= 26) {
                     NotificationHelper notificationHelper = new NotificationHelper(context, packageName);
-                    String strChannelName = CoreApplication.getInstance().getListApplicationName().get(packageName);
-                    Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+                    String strChannelName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
+                    Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
                     Notification newMessageNotification = new NotificationCompat.Builder(context, strChannelName)
                             .setSmallIcon(R.drawable.ic_focus_launcher_notification)
                             .setContentTitle(strChannelName)
@@ -197,8 +198,8 @@ public class PackageUtil {
                 } else {
                     if (notificationListSize > 1) {
                         if (Build.VERSION.SDK_INT >= 24) {
-                            String strChannelName = CoreApplication.getInstance().getListApplicationName().get(packageName);
-                            Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+                            String strChannelName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
+                            Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
                             Notification newMessageNotification = new NotificationCompat.Builder(context, strChannelName)
                                     .setSmallIcon(R.drawable.ic_focus_launcher_notification)
                                     .setContentTitle(strChannelName)
@@ -231,7 +232,7 @@ public class PackageUtil {
 
     @TargetApi(Build.VERSION_CODES.O)
     static void createNotificationChannel(Context context, NotificationManager notificationManager, String packageName) {
-        CharSequence channelName = CoreApplication.getInstance().getListApplicationName().get(packageName);
+        CharSequence channelName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
         int importance;
         if (!PrefSiempo.getInstance(context).read(PrefSiempo.ALLOW_PEAKING, true)) {
             importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -259,7 +260,7 @@ public class PackageUtil {
         try {
             if (notification.getPackageName() != null && !notification.getPackageName().equalsIgnoreCase("android")) {
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                String applicationNameFromPackageName = CoreApplication.getInstance().getApplicationNameFromPackageName(notification.getPackageName());
+                String applicationNameFromPackageName = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(notification.getPackageName());
                 if (Build.VERSION.SDK_INT >= 26) {
                     Tracer.i("Tracking notification greater");
                     NotificationChannel notificationChannel = createChannel(context,
@@ -286,7 +287,7 @@ public class PackageUtil {
                 }
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
 
@@ -303,7 +304,7 @@ public class PackageUtil {
     private static NotificationCompat.Builder getNotification(Context context, TableNotificationSms notification) {
 
         Tracer.i("Tracking getNotification1");
-        String applicationNameFromPackageName = CoreApplication.getInstance().getApplicationNameFromPackageName(notification.getPackageName());
+        String applicationNameFromPackageName = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(notification.getPackageName());
         Tracer.i("Tracking getNotification2");
         int priority = !PrefSiempo.getInstance(context).read(PrefSiempo.ALLOW_PEAKING, true) ? Notification.PRIORITY_DEFAULT : Notification.PRIORITY_HIGH;
         Tracer.i("Tracking getNotification3");
@@ -391,7 +392,7 @@ public class PackageUtil {
         // image bitmap the app icon will be used
         if (notificationSms.size() > 1) {
             if (notification.getPackageName() != null) {
-                bitmap = CoreApplication.getInstance().getBitmapFromMemCache
+                bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache
                         (notification.getPackageName());
             }
         }
@@ -436,7 +437,7 @@ public class PackageUtil {
         // image bitmap the app icon will be used
         if (notificationSms.size() > 1) {
             if (packageName != null) {
-                bitmap = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+                bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
             }
         }
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -448,7 +449,7 @@ public class PackageUtil {
         }
         inboxStyle.setSummaryText("You have " + notificationSms.size() + " unread message");
         PendingIntent pendingIntent = getPendingIntent(context, notificationSms.get(0));
-        String strChannelName = CoreApplication.getInstance().getListApplicationName().get(packageName);
+        String strChannelName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
         NotificationCompat.Builder groupBuilder =
                 new NotificationCompat.Builder(context, strChannelName)
                         .setContentTitle(strChannelName)
@@ -494,9 +495,9 @@ public class PackageUtil {
         try {
             if (isAlarmEnable(id)) {
                 Log.d("Alarm", "Cancel Enabled Alarm :" + id);
-                Intent intentToFire = new Intent(CoreApplication.getInstance(), AlarmBroadcast.class);
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(CoreApplication.getInstance(), id, intentToFire, 0);
-                AlarmManager alarmManager = (AlarmManager) CoreApplication.getInstance().getSystemService(Context.ALARM_SERVICE);
+                Intent intentToFire = new Intent(CoreApplication.Companion.getInstance(), AlarmBroadcast.class);
+                PendingIntent alarmIntent = PendingIntent.getBroadcast(CoreApplication.Companion.getInstance(), id, intentToFire, 0);
+                AlarmManager alarmManager = (AlarmManager) CoreApplication.Companion.getInstance().getSystemService(Context.ALARM_SERVICE);
                 if (alarmManager != null) {
                     alarmManager.cancel(alarmIntent);
                 }
@@ -507,9 +508,9 @@ public class PackageUtil {
     }
 
     private static boolean isAlarmEnable(int id) {
-        if (CoreApplication.getInstance() != null) {
-            Intent intentToFire = new Intent(CoreApplication.getInstance(), AlarmBroadcast.class);
-            return (PendingIntent.getBroadcast(CoreApplication.getInstance(), id, intentToFire, PendingIntent.FLAG_NO_CREATE) != null);
+        if (CoreApplication.Companion.getInstance() != null) {
+            Intent intentToFire = new Intent(CoreApplication.Companion.getInstance(), AlarmBroadcast.class);
+            return (PendingIntent.getBroadcast(CoreApplication.Companion.getInstance(), id, intentToFire, PendingIntent.FLAG_NO_CREATE) != null);
         }
         return false;
     }
@@ -519,11 +520,11 @@ public class PackageUtil {
             if (id == -1) {
                 PackageUtil.cancelAlarm(0);
             }
-            if (id != -1 && CoreApplication.getInstance() != null) {
+            if (id != -1 && CoreApplication.Companion.getInstance() != null) {
 
-                Intent intentToFire = new Intent(CoreApplication.getInstance(), AlarmBroadcast.class);
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(CoreApplication.getInstance(), id, intentToFire, 0);
-                AlarmManager alarmManager = (AlarmManager) CoreApplication.getInstance().getSystemService(Context.ALARM_SERVICE);
+                Intent intentToFire = new Intent(CoreApplication.Companion.getInstance(), AlarmBroadcast.class);
+                PendingIntent alarmIntent = PendingIntent.getBroadcast(CoreApplication.Companion.getInstance(), id, intentToFire, 0);
+                AlarmManager alarmManager = (AlarmManager) CoreApplication.Companion.getInstance().getSystemService(Context.ALARM_SERVICE);
                 long time = calendar.getTimeInMillis();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     // Wakes up the device in Doze Mode
@@ -546,7 +547,7 @@ public class PackageUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
@@ -622,7 +623,7 @@ public class PackageUtil {
                     }
                 }
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
 
         } else if (strTime.length == 3) {
@@ -683,7 +684,7 @@ public class PackageUtil {
                     }
                 }
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
         }
         calendar1.set(Calendar.SECOND, 0);
@@ -797,7 +798,7 @@ public class PackageUtil {
             context.startActivity(intent);
         } catch (Exception e) {
             Tracer.e(e, e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
@@ -856,7 +857,7 @@ public class PackageUtil {
         ArrayList<MainListItem> sortedTools = new ArrayList<>();
 
         //get the JSON array of the ordered of sorted customers
-        String jsonListOfSortedToolsId = PrefSiempo.getInstance(Launcher3App.getInstance().getApplicationContext()).read(PrefSiempo.SORTED_MENU, "");
+        String jsonListOfSortedToolsId = PrefSiempo.getInstance(Launcher3App_.getInstance().getApplicationContext()).read(PrefSiempo.SORTED_MENU, "");
         Tracer.d("MenuItem",jsonListOfSortedToolsId);
         Log.d("MenuItem", jsonListOfSortedToolsId);
 
@@ -942,7 +943,7 @@ public class PackageUtil {
     public static ArrayList<MainListItem> getFavoriteList(boolean isFalse) {
         ArrayList<MainListItem> sortedFavoriteList = new ArrayList<>();
         try {
-            Context context = Launcher3App.getInstance().getApplicationContext();
+            Context context = Launcher3App_.getInstance().getApplicationContext();
             ArrayList<MainListItem> appList = getAppList(context);
             if (appList.size() > 0) {
                 String jsonListOfSortedFavorites = PrefSiempo.getInstance(context).read(PrefSiempo.FAVORITE_SORTED_MENU, "");
@@ -973,7 +974,7 @@ public class PackageUtil {
     private static ArrayList<MainListItem> getAppList(Context context) {
         ArrayList<MainListItem> appList = new ArrayList<>();
         try {
-            List<String> installedPackageList = CoreApplication.getInstance().getPackagesList();
+            List<String> installedPackageList = CoreApplication.Companion.getInstance().getPackagesList();
 
             //Added as a part of SSA-1483, in case of installed package
             if (installedPackageList.isEmpty()) {
@@ -991,9 +992,9 @@ public class PackageUtil {
             for (String resolveInfo : installedPackageList) {
                 if (!resolveInfo.equalsIgnoreCase(context.getPackageName())) {
                     if (!TextUtils.isEmpty(resolveInfo)) {
-                        String strAppName = CoreApplication.getInstance().getListApplicationName().get(resolveInfo);
+                        String strAppName = CoreApplication.Companion.getInstance().getListApplicationName().get(resolveInfo);
                         if (strAppName == null) {
-                            strAppName = CoreApplication.getInstance().getApplicationNameFromPackageName(resolveInfo);
+                            strAppName = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(resolveInfo);
                         }
                         if (!TextUtils.isEmpty(strAppName)) {
                             appList.add(new MainListItem(-1, "" + strAppName, resolveInfo));
@@ -1293,7 +1294,7 @@ public class PackageUtil {
             }
             resourcesForApplication.updateConfiguration(originalConfig, originalDisplayMetrics);
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             drawable = appInfo.loadIcon(context.getPackageManager());
         }
         return drawable;
@@ -1405,7 +1406,7 @@ public class PackageUtil {
 
 
     private static List<MainListItem> getJunkListItems(List<MainListItem> allItems, Context context) {
-        HashMap<Integer, AppMenu> toolSetting = CoreApplication.getInstance()
+        HashMap<Integer, AppMenu> toolSetting = CoreApplication.Companion.getInstance()
                 .getToolsSettings();
         ArrayList<String> junkFoodAppList;
         Set<String> junkFoodList = PrefSiempo

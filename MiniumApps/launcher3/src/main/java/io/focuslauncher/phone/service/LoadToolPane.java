@@ -38,9 +38,8 @@ public class LoadToolPane extends AsyncTask<String, String, ArrayList<MainListIt
             items = PackageUtil.getToolsMenuData(items);
             Set<Integer> list = new HashSet<>();
 
-            if (null != CoreApplication.getInstance() && null != CoreApplication
-                    .getInstance().getToolsSettings()) {
-                for (Map.Entry<Integer, AppMenu> entry : CoreApplication.getInstance().getToolsSettings().entrySet()) {
+            if (null != CoreApplication.Companion.getInstance() && null != CoreApplication.Companion.getInstance().getToolsSettings()) {
+                for (Map.Entry<Integer, AppMenu> entry : CoreApplication.Companion.getInstance().getToolsSettings().entrySet()) {
                     if (entry.getValue().isBottomDoc()) {
                         list.add(entry.getKey());
                     }
@@ -72,8 +71,8 @@ public class LoadToolPane extends AsyncTask<String, String, ArrayList<MainListIt
         try {
 //            sortingMenu(s);
 
-            CoreApplication.getInstance().setToolItemsList(s);
-            CoreApplication.getInstance().setToolBottomItemsList(bottomDockList);
+            CoreApplication.Companion.getInstance().setToolItemsList(s);
+            CoreApplication.Companion.getInstance().setToolBottomItemsList(bottomDockList);
             EventBus.getDefault().postSticky(new NotifyBottomView(true));
             EventBus.getDefault().postSticky(new NotifyToolView(true));
         } catch (Exception e) {

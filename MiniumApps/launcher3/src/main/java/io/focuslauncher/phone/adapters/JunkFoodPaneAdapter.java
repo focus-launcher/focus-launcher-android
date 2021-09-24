@@ -75,7 +75,7 @@ public class JunkFoodPaneAdapter extends RecyclerView.Adapter<JunkFoodPaneAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final String item = mainListItemList.get(position);
         holder.linearLayout.setVisibility(View.VISIBLE);
-        String applicationName = CoreApplication.getInstance().getApplicationNameFromPackageName(item);
+        String applicationName = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(item);
         holder.text.setText(applicationName);
         if (isHideIconBranding) {
             holder.txtAppTextImage.setVisibility(View.VISIBLE);
@@ -94,7 +94,7 @@ public class JunkFoodPaneAdapter extends RecyclerView.Adapter<JunkFoodPaneAdapte
             holder.txtAppTextImage.setVisibility(View.GONE);
             holder.imgUnderLine.setVisibility(View.GONE);
             holder.imgAppIcon.setVisibility(View.VISIBLE);
-            Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(item);
+            Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(item);
             if (bitmap != null) {
                 holder.imgAppIcon.setImageBitmap(bitmap);
             } else {
@@ -102,11 +102,11 @@ public class JunkFoodPaneAdapter extends RecyclerView.Adapter<JunkFoodPaneAdapte
                 try {
                     appInfo = context.getPackageManager().getApplicationInfo(item, PackageManager.GET_META_DATA);
                     BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                    CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                    CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
-                Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(item);
+                Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(item);
                 holder.imgAppIcon.setImageDrawable(drawable);
             }
 
@@ -126,7 +126,7 @@ public class JunkFoodPaneAdapter extends RecyclerView.Adapter<JunkFoodPaneAdapte
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseHelper.getInstance().logSiempoMenuUsage(2, "", CoreApplication.getInstance().getApplicationNameFromPackageName(item));
+                FirebaseHelper.getInstance().logSiempoMenuUsage(2, "", CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(item));
                 new ActivityHelper(context).openAppWithPackageName(item);
                 //Show blocking overlay after onclick
                 EventBus.getDefault().post(new JunkAppOpenEvent(true));

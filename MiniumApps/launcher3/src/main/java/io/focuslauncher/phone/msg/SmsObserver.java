@@ -67,7 +67,7 @@ public class SmsObserver extends ContentObserver {
                 }
             }
         } catch (IllegalStateException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         } finally {
             if (cursor != null) {

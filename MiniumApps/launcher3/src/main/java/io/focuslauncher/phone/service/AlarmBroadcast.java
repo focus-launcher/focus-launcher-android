@@ -27,11 +27,11 @@ public class AlarmBroadcast extends BroadcastReceiver {
                     .TEMPO_TYPE, 0);
             if (tempoType == 1) {
                 Log.d("Alarm", "Batch Receiver:");
-                if (CoreApplication.getInstance() != null)
+                if (CoreApplication.Companion.getInstance() != null)
                     PackageUtil.enableDisableAlarm(PackageUtil.batchMode(context), 0);
             } else if (tempoType == 2) {
                 Log.d("Alarm", "Only at Receiver:");
-                if (CoreApplication.getInstance() != null)
+                if (CoreApplication.Companion.getInstance() != null)
                     PackageUtil.enableDisableAlarm(PackageUtil.getOnlyAt(context), 0);
             }
         } catch (Exception e) {

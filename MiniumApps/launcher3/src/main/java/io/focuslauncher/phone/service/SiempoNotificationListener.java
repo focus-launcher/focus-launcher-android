@@ -38,11 +38,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.focuslauncher.phone.app.Launcher3App;
 import io.focuslauncher.phone.receivers.PhoneCallReceiver;
 import io.focuslauncher.R;
 import io.focuslauncher.phone.app.Constants;
 import io.focuslauncher.phone.app.CoreApplication;
-import io.focuslauncher.phone.app.Launcher3App;
 import io.focuslauncher.phone.db.DBUtility;
 import io.focuslauncher.phone.db.DaoSession;
 import io.focuslauncher.phone.db.TableNotificationSms;
@@ -101,7 +101,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
             }
             return true;
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             return true;
         }
     }
@@ -380,7 +380,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
 
         try {
@@ -390,7 +390,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
 
 
@@ -413,7 +413,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
                 icon = statusBarNotification.getNotification().extras.getInt(Notification.EXTRA_SMALL_ICON);
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.d(e.getMessage());
         }
 
@@ -423,7 +423,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
                 largeIcon = UIUtils.convertBitmapToByte(iconUser);
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.d(e.getMessage());
         }
         String strCount = null;
@@ -440,7 +440,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
 
         if (statusBarNotification.getNotification().category != null && statusBarNotification.getNotification().category.equals(Notification.CATEGORY_PROGRESS)) {
@@ -491,7 +491,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
                     logFirebaseCount(strPackageName, notificationSms.size());
                 }
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
         }
     }
@@ -519,7 +519,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
 //                return;
 //            }
             try {
-                DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+                DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
                 TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
                 TableNotificationSms notificationSms = DBUtility.getNotificationDao().queryBuilder()
                         .where(TableNotificationSmsDao.Properties._contact_title.eq(strTitle),
@@ -581,14 +581,14 @@ public class SiempoNotificationListener extends NotificationListenerService {
             } catch (Exception e) {
                 e.printStackTrace();
                 Tracer.d("SiempoNotificationListener:parseOtherMessages" + e.getMessage());
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
         }
     }
 
     private void parseHangOutMessage(StatusBarNotification statusBarNotification, String strPackageName, String strTitle, String strText, Date date, String tickerText, int icon, byte[] largeIcon) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             if (!strTitle.trim().endsWith("new messages")) {
                 String groupname = "";
@@ -732,7 +732,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
 
     private void parseFacebookLite(StatusBarNotification statusBarNotification, String strPackageName, String strTitle, String strText, Date date, StringBuilder data, int icon, byte[] largeIcon) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             TableNotificationSms notificationSms
                     = DBUtility.getNotificationDao().queryBuilder()
@@ -793,13 +793,13 @@ public class SiempoNotificationListener extends NotificationListenerService {
         } catch (Exception e) {
             e.printStackTrace();
             Tracer.d("SiempoNotificationListener:parseFacebookLite" + e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
     private void parseFacebookMessenger(StatusBarNotification statusBarNotification, String strPackageName, String strTitle, String strText, Date date, int icon, byte[] largeIcon) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             TableNotificationSms notificationSms
                     = DBUtility.getNotificationDao().queryBuilder()
@@ -850,13 +850,13 @@ public class SiempoNotificationListener extends NotificationListenerService {
         } catch (Exception e) {
             e.printStackTrace();
             Tracer.d("SiempoNotificationListener:parseFacebookMessenger" + e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
     private void parseTelegramMessenger(StatusBarNotification statusBarNotification, String strPackageName, String strTitle, String strText, Date date, int icon, byte[] largeIcon) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             if (strTitle != null && strText != null && !strText.equalsIgnoreCase("") && !strTitle.contains("Telegram")) {
                 strTitle = checkTextContainForTelegram(strTitle).trim();
@@ -910,7 +910,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
         } catch (Exception e) {
             e.printStackTrace();
             Tracer.d("SiempoNotificationListener:parseFacebookMessenger" + e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
@@ -925,7 +925,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
 
     private void parseFacebook(StatusBarNotification statusBarNotification, String strPackageName, String strTitle, String strText, Date date, int icon, byte[] largeIcon) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             TableNotificationSms notificationSms = new TableNotificationSms();
             notificationSms.set_contact_title(strTitle);
@@ -942,14 +942,14 @@ public class SiempoNotificationListener extends NotificationListenerService {
             notificationSms.setId(id);
         } catch (Exception e) {
             Tracer.d("SiempoNotificationListener:parseFacebook" + e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
     }
 
     private void parseGoogleCalender(StatusBarNotification statusBarNotification, String strPackageName, String strTitle, String strText, Date date, String strBigText, int icon, byte[] largeIcon) {
         try {
-            DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+            DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
             TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
             TableNotificationSms notificationSms = DBUtility.getNotificationDao().queryBuilder()
                     .where(TableNotificationSmsDao.Properties._contact_title.eq(strTitle),
@@ -1005,14 +1005,14 @@ public class SiempoNotificationListener extends NotificationListenerService {
 
         } catch (Exception e) {
             Tracer.d("SiempoNotificationListener:parseGoogleCalender" + e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
     }
 
     private void parseWhatsappMessage(StatusBarNotification statusBarNotification, String
             strPackageName, Date date, StringBuilder data, int icon, byte[] largeIcon) {
-        DaoSession daoSession = ((Launcher3App) CoreApplication.getInstance()).getDaoSession();
+        DaoSession daoSession = ((Launcher3App) CoreApplication.Companion.getInstance()).getDaoSession();
         TableNotificationSmsDao smsDao = daoSession.getTableNotificationSmsDao();
         try {
             if (statusBarNotification.getNotification().extras != null) {
@@ -1189,7 +1189,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
             }
         } catch (Exception e) {
             Tracer.d("SiempoNotificationListener:parseWhatsappMessage" + e.getMessage());
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
@@ -1204,7 +1204,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
         try {
             ai = getPackageManager().getApplicationInfo(packageName, 0);
         } catch (final PackageManager.NameNotFoundException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             ai = null;
         }
         return (String) (ai != null ? getPackageManager().getApplicationLabel(ai) : "(unknown)");
@@ -1222,7 +1222,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
             FirebaseHelper.getInstance().logSuppressedNotification(getAppName(strPackageName), count);
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
@@ -1293,7 +1293,7 @@ public class SiempoNotificationListener extends NotificationListenerService {
             if (finalTitle != null)
                 return (finalTitle.length() <= 3 || finalTitle.charAt(finalTitle.length() - 3) != ':') ? finalTitle : finalTitle.substring(0, finalTitle.length() - 3);
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             return title;
         }
         return null;

@@ -52,7 +52,7 @@ public class ToolPositioningAdapter extends RecyclerView.Adapter<ToolPositioning
         mDragStartListener = dragListener;
         mListChangedListener = listChangedListener;
         this.isHideIconBranding = isHideIconBranding;
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ToolPositioningAdapter extends RecyclerView.Adapter<ToolPositioning
                 notifyItemMoved(fromPosition, toPosition);
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
 
@@ -115,8 +115,8 @@ public class ToolPositioningAdapter extends RecyclerView.Adapter<ToolPositioning
                 holder.icon.setImageResource(item.getDrawable());
                 holder.text.setText(item.getTitle());
             } else {
-                holder.text.setText(CoreApplication.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
-                Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(appMenu.getApplicationName());
+                holder.text.setText(CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(appMenu.getApplicationName()));
+                Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(appMenu.getApplicationName());
                 if (bitmap != null) {
                     holder.icon.setVisibility(View.GONE);
                     holder.imgAppIcon.setVisibility(View.VISIBLE);
@@ -126,7 +126,7 @@ public class ToolPositioningAdapter extends RecyclerView.Adapter<ToolPositioning
                     try {
                         appInfo = context.getPackageManager().getApplicationInfo(appMenu.getApplicationName(), PackageManager.GET_META_DATA);
                         BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                        CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                        CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -207,7 +207,7 @@ public class ToolPositioningAdapter extends RecyclerView.Adapter<ToolPositioning
                 notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
 
         }

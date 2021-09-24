@@ -51,7 +51,7 @@ public class LoadFavoritePane extends AsyncTask<String, String, ArrayList<MainLi
     @Override
     protected void onPostExecute(ArrayList<MainListItem> s) {
         super.onPostExecute(s);
-        CoreApplication.getInstance().setFavoriteItemsList(s);
+        CoreApplication.Companion.getInstance().setFavoriteItemsList(s);
         EventBus.getDefault().postSticky(new NotifyFavortieView(true));
     }
 }

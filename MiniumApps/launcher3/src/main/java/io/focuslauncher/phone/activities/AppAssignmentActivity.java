@@ -149,7 +149,7 @@ public class AppAssignmentActivity extends CoreActivity {
 
     public void showListByCategory(){
         boolean isCategoryAvailable=false;
-        List<CategoryAppList> categoryAppList=CoreApplication.getInstance().categoryAppList;
+        List<CategoryAppList> categoryAppList= (List<CategoryAppList>) CoreApplication.Companion.getInstance().categoryAppList;
 
 
         if(categoryAppList!=null && categoryAppList.size()>0) {
@@ -251,7 +251,7 @@ public class AppAssignmentActivity extends CoreActivity {
                 showallAppBtn.setVisibility(View.GONE);
             }
         } else {
-            appList = CoreApplication.getInstance().getApplicationByCategory(mainListItem.getId());
+            appList = CoreApplication.Companion.getInstance().getApplicationByCategory(mainListItem.getId());
         }
 
         appListAll = new ArrayList<>();
@@ -278,7 +278,7 @@ public class AppAssignmentActivity extends CoreActivity {
     private ArrayList<ResolveInfo> getMimeList() {
         ArrayList<ResolveInfo> mimeListLocal = new ArrayList<>();
         for (int i = 1; i <= 20; i++) {
-            mimeListLocal.addAll(CoreApplication.getInstance().getApplicationByCategory(i));
+            mimeListLocal.addAll(CoreApplication.Companion.getInstance().getApplicationByCategory(i));
         }
         return mimeListLocal;
     }

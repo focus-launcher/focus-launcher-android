@@ -154,7 +154,7 @@ public class AlphaSettingsActivity extends CoreActivity {
         icon_UserId.setImageDrawable(new IconDrawable(context, "fa-user-secret")
                 .colorRes(R.color.text_primary)
                 .sizeDp(18));
-        txt_UserId.setText(String.format("UserId: %s", CoreApplication.getInstance().getDeviceId()));
+        txt_UserId.setText(String.format("UserId: %s", CoreApplication.Companion.getInstance().getDeviceId()));
         if (PrefSiempo.getInstance(this).read(PrefSiempo.JUNK_RESTRICTED, false)) {
             switch_alphaRestriction.setChecked(true);
         } else {
@@ -350,7 +350,7 @@ public class AlphaSettingsActivity extends CoreActivity {
 
             String userEmail = PrefSiempo.getInstance(this).read(PrefSiempo
                     .USER_EMAILID, "");
-            storeDataToFirebase(CoreApplication.getInstance().getDeviceId(), userEmail, event.getLatitude(), event.getLongitude());
+            storeDataToFirebase(CoreApplication.Companion.getInstance().getDeviceId(), userEmail, event.getLatitude(), event.getLongitude());
             switch_location.setChecked(true);
             longitude.setVisibility(View.VISIBLE);
             latitude.setVisibility(View.VISIBLE);

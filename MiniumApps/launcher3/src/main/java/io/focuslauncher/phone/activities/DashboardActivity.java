@@ -166,7 +166,7 @@ public class DashboardActivity extends CoreActivity implements InstallStateUpdat
                     }
                     if (activeNetwork != null) {
                         new MailChimpOperation(MailChimpOperation.EmailType.EMAIL_REG).execute(strEmail);
-                        storeDataToFirebase(CoreApplication.getInstance().getDeviceId(), strEmail);
+                        storeDataToFirebase(CoreApplication.Companion.getInstance().getDeviceId(), strEmail);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

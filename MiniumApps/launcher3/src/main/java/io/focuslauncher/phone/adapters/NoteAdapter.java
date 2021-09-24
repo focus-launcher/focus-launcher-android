@@ -122,7 +122,7 @@ public class NoteAdapter extends BaseAdapter implements ListAdapter {
                 favoured = noteObject.getBoolean(NOTE_FAVOURED);
 
             } catch (JSONException e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 e.printStackTrace();
             }
 

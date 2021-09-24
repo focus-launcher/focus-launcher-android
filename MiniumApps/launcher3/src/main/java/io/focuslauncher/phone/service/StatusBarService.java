@@ -210,7 +210,7 @@ public class StatusBarService extends Service {
                             }
                         } else {
                             if (!packagename.equalsIgnoreCase(process)) {
-                                ArrayMap<String, Long> map = CoreApplication.getInstance().getThirdpartyAppLogasLauncher();
+                                ArrayMap<String, Long> map = CoreApplication.Companion.getInstance().getThirdpartyAppLogasLauncher();
                                 if (map != null) {
                                     if (map.containsKey(packagename)) {
                                         long time = map.get(packagename);
@@ -250,7 +250,7 @@ public class StatusBarService extends Service {
                             }
                         } else {
                             if (!packagename.equalsIgnoreCase(process)) {
-                                ArrayMap<String, Long> map = CoreApplication.getInstance().getThirdpartyAppLogasnotLauncher();
+                                ArrayMap<String, Long> map = CoreApplication.Companion.getInstance().getThirdpartyAppLogasnotLauncher();
                                 if (map != null) {
                                     if (map.containsKey(packagename)) {
                                         long time = map.get(packagename);
@@ -602,7 +602,7 @@ public class StatusBarService extends Service {
                     (PrefSiempo.JUNKFOOD_APPS, junkFoodList);
         }
 
-        HashMap<Integer, AppMenu> hashMap = CoreApplication.getInstance().getToolsSettings();
+        HashMap<Integer, AppMenu> hashMap = CoreApplication.Companion.getInstance().getToolsSettings();
         for (Map.Entry<Integer, AppMenu> has : hashMap.entrySet()) {
             if (has.getValue().getApplicationName().equalsIgnoreCase(packageName)) {
                 Log.d("Remove Application", packageName);
@@ -1762,7 +1762,7 @@ public class StatusBarService extends Service {
                     @Override
                     public void onClick(View v) {
                         try {
-                            HashMap<Integer, AppMenu> map = CoreApplication.getInstance().getToolsSettings();
+                            HashMap<Integer, AppMenu> map = CoreApplication.Companion.getInstance().getToolsSettings();
                             if (map.get(MainListItemLoader.TOOLS_WELLNESS).getApplicationName().equalsIgnoreCase("")) {
                                 MainListItem item = new MainListItem(MainListItemLoader.TOOLS_WELLNESS, context.getResources()
                                         .getString(R.string.title_wellness), R.drawable
@@ -2436,7 +2436,7 @@ public class StatusBarService extends Service {
                     @Override
                     public void onClick(View v) {
                         try {
-                            HashMap<Integer, AppMenu> map = CoreApplication.getInstance().getToolsSettings();
+                            HashMap<Integer, AppMenu> map = CoreApplication.Companion.getInstance().getToolsSettings();
                             if (map.get(MainListItemLoader.TOOLS_WELLNESS).getApplicationName().equalsIgnoreCase("")) {
                                 MainListItem item = new MainListItem(MainListItemLoader.TOOLS_WELLNESS, context.getResources()
                                         .getString(R.string.title_wellness), R.drawable
@@ -2454,7 +2454,7 @@ public class StatusBarService extends Service {
                                     context.startActivity(intent);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    CoreApplication.getInstance().logException(e);
+                                    CoreApplication.Companion.getInstance().logException(e);
                                     UIUtils.alert(context, context.getString(R.string.app_not_found));
                                 }
                             }
@@ -3171,7 +3171,7 @@ public class StatusBarService extends Service {
             startActivity(intent);
         } else {
 //                            new ActivityHelper(context).openNotesApp(false);
-            HashMap<Integer, AppMenu> map = CoreApplication.getInstance().getToolsSettings();
+            HashMap<Integer, AppMenu> map = CoreApplication.Companion.getInstance().getToolsSettings();
             if (map.get(MainListItemLoader.TOOLS_NOTES).getApplicationName().equalsIgnoreCase("Notes")) {
                 try {
                     Intent intent = new Intent(context,
@@ -3181,7 +3181,7 @@ public class StatusBarService extends Service {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } catch (Exception e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     Tracer.e(e, e.getMessage());
                 }
             } else if (map.get(MainListItemLoader.TOOLS_NOTES).getApplicationName().equalsIgnoreCase("")) {
@@ -3203,7 +3203,7 @@ public class StatusBarService extends Service {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     UIUtils.alert(context, context.getString(R.string.app_not_found));
                 }
             }
@@ -3284,7 +3284,7 @@ public class StatusBarService extends Service {
                                     intent.getExtras().getBoolean(Intent.EXTRA_REPLACING, false))) {
                                 installPackageName = intent.getData().getEncodedSchemeSpecificPart();
                                 addAppFromBlockedList(installPackageName);
-                                CoreApplication.getInstance().addOrRemoveApplicationInfo(true, installPackageName);
+                                CoreApplication.Companion.getInstance().addOrRemoveApplicationInfo(true, installPackageName);
                                 reloadData();
                             }
                         }
@@ -3298,7 +3298,7 @@ public class StatusBarService extends Service {
                                     new DBClient().deleteMsgByPackageName(uninstallPackageName);
                                     removeAppFromPreference(context, uninstallPackageName);
                                     removeAppFromBlockedList(uninstallPackageName);
-                                    CoreApplication.getInstance().addOrRemoveApplicationInfo(false, uninstallPackageName);
+                                    CoreApplication.Companion.getInstance().addOrRemoveApplicationInfo(false, uninstallPackageName);
                                     reloadData();
                                 }
                             }
@@ -3309,14 +3309,14 @@ public class StatusBarService extends Service {
                             packageName = intent.getData().getSchemeSpecificPart();
                             boolean isEnable = UIUtils.isAppInstalledAndEnabled(context, packageName);
                             if (isEnable) {
-                                if (!CoreApplication.getInstance().getPackagesList().contains(packageName)) {
+                                if (!CoreApplication.Companion.getInstance().getPackagesList().contains(packageName)) {
                                     addAppFromBlockedList(packageName);
-                                    CoreApplication.getInstance().addOrRemoveApplicationInfo(true, packageName);
+                                    CoreApplication.Companion.getInstance().addOrRemoveApplicationInfo(true, packageName);
                                 }
                             } else {
                                 removeAppFromPreference(context, packageName);
                                 removeAppFromBlockedList(packageName);
-                                CoreApplication.getInstance().addOrRemoveApplicationInfo(false, packageName);
+                                CoreApplication.Companion.getInstance().addOrRemoveApplicationInfo(false, packageName);
                             }
                             reloadData();
                         }
@@ -3327,7 +3327,7 @@ public class StatusBarService extends Service {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
 
         }
@@ -3402,7 +3402,7 @@ public class StatusBarService extends Service {
                                 PrefSiempo.getInstance(context).write(PrefSiempo.JUNKFOOD_USAGE_COVER_TIME, 0L);
                             }
 
-                            ArrayMap<String, Long> mapAsDefault = CoreApplication.getInstance().getThirdpartyAppLogasLauncher();
+                            ArrayMap<String, Long> mapAsDefault = CoreApplication.Companion.getInstance().getThirdpartyAppLogasLauncher();
                             if (mapAsDefault != null && mapAsDefault.size() > 0) {
                                 if (mapAsDefault.containsKey(getPackageName())) {
                                     mapAsDefault.remove(getPackageName());
@@ -3415,7 +3415,7 @@ public class StatusBarService extends Service {
                             }
                         }
                     } else {
-                        ArrayMap<String, Long> mapNotDefault = CoreApplication.getInstance().getThirdpartyAppLogasnotLauncher();
+                        ArrayMap<String, Long> mapNotDefault = CoreApplication.Companion.getInstance().getThirdpartyAppLogasnotLauncher();
                         if (mapNotDefault != null && mapNotDefault.size() > 0) {
                             if (mapNotDefault.containsKey(getPackageName())) {
                                 mapNotDefault.remove(getPackageName());

@@ -22,7 +22,7 @@ public class MultipleItemDelete implements DeleteStrategy {
 
             DBUtility.getNotificationDao().deleteInTx(notificationSmsesList);
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
     }

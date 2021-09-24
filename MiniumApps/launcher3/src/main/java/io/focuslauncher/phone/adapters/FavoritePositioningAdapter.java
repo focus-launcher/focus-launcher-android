@@ -50,7 +50,7 @@ public class FavoritePositioningAdapter extends RecyclerView.Adapter<FavoritePos
         this.isHideIconBranding = isHideIconBranding;
         mDragStartListener = dragListener;
         mListChangedListener = listChangedListener;
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class FavoritePositioningAdapter extends RecyclerView.Adapter<FavoritePos
                 notifyItemMoved(fromPosition, toPosition);
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
 
@@ -106,7 +106,7 @@ public class FavoritePositioningAdapter extends RecyclerView.Adapter<FavoritePos
             // based on user selected language, and in case of package nme
             // not available showing the default item name
             if (!TextUtils.isEmpty(item.getPackageName())) {
-                String applicationName = CoreApplication.getInstance()
+                String applicationName = CoreApplication.Companion.getInstance()
                         .getApplicationNameFromPackageName(item.getPackageName());
                 holder.text.setText(applicationName);
             } else {
@@ -218,7 +218,7 @@ public class FavoritePositioningAdapter extends RecyclerView.Adapter<FavoritePos
                 notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
 
         }

@@ -55,7 +55,7 @@ public class LoadJunkFoodPane extends AsyncTask<String, String, ArrayList<String
     @Override
     protected void onPostExecute(ArrayList<String> s) {
         super.onPostExecute(s);
-        CoreApplication.getInstance().setJunkFoodList(s);
+        CoreApplication.Companion.getInstance().setJunkFoodList(s);
         EventBus.getDefault().postSticky(new NotifyJunkFoodView(true));
     }
 }

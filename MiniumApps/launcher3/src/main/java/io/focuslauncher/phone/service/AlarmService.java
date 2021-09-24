@@ -215,7 +215,7 @@ public class AlarmService extends IntentService {
                     NotificationManager notificationManager = (NotificationManager) getSystemService(
                             NOTIFICATION_SERVICE);
                     if (Build.VERSION.SDK_INT >= 26) {
-                        CharSequence channelName = CoreApplication.getInstance().getListApplicationName().get(customNotification.getPackagename());
+                        CharSequence channelName = CoreApplication.Companion.getInstance().getListApplicationName().get(customNotification.getPackagename());
                         int importance;
                         if (!PrefSiempo.getInstance(context).read(PrefSiempo.ALLOW_PEAKING, true)) {
                             importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -276,13 +276,13 @@ public class AlarmService extends IntentService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
     }
 
     private Notification createGroupNotification(String packageName, ArrayList<TableNotificationSms> notificationSms) {
-        String applicationName = CoreApplication.getInstance().getListApplicationName().get(packageName);
-        Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+        String applicationName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
+        Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
         PendingIntent contentIntent = PackageUtil.getPendingIntent(context, notificationSms.get(0));
         return new NotificationCompat.Builder(context, applicationName)
                 .setSmallIcon(R.drawable.ic_focus_launcher_notification)
@@ -299,8 +299,8 @@ public class AlarmService extends IntentService {
     }
 
     private Notification createSingleNotification(TableNotificationSms tableNotificationSms, boolean isGrouped) {
-        String applicationName = CoreApplication.getInstance().getListApplicationName().get(tableNotificationSms.getPackageName());
-        Bitmap bitmapApplication = CoreApplication.getInstance().getBitmapFromMemCache(tableNotificationSms.getPackageName());
+        String applicationName = CoreApplication.Companion.getInstance().getListApplicationName().get(tableNotificationSms.getPackageName());
+        Bitmap bitmapApplication = CoreApplication.Companion.getInstance().getBitmapFromMemCache(tableNotificationSms.getPackageName());
         int priority = !PrefSiempo.getInstance(context).read(PrefSiempo.ALLOW_PEAKING, true) ? Notification.PRIORITY_DEFAULT : Notification.PRIORITY_HIGH;
         PendingIntent contentIntent = PackageUtil.getPendingIntent(context, tableNotificationSms);
         RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification_card);
@@ -355,8 +355,8 @@ public class AlarmService extends IntentService {
      */
     private void generateBelow24(Context context, ArrayList<TableNotificationSms> notificationSms) {
         String packageName = notificationSms.get(0).getPackageName();
-        String applicationName = CoreApplication.getInstance().getListApplicationName().get(packageName);
-        Bitmap bitmapApplication = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+        String applicationName = CoreApplication.Companion.getInstance().getListApplicationName().get(packageName);
+        Bitmap bitmapApplication = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
         NotificationManagerCompat n = NotificationManagerCompat.from(this);
         int priority = !PrefSiempo.getInstance(context).read(PrefSiempo.ALLOW_PEAKING, true) ? Notification.PRIORITY_DEFAULT : Notification.PRIORITY_HIGH;
         if (notificationSms.size() == 1) {

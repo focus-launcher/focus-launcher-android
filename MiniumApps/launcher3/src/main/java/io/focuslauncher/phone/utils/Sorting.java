@@ -57,16 +57,16 @@ public class Sorting {
             public int compare(final String object1, final String object2) {
                 String strObj1;
                 String strObj2;
-                if (CoreApplication.getInstance().getListApplicationName().get(object1) != null) {
-                    strObj1 = CoreApplication.getInstance().getListApplicationName().get(object1);
+                if (CoreApplication.Companion.getInstance().getListApplicationName().get(object1) != null) {
+                    strObj1 = CoreApplication.Companion.getInstance().getListApplicationName().get(object1);
                 } else {
-                    strObj1 = CoreApplication.getInstance().getApplicationNameFromPackageName(object1);
+                    strObj1 = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(object1);
                 }
 
-                if (CoreApplication.getInstance().getListApplicationName().get(object2) != null) {
-                    strObj2 = CoreApplication.getInstance().getListApplicationName().get(object2);
+                if (CoreApplication.Companion.getInstance().getListApplicationName().get(object2) != null) {
+                    strObj2 = CoreApplication.Companion.getInstance().getListApplicationName().get(object2);
                 } else {
-                    strObj2 = CoreApplication.getInstance().getApplicationNameFromPackageName(object2);
+                    strObj2 = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(object2);
                 }
 
                 return (strObj1 != null ? strObj1.toLowerCase() : "").compareTo((strObj2 != null ? strObj2.toLowerCase() : ""));
@@ -104,16 +104,16 @@ public class Sorting {
                 String strObj1;
                 String strObj2;
 
-                if (CoreApplication.getInstance().getListApplicationName().get(object1.packageName) != null) {
-                    strObj1 = CoreApplication.getInstance().getListApplicationName().get(object1.packageName);
+                if (CoreApplication.Companion.getInstance().getListApplicationName().get(object1.packageName) != null) {
+                    strObj1 = CoreApplication.Companion.getInstance().getListApplicationName().get(object1.packageName);
                 } else {
-                    strObj1 = CoreApplication.getInstance().getApplicationNameFromPackageName(object1.packageName);
+                    strObj1 = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(object1.packageName);
                 }
 
-                if (CoreApplication.getInstance().getListApplicationName().get(object2.packageName) != null) {
-                    strObj2 = CoreApplication.getInstance().getListApplicationName().get(object2.packageName);
+                if (CoreApplication.Companion.getInstance().getListApplicationName().get(object2.packageName) != null) {
+                    strObj2 = CoreApplication.Companion.getInstance().getListApplicationName().get(object2.packageName);
                 } else {
-                    strObj2 = CoreApplication.getInstance().getApplicationNameFromPackageName(object2.packageName);
+                    strObj2 = CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(object2.packageName);
                 }
 
                 return (strObj1 != null ? strObj1.toLowerCase() : "").compareTo((strObj2 != null ? strObj2.toLowerCase() : ""));

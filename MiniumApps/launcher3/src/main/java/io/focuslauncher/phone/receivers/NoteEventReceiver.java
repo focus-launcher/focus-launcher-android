@@ -76,7 +76,7 @@ public class NoteEventReceiver extends BroadcastReceiver {
             Tracer.i("New note: " + newNoteObject);
 
         } catch (JSONException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
 

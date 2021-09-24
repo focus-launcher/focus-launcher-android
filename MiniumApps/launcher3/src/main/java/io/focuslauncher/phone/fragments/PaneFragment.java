@@ -319,8 +319,8 @@ public class PaneFragment extends CoreFragment {
     public void onEvent(NotifyBottomView notifyBottomView) {
         if (notifyBottomView != null) {
             if (notifyBottomView.isNotify()) {
-                items = CoreApplication.getInstance().getToolBottomItemsList();
-                mAdapter = new ToolsMenuAdapter(getActivity(), CoreApplication.getInstance().isHideIconBranding(), true, items);
+                items = CoreApplication.Companion.getInstance().getToolBottomItemsList();
+                mAdapter = new ToolsMenuAdapter(getActivity(), CoreApplication.Companion.getInstance().isHideIconBranding(), true, items);
                 recyclerViewBottomDoc.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 EventBus.getDefault().removeStickyEvent(notifyBottomView);
@@ -496,8 +496,8 @@ public class PaneFragment extends CoreFragment {
             }
             itemDecoration = new ItemOffsetDecoration(context, R.dimen.dp_10);
             recyclerViewBottomDoc.addItemDecoration(itemDecoration);
-            items = CoreApplication.getInstance().getToolBottomItemsList();
-            mAdapter = new ToolsMenuAdapter(getActivity(), CoreApplication.getInstance().isHideIconBranding(), true, items);
+            items = CoreApplication.Companion.getInstance().getToolBottomItemsList();
+            mAdapter = new ToolsMenuAdapter(getActivity(), CoreApplication.Companion.getInstance().isHideIconBranding(), true, items);
             recyclerViewBottomDoc.setAdapter(mAdapter);
         }
     }
@@ -883,7 +883,7 @@ public class PaneFragment extends CoreFragment {
 
 
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }
@@ -932,7 +932,7 @@ public class PaneFragment extends CoreFragment {
                 }
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }
@@ -1063,7 +1063,7 @@ public class PaneFragment extends CoreFragment {
                 }
             });
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }

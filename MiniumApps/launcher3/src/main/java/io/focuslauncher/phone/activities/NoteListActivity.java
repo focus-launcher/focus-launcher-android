@@ -100,7 +100,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
             newFavourite = notes.getJSONObject(position);
 
         } catch (JSONException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             e.printStackTrace();
         }
 
@@ -111,7 +111,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                     newFavourite.put(NOTE_FAVOURED, true);
 
                 } catch (JSONException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
 
@@ -124,7 +124,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                         newArray.put(0, newFavourite);
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 
@@ -135,7 +135,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                                 newArray.put(notes.get(i));
 
                             } catch (JSONException e) {
-                                CoreApplication.getInstance().logException(e);
+                                CoreApplication.Companion.getInstance().logException(e);
                                 e.printStackTrace();
                             }
                         }
@@ -159,7 +159,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                     try {
                         notes.put(position, newFavourite);
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 
@@ -196,7 +196,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                     adapter.setAdapterData(notes);
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
             }
@@ -582,7 +582,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                             intent.putExtra(NOTE_HIDE_BODY, false);
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 
@@ -606,7 +606,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                             intent.putExtra(NOTE_HIDE_BODY, false);
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 
@@ -667,7 +667,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                                         Uri.parse("market://details?id=" + appPackageName)));
 
                             } catch (android.content.ActivityNotFoundException e) {
-                            CoreApplication.getInstance().logException(e);
+                            CoreApplication.Companion.getInstance().logException(e);
                                 startActivity(new Intent(Intent.ACTION_VIEW,
                                         Uri.parse("http://play.google.com/store/apps/details?id="
                                                 + appPackageName)));
@@ -853,7 +853,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                     note = notes.getJSONObject(i);
 
                 } catch (JSONException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
 
@@ -869,7 +869,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                         }
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
                 }
@@ -948,7 +948,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                         notes.put(newNoteObject);
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 
@@ -992,7 +992,7 @@ public class NoteListActivity extends CoreActivity implements AdapterView.OnItem
                         notes.put(requestCode, newNoteObject);
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 

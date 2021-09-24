@@ -76,7 +76,7 @@ public class FirebaseHelper {
 
 
     public FirebaseAnalytics getFirebaseAnalytics() {
-        return ((Launcher3App) CoreApplication.getInstance()).getFirebaseAnalytics();
+        return ((Launcher3App) CoreApplication.Companion.getInstance()).getFirebaseAnalytics();
     }
 
     /**

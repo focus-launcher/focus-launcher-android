@@ -148,7 +148,7 @@ public class FavoritesSelectionActivity extends CoreActivity implements AdapterV
      * load system apps and filter the application for junkfood and normal.
      */
     private void loadApps() {
-        List<String> installedPackageListLocal = CoreApplication.getInstance().getPackagesList();
+        List<String> installedPackageListLocal = CoreApplication.Companion.getInstance().getPackagesList();
         List<String> appList = new ArrayList<>(installedPackageListLocal);
         installedPackageList = appList;
         bindData();
@@ -224,7 +224,7 @@ public class FavoritesSelectionActivity extends CoreActivity implements AdapterV
                 if (resolveInfo != null && !resolveInfo.equalsIgnoreCase(getPackageName())) {
                     boolean isEnable = UIUtils.isAppInstalledAndEnabled(this, resolveInfo);
                     if (isEnable) {
-                        String applicationname = CoreApplication.getInstance()
+                        String applicationname = CoreApplication.Companion.getInstance()
                                 .getListApplicationName().get(resolveInfo);
                         if (!TextUtils.isEmpty(applicationname)) {
                             if (adapterList.contains(resolveInfo)) {
@@ -407,7 +407,7 @@ public class FavoritesSelectionActivity extends CoreActivity implements AdapterV
                     if (!resolveInfo.equalsIgnoreCase(getPackageName())) {
                         boolean isEnable = UIUtils.isAppInstalledAndEnabled(FavoritesSelectionActivity.this, resolveInfo);
                         if (isEnable) {
-                            String applicationname = CoreApplication.getInstance()
+                            String applicationname = CoreApplication.Companion.getInstance()
                                     .getListApplicationName().get(resolveInfo);
                             if (!TextUtils.isEmpty(applicationname)) {
                                 if (adapterList.contains(resolveInfo)) {

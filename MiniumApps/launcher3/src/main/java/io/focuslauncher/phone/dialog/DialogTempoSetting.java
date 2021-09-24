@@ -522,7 +522,7 @@ public class DialogTempoSetting extends Dialog implements View.OnClickListener {
             strMessage = strMessage + context.getString(R.string.msg_next_delivery) + df.format(calendar.getTime());
             txtMessage.setText(strMessage);
             calendar.set(Calendar.SECOND, 0);
-            if (CoreApplication.getInstance() != null)
+            if (CoreApplication.Companion.getInstance() != null)
                 PackageUtil.enableDisableAlarm(calendar, 0);
         } else if (pos == 2) {
             radioIndividual.setChecked(false);
@@ -651,7 +651,7 @@ public class DialogTempoSetting extends Dialog implements View.OnClickListener {
                     }
                 }
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
 
         } else if (strTime.length == 3) {
@@ -741,7 +741,7 @@ public class DialogTempoSetting extends Dialog implements View.OnClickListener {
                     }
                 }
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
             }
         }
     }

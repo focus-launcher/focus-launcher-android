@@ -63,7 +63,7 @@ public class ToolsListAdapter extends RecyclerView.Adapter<ToolsListAdapter
     }
 
     public void refreshEvents(List<MainListItem> listItems1) {
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
         listItems = new ArrayList<>();
         listItems.addAll(listItems1);
         notifyDataSetChanged();
@@ -195,7 +195,7 @@ public class ToolsListAdapter extends RecyclerView.Adapter<ToolsListAdapter
             if (map.get(mainListItem.getId()).getApplicationName().equalsIgnoreCase("Notes")) {
                 holder.txtAssignApp.setText("Note");
             } else {
-                holder.txtAssignApp.setText(CoreApplication.getInstance().getApplicationNameFromPackageName(map.get(mainListItem.getId()).getApplicationName()));
+                holder.txtAssignApp.setText(CoreApplication.Companion.getInstance().getApplicationNameFromPackageName(map.get(mainListItem.getId()).getApplicationName()));
             }
         }
 

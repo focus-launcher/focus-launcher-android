@@ -64,7 +64,7 @@ public class EvernoteManager {
             note.setContent(EvernoteUtil.NOTE_PREFIX + newNoteObject.getString(NOTE_BODY) + EvernoteUtil.NOTE_SUFFIX);
 
         } catch (JSONException e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
 

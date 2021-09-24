@@ -177,7 +177,7 @@ public class FavoriteAppsPositionActivity extends CoreActivity implements OnFavo
         recyclerView.addItemDecoration(itemDecoration);
 
 
-        mAdapter = new FavoritePositioningAdapter(this, CoreApplication.getInstance().isHideIconBranding(), items, this, this);
+        mAdapter = new FavoritePositioningAdapter(this, CoreApplication.Companion.getInstance().isHideIconBranding(), items, this, this);
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter, this);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);

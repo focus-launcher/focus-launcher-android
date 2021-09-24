@@ -57,7 +57,7 @@ public class AppAssignmentAdapter extends RecyclerView.Adapter<AppAssignmentAdap
         this.resolveInfoList = resolveInfoList;
         this.id = id;
         filterList = resolveInfoList;
-        map = CoreApplication.getInstance().getToolsSettings();
+        map = CoreApplication.Companion.getInstance().getToolsSettings();
         mProvider = new DrawableProvider(context);
         this.class_name = class_name;
     }
@@ -114,7 +114,7 @@ public class AppAssignmentAdapter extends RecyclerView.Adapter<AppAssignmentAdap
                     }
                 });
             } else {
-                Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(item.activityInfo.packageName);
+                Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(item.activityInfo.packageName);
                 if (bitmap != null) {
                     holder.imgIcon.setImageBitmap(bitmap);
                 } else {
@@ -122,11 +122,11 @@ public class AppAssignmentAdapter extends RecyclerView.Adapter<AppAssignmentAdap
                     try {
                         appInfo = context.getPackageManager().getApplicationInfo(item.activityInfo.packageName, PackageManager.GET_META_DATA);
                         BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                        CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                        CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }
-                    Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(item.activityInfo.packageName);
+                    Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(item.activityInfo.packageName);
                     holder.imgIcon.setImageDrawable(drawable);
                 }
                 holder.btnHideApps.setVisibility(View.GONE);
@@ -138,7 +138,7 @@ public class AppAssignmentAdapter extends RecyclerView.Adapter<AppAssignmentAdap
             @Override
             public void onClick(View v) {
                 if (holder.btnHideApps.getVisibility() != View.VISIBLE) {
-                    HashMap<Integer, AppMenu> map = CoreApplication.getInstance().getToolsSettings();
+                    HashMap<Integer, AppMenu> map = CoreApplication.Companion.getInstance().getToolsSettings();
                     boolean isSameApp = false;
                     if (id == 5 && item == null) {
                         if (map.get(id).getApplicationName().equalsIgnoreCase("Notes")) {
@@ -225,13 +225,13 @@ public class AppAssignmentAdapter extends RecyclerView.Adapter<AppAssignmentAdap
                         if (id == 5 && resolveInfoList.get(i) == null) {
                             filterableString = context.getString(R.string.label_note);
                         } else {
-                            filterableString = CoreApplication.getInstance().getListApplicationName()
+                            filterableString = CoreApplication.Companion.getInstance().getListApplicationName()
                                     .get(resolveInfoList.get(i)
                                             .activityInfo
                                             .packageName);
                         }
                         if (filterableString == null) {
-                            filterableString = CoreApplication.getInstance()
+                            filterableString = CoreApplication.Companion.getInstance()
                                     .getApplicationNameFromPackageName(resolveInfoList.get(i)
                                             .activityInfo.packageName);
                         }

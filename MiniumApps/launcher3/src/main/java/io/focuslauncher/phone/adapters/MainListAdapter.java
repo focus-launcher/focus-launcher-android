@@ -105,7 +105,7 @@ public class MainListAdapter extends ArrayAdapter<MainListItem> {
         try {
             pos = getItem(position).getItemType().ordinal();
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
         }
         return pos;
 
@@ -190,7 +190,7 @@ public class MainListAdapter extends ArrayAdapter<MainListItem> {
 
     private View getActionItemView(int position, View view, ViewGroup parent) {
         ActionViewHolder holder;
-        isHideIconBranding = CoreApplication.getInstance()
+        isHideIconBranding = CoreApplication.Companion.getInstance()
                 .isHideIconBranding();
 
         if (view == null) {
@@ -242,18 +242,18 @@ public class MainListAdapter extends ArrayAdapter<MainListItem> {
                                 color, 24);
                         holder.icon.setImageDrawable(drawable);
                     } else {
-                        Bitmap bitmap = CoreApplication.getInstance().getBitmapFromMemCache(packageName);
+                        Bitmap bitmap = CoreApplication.Companion.getInstance().getBitmapFromMemCache(packageName);
                         if (bitmap != null) {
                             holder.icon.setImageBitmap(bitmap);
                         } else {
                             try {
                                 ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
                                 BitmapWorkerTask bitmapWorkerTask = new BitmapWorkerTask(appInfo, context.getPackageManager());
-                                CoreApplication.getInstance().includeTaskPool(bitmapWorkerTask, null);
+                                CoreApplication.Companion.getInstance().includeTaskPool(bitmapWorkerTask, null);
                             } catch (PackageManager.NameNotFoundException e) {
                                 e.printStackTrace();
                             }
-                            Drawable drawable = CoreApplication.getInstance().getApplicationIconFromPackageName(packageName);
+                            Drawable drawable = CoreApplication.Companion.getInstance().getApplicationIconFromPackageName(packageName);
                             holder.icon.setImageDrawable(drawable);
                         }
                     }

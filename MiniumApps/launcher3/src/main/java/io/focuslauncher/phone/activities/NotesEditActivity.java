@@ -497,7 +497,7 @@ public class NotesEditActivity extends CoreActivity implements Toolbar.OnMenuIte
                 }
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
     }
@@ -529,7 +529,7 @@ public class NotesEditActivity extends CoreActivity implements Toolbar.OnMenuIte
                         notes.put(bundle.getInt(NOTE_REQUEST_CODE), newNoteObject);
 
                     } catch (JSONException e) {
-                        CoreApplication.getInstance().logException(e);
+                        CoreApplication.Companion.getInstance().logException(e);
                         e.printStackTrace();
                     }
 
@@ -564,7 +564,7 @@ public class NotesEditActivity extends CoreActivity implements Toolbar.OnMenuIte
                     notes.put(newNoteObject);
 
                 } catch (JSONException e) {
-                    CoreApplication.getInstance().logException(e);
+                    CoreApplication.Companion.getInstance().logException(e);
                     e.printStackTrace();
                 }
 

@@ -163,7 +163,7 @@ public class EmailRequestActivity extends CoreActivity implements View.OnClickLi
                 }
                 if (activeNetwork != null) {
                     new MailChimpOperation(MailChimpOperation.EmailType.EMAIL_REG).execute(strEmail);
-                    storeDataToFirebase(CoreApplication.getInstance().getDeviceId(), strEmail, 0, 0);
+                    storeDataToFirebase(CoreApplication.Companion.getInstance().getDeviceId(), strEmail, 0, 0);
                 }
                 finish();
             } catch (Exception e) {

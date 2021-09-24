@@ -104,7 +104,7 @@ public class MainFragmentMediator {
                     items.addAll(localList);
                 }
             } catch (Exception e) {
-                CoreApplication.getInstance().logException(e);
+                CoreApplication.Companion.getInstance().logException(e);
                 Tracer.e(e, e.getMessage());
             }
         }
@@ -133,7 +133,7 @@ public class MainFragmentMediator {
                 }
             }
         } catch (Exception e) {
-            CoreApplication.getInstance().logException(e);
+            CoreApplication.Companion.getInstance().logException(e);
             Tracer.e(e, e.getMessage());
         }
 
@@ -260,7 +260,7 @@ public class MainFragmentMediator {
                                 FirebaseHelper.getInstance().logIFAction(FirebaseHelper.ACTION_CALL, "", data);
                                 EventBus.getDefault().post(new SendSmsEvent(true, "", ""));
                             } catch (Exception e) {
-                                CoreApplication.getInstance().logException(e);
+                                CoreApplication.Companion.getInstance().logException(e);
                                 e.printStackTrace();
                             }
                         } else {

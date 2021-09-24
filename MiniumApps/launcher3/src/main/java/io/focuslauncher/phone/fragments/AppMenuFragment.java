@@ -150,10 +150,10 @@ public class AppMenuFragment extends CoreFragment implements View.OnClickListene
         });
 
         switchHideIcon = view.findViewById(R.id.switchHideIcon);
-        switchHideIcon.setChecked(CoreApplication.getInstance().isHideIconBranding());
+        switchHideIcon.setChecked(CoreApplication.Companion.getInstance().isHideIconBranding());
 
         switchJunkFoodmize = view.findViewById(R.id.switchJunkFoodmize);
-        switchJunkFoodmize.setChecked(CoreApplication.getInstance().isRandomize());
+        switchJunkFoodmize.setChecked(CoreApplication.Companion.getInstance().isRandomize());
 
         switchOveruseFlagged = view.findViewById(R.id.switchOveruseFlagged);
         if (index == -1
@@ -212,11 +212,11 @@ public class AppMenuFragment extends CoreFragment implements View.OnClickListene
                     switchJunkFoodmize.setChecked(false);
                     PrefSiempo.getInstance(context).write(PrefSiempo.IS_RANDOMIZE_JUNKFOOD, false);
                     FirebaseHelper.getInstance().logIntention_IconBranding_Randomize(FirebaseHelper.RANDOMIZED_JUNK_FOOD, 0);
-                    CoreApplication.getInstance().setRandomize(false);
+                    CoreApplication.Companion.getInstance().setRandomize(false);
                 } else {
                     switchJunkFoodmize.setChecked(true);
                     PrefSiempo.getInstance(context).write(PrefSiempo.IS_RANDOMIZE_JUNKFOOD, true);
-                    CoreApplication.getInstance().setRandomize(true);
+                    CoreApplication.Companion.getInstance().setRandomize(true);
                     FirebaseHelper.getInstance().logIntention_IconBranding_Randomize(FirebaseHelper.RANDOMIZED_JUNK_FOOD, 1);
                 }
                 EventBus.getDefault().postSticky(new NotifyJunkFoodView(true));
@@ -228,7 +228,7 @@ public class AppMenuFragment extends CoreFragment implements View.OnClickListene
                     switchHideIcon.setChecked(true);
                     PrefSiempo.getInstance(context).write(PrefSiempo.IS_ICON_BRANDING, true);
                     FirebaseHelper.getInstance().logIntention_IconBranding_Randomize(FirebaseHelper.HIDE_ICON_BRANDING, 1);
-                    CoreApplication.getInstance().setHideIconBranding(true);
+                    CoreApplication.Companion.getInstance().setHideIconBranding(true);
                     EventBus.getDefault().postSticky(new NotifyJunkFoodView(true));
                     EventBus.getDefault().postSticky(new NotifyFavortieView(true));
                     EventBus.getDefault().postSticky(new NotifyToolView(true));
@@ -410,7 +410,7 @@ public class AppMenuFragment extends CoreFragment implements View.OnClickListene
                 switchHideIcon.setChecked(false);
                 PrefSiempo.getInstance(context).write(PrefSiempo.IS_ICON_BRANDING, false);
                 FirebaseHelper.getInstance().logIntention_IconBranding_Randomize(FirebaseHelper.HIDE_ICON_BRANDING, 0);
-                CoreApplication.getInstance().setHideIconBranding(false);
+                CoreApplication.Companion.getInstance().setHideIconBranding(false);
                 EventBus.getDefault().postSticky(new NotifyJunkFoodView(true));
                 EventBus.getDefault().postSticky(new NotifyFavortieView(true));
                 EventBus.getDefault().postSticky(new NotifyToolView(true));
