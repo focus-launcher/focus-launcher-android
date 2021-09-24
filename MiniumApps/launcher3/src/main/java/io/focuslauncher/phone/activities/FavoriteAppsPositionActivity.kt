@@ -31,6 +31,7 @@ import android.widget.ImageView
 import com.google.gson.Gson
 import io.focuslauncher.databinding.ActivityFavoriteAppsPositioningBinding
 import io.focuslauncher.phone.util.AppUtils
+import io.focuslauncher.phone.utils.bindView
 import io.focuslauncher.phone.utils.lifecycleProperty
 import java.io.File
 import java.lang.Exception
@@ -48,8 +49,7 @@ class FavoriteAppsPositionActivity : CoreActivity(), OnFavoriteItemListChangedLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFavoriteAppsPositioningBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
+        binding = bindView(ActivityFavoriteAppsPositioningBinding::inflate)
         val filePath = PrefSiempo.getInstance(this).read(PrefSiempo.DEFAULT_BAG, "")
         try {
             if (!TextUtils.isEmpty(filePath)) {

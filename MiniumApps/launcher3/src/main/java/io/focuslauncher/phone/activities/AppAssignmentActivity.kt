@@ -20,10 +20,7 @@ import io.focuslauncher.phone.event.AppInstalledEvent
 import io.focuslauncher.phone.event.NotifySearchRefresh
 import io.focuslauncher.phone.helper.FirebaseHelper
 import io.focuslauncher.phone.models.MainListItem
-import io.focuslauncher.phone.utils.NetworkUtil
-import io.focuslauncher.phone.utils.PrefSiempo
-import io.focuslauncher.phone.utils.Sorting
-import io.focuslauncher.phone.utils.lifecycleProperty
+import io.focuslauncher.phone.utils.*
 
 class AppAssignmentActivity : CoreActivity() {
     var appList: MutableList<ResolveInfo> = ArrayList()
@@ -59,8 +56,7 @@ class AppAssignmentActivity : CoreActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAppAssignementBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
+        binding = bindView(ActivityAppAssignementBinding::inflate)
         mainListItem = intent.getSerializableExtra(Constants.INTENT_MAINLISTITEM) as MainListItem?
         className = intent.getStringExtra("class_name")
         if (mainListItem != null) {

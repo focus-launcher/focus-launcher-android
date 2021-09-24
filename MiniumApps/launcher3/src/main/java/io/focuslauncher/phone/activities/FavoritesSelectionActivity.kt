@@ -54,8 +54,7 @@ class FavoritesSelectionActivity : CoreActivity(), AdapterView.OnItemClickListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFavoriteSelectionBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
+        binding = bindView(ActivityFavoriteSelectionBinding::inflate)
         initView()
         list = PrefSiempo.getInstance(this).read(PrefSiempo.FAVORITE_APPS, HashSet())
         adapterList = HashSet()

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import io.focuslauncher.R
 import io.focuslauncher.databinding.FragmentPrivacyPolicyBinding
 import io.focuslauncher.phone.helper.FirebaseHelper
+import io.focuslauncher.phone.utils.bindView
 import io.focuslauncher.phone.utils.lifecycleProperty
 import java.lang.Exception
 
@@ -23,7 +24,7 @@ class PrivacyPolicyActivity : CoreActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_faq)
+        binding = bindView(FragmentPrivacyPolicyBinding::inflate)
         binding?.toolbar?.apply {
             setNavigationIcon(R.drawable.ic_arrow_back_blue_24dp)
             setTitle(R.string.privacypolicy)
@@ -33,7 +34,7 @@ class PrivacyPolicyActivity : CoreActivity() {
         //web_Faq = findViewById(R.id.web_Faq);
         try {
             binding?.webPrivacyPolicy?.apply {
-                getSettings().javaScriptEnabled = true
+                settings.javaScriptEnabled = true
                 loadUrl(getString(R.string.url_privicey_policy))
                 setBackgroundColor(Color.TRANSPARENT)
             }

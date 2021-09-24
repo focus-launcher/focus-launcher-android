@@ -5,14 +5,12 @@ import org.androidannotations.annotations.EActivity
 import io.focuslauncher.R
 import io.focuslauncher.phone.activities.CoreActivity
 import org.androidannotations.annotations.ViewById
-import io.focuslauncher.phone.utils.PermissionUtil
 import android.app.ProgressDialog
 import com.google.android.gms.location.LocationRequest
 import android.location.LocationManager
 import android.content.BroadcastReceiver
 import android.content.Intent
 import io.focuslauncher.phone.activities.AlphaSettingsActivity
-import io.focuslauncher.phone.utils.PrefSiempo
 import io.focuslauncher.phone.event.StartLocationEvent
 import org.androidannotations.annotations.AfterViews
 import com.joanzapata.iconify.IconDrawable
@@ -47,8 +45,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.firebase.database.*
 import de.greenrobot.event.EventBus
 import io.focuslauncher.databinding.ActivitySiempoAlphaSettingsBinding
-import io.focuslauncher.phone.utils.lifecycleProperty
-import io.focuslauncher.phone.utils.locationManager
+import io.focuslauncher.phone.utils.*
 import java.lang.Exception
 import java.util.ArrayList
 import java.util.HashMap
@@ -68,8 +65,7 @@ open class AlphaSettingsActivity : CoreActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySiempoAlphaSettingsBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
+        binding = bindView(ActivitySiempoAlphaSettingsBinding::inflate)
         initView()
         onClickEvents()
     }

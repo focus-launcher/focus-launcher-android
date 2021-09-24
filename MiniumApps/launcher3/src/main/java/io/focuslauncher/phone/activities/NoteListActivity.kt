@@ -27,6 +27,7 @@ import io.focuslauncher.databinding.ActivityMainNotesBinding
 import io.focuslauncher.phone.helper.FirebaseHelper
 import io.focuslauncher.phone.log.Tracer
 import io.focuslauncher.phone.utils.DataUtils
+import io.focuslauncher.phone.utils.bindView
 import io.focuslauncher.phone.utils.lifecycleProperty
 import java.io.File
 import java.lang.Exception
@@ -170,9 +171,7 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
 
         // If not null -> equal main notes to retrieved notes
         if (tempNotes != null) notes = tempNotes
-        binding = ActivityMainNotesBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
-
+        binding = bindView(ActivityMainNotesBinding::inflate)
         // Init layout components
         initToolbar()
         newNoteButtonBaseYCoordinate = binding?.fab?.y ?: 0f

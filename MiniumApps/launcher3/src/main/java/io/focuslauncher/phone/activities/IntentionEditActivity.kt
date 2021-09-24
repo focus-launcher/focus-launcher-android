@@ -26,6 +26,7 @@ import io.focuslauncher.databinding.ActivityIntentionEditBinding
 import io.focuslauncher.phone.helper.FirebaseHelper
 import io.focuslauncher.phone.utils.PrefSiempo
 import io.focuslauncher.phone.utils.UIUtils
+import io.focuslauncher.phone.utils.bindView
 import io.focuslauncher.phone.utils.lifecycleProperty
 
 class IntentionEditActivity : CoreActivity(), View.OnClickListener {
@@ -40,8 +41,7 @@ class IntentionEditActivity : CoreActivity(), View.OnClickListener {
         window.enterTransition = enterTrans
         val returnTrans: Transition = Slide()
         window.returnTransition = returnTrans
-        binding = ActivityIntentionEditBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
+        binding = bindView(ActivityIntentionEditBinding::inflate)
         val window = window
         //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.statusBarColor = resources.getColor(R.color.bg_permissionscreenstatusbar)

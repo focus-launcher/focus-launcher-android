@@ -10,6 +10,7 @@ import io.focuslauncher.databinding.ActivityTempoSettingsBinding
 import io.focuslauncher.phone.fragments.AppMenuFragment
 import io.focuslauncher.phone.fragments.TempoSettingsFragment
 import io.focuslauncher.phone.utils.PrefSiempo
+import io.focuslauncher.phone.utils.bindView
 import io.focuslauncher.phone.utils.lifecycleProperty
 
 open class SettingsActivity : CoreActivity() {
@@ -18,8 +19,7 @@ open class SettingsActivity : CoreActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTempoSettingsBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding?.root)
+        binding = bindView(ActivityTempoSettingsBinding::inflate)
 
         if (intent.hasExtra("FlagApp")) {
             loadFragment(AppMenuFragment.newInstance(true), R.id.tempoView, "main")
