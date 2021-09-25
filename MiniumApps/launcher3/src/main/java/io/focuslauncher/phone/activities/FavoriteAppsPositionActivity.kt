@@ -7,9 +7,6 @@ import io.focuslauncher.phone.adapters.FavoritePositioningAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.focuslauncher.phone.customviews.ItemOffsetDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import android.widget.TextView
-import android.widget.RelativeLayout
-import android.widget.LinearLayout
 import android.os.Bundle
 import io.focuslauncher.R
 import io.focuslauncher.phone.utils.PrefSiempo
@@ -25,9 +22,7 @@ import io.focuslauncher.phone.app.CoreApplication
 import io.focuslauncher.phone.main.SimpleItemTouchHelperCallback
 import android.content.Intent
 import android.net.Uri
-import android.view.LayoutInflater
 import android.view.Menu
-import android.widget.ImageView
 import com.google.gson.Gson
 import io.focuslauncher.databinding.ActivityFavoriteAppsPositioningBinding
 import io.focuslauncher.phone.util.AppUtils
@@ -41,7 +36,7 @@ class FavoriteAppsPositionActivity : CoreActivity(), OnFavoriteItemListChangedLi
 
     private var items = ArrayList<MainListItem>()
 
-    private var adapter: FavoritePositioningAdapter? = null
+    private var favoritesAdapter: FavoritePositioningAdapter? = null
     private var itemTouchHelper: ItemTouchHelper? = null
     private var startTime: Long = 0
 
@@ -103,14 +98,20 @@ class FavoriteAppsPositionActivity : CoreActivity(), OnFavoriteItemListChangedLi
         }
         items = ArrayList()
         items = PackageUtil.getFavoriteList(this, false)
-        adapter = FavoritePositioningAdapter(this, CoreApplication.getInstance().isHideIconBranding, items, this, this)
-        val callback: ItemTouchHelper.Callback = SimpleItemTouchHelperCallback(adapter, this)
+        favoritesAdapter = FavoritePositioningAdapter(
+            this,
+            CoreApplication.getInstance().isHideIconBranding,
+            items,
+            this,
+            this
+        )
+        val callback: ItemTouchHelper.Callback = SimpleItemTouchHelperCallback(favoritesAdapter, this)
         itemTouchHelper = ItemTouchHelper(callback)
         binding?.recyclerView?.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context, 4)
             addItemDecoration(ItemOffsetDecoration(context, R.dimen.dp_10))
-            this.adapter = adapter
+            adapter = favoritesAdapter
             itemTouchHelper?.attachToRecyclerView(this)
         }
         binding?.txtSelectTools?.setOnClickListener {
