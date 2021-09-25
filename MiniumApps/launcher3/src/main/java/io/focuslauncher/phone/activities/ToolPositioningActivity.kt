@@ -1,247 +1,154 @@
-package io.focuslauncher.phone.activities;
+package io.focuslauncher.phone.activities
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
-import androidx.annotation.ColorRes;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import android.text.SpannableString;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.gson.Gson
+import io.focuslauncher.R
+import io.focuslauncher.databinding.ActivityToolPositioningBinding
+import io.focuslauncher.phone.adapters.ToolPositioningAdapter
+import io.focuslauncher.phone.app.CoreApplication
+import io.focuslauncher.phone.customviews.ItemOffsetDecoration
+import io.focuslauncher.phone.helper.FirebaseHelper
+import io.focuslauncher.phone.interfaces.OnToolItemListChangedListener
+import io.focuslauncher.phone.main.MainListItemLoader
+import io.focuslauncher.phone.main.OnStartDragListener
+import io.focuslauncher.phone.main.SimpleItemTouchHelperCallback
+import io.focuslauncher.phone.models.AppMenu
+import io.focuslauncher.phone.models.MainListItem
+import io.focuslauncher.phone.service.LoadToolPane
+import io.focuslauncher.phone.util.AppUtils
+import io.focuslauncher.phone.utils.PackageUtil
+import io.focuslauncher.phone.utils.PrefSiempo
+import io.focuslauncher.phone.utils.bindView
+import io.focuslauncher.phone.utils.lifecycleProperty
+import java.io.File
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.gson.Gson;
+class ToolPositioningActivity : CoreActivity(), OnToolItemListChangedListener, OnStartDragListener {
+    var map = HashMap<Int, AppMenu>()
+    private var items = ArrayList<MainListItem>()
+    private var sortedList = ArrayList<MainListItem>()
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+    private var binding: ActivityToolPositioningBinding? by lifecycleProperty()
 
-import io.focuslauncher.R;
-import io.focuslauncher.phone.adapters.ToolPositioningAdapter;
-import io.focuslauncher.phone.app.CoreApplication;
-import io.focuslauncher.phone.customviews.ItemOffsetDecoration;
-import io.focuslauncher.phone.helper.FirebaseHelper;
-import io.focuslauncher.phone.interfaces.OnToolItemListChangedListener;
-import io.focuslauncher.phone.main.MainListItemLoader;
-import io.focuslauncher.phone.main.OnStartDragListener;
-import io.focuslauncher.phone.main.SimpleItemTouchHelperCallback;
-import io.focuslauncher.phone.models.AppMenu;
-import io.focuslauncher.phone.models.MainListItem;
-import io.focuslauncher.phone.service.LoadToolPane;
-import io.focuslauncher.phone.util.AppUtils;
-import io.focuslauncher.phone.utils.PackageUtil;
-import io.focuslauncher.phone.utils.PrefSiempo;
+    private var toolsAdapter: ToolPositioningAdapter? = null
+    private var mItemTouchHelper: ItemTouchHelper? = null
+    private var startTime: Long = 0
 
-public class ToolPositioningActivity extends CoreActivity implements OnToolItemListChangedListener,
-        OnStartDragListener {
-    HashMap<Integer, AppMenu> map = new HashMap<>();
-    LinearLayout linMain;
-    private ArrayList<MainListItem> items = new ArrayList<>();
-    private ArrayList<MainListItem> topItems = new ArrayList<>();
-    private ArrayList<MainListItem> bottomItems = new ArrayList<>();
-    private ArrayList<MainListItem> sortedList = new ArrayList<>();
-    private ToolPositioningAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ItemOffsetDecoration itemDecoration;
-    private ItemTouchHelper mItemTouchHelper;
-    private Parcelable mListState;
-    private RecyclerView recyclerView;
-    private Toolbar toolbar;
-    private TextView txtSelectTools;
-    private RelativeLayout relTop;
-    private LinearLayout linearTop;
-    private long startTime = 0;
-    private RelativeLayout relMain;
-    private ImageView imgBackground;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tool_positioning);
-        relMain = findViewById(R.id.relMain);
-        linMain = findViewById(R.id.linMain);
-        imgBackground = findViewById(R.id.imgBackground);
-        String filePath = PrefSiempo.getInstance(this).read(PrefSiempo
-                .DEFAULT_BAG, "");
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = bindView(ActivityToolPositioningBinding::inflate)
+        val filePath = PrefSiempo.getInstance(this).read(PrefSiempo.DEFAULT_BAG, "")
         try {
             if (!TextUtils.isEmpty(filePath)) {
-                //Code for Applying background
                 Glide.with(this)
-                        .load(Uri.fromFile(new File(filePath))) // Uri of the
-                        // picture
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(imgBackground);
-                linMain.setBackgroundColor(ContextCompat.getColor(this, R.color
-                        .trans_black_bg));
+                    .load(Uri.fromFile(File(filePath)))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding?.imgBackground)
+                binding?.linMain?.setBackgroundColor(ContextCompat.getColor(this, R.color.trans_black_bg))
             } else {
-
-                imgBackground.setImageBitmap(null);
-                imgBackground.setBackground(null);
-                linMain.setBackgroundColor(ContextCompat.getColor(this, R.color
-                        .transparent));
+                binding?.imgBackground?.setImageBitmap(null)
+                binding?.imgBackground?.background = null
+                binding?.linMain?.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        /*StatusBarUtil.setTranslucent(this);
-        boolean read = PrefSiempo.getInstance(this).read(PrefSiempo.IS_DARK_THEME, false);
-        if (read) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black));
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().setStatusBarColor(getResources().getColor(R.color.white));
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-        }*/
-        AppUtils.notificationBarManaged(this, null);
-        AppUtils.statusBarManaged(this);
-        AppUtils.statusbarColor0(this, 1);
+        AppUtils.notificationBarManaged(this, null)
+        AppUtils.statusBarManaged(this)
+        AppUtils.statusbarColor0(this, 1)
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startTime = System.currentTimeMillis();
-        map = CoreApplication.getInstance().getToolsSettings();
-        initView();
+    override fun onResume() {
+        super.onResume()
+        startTime = System.currentTimeMillis()
+        map = CoreApplication.getInstance().toolsSettings
+        initView()
     }
 
-    private void setTextColorForMenuItem(MenuItem menuItem, @ColorRes int color) {
-        SpannableString spanString = new SpannableString(menuItem.getTitle().toString());
-        spanString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, color)), 0, spanString.length(), 0);
-        menuItem.setTitle(spanString);
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.app_junkfood_flagging, menu)
+        val menuItem = menu.findItem(R.id.item_save)
+        menuItem.setOnMenuItemClickListener { item: MenuItem? ->
+            finish()
+            false
+        }
+        return super.onCreateOptionsMenu(menu)
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.app_junkfood_flagging, menu);
-        MenuItem menuItem = menu.findItem(R.id.item_save);
-//        setTextColorForMenuItem(menuItem, R.color.colorAccent);
-        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                finish();
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
+    override fun onPause() {
+        super.onPause()
+        for (i in sortedList.indices) {
+            map[sortedList[i].id]?.isBottomDoc = i >= 40
+        }
+        val hashMapToolSettings = Gson().toJson(map)
+        PrefSiempo.getInstance(this).write(PrefSiempo.TOOLS_SETTING, hashMapToolSettings)
+        LoadToolPane().execute()
+        FirebaseHelper.getInstance().logScreenUsageTime(this.javaClass.simpleName, startTime)
     }
 
+    private fun initView() {
+        binding?.toolbar?.apply {
+            setTitle(R.string.editing_tools)
+            setSupportActionBar(this)
+            setOnClickListener { finish() }
+        }
+        items = ArrayList()
+        MainListItemLoader().loadItemsDefaultApp(items)
+        items = PackageUtil.getToolsMenuData(this, items)
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        for (int i = 0; i < sortedList.size(); i++) {
-
-            if (i >= 40) {
-                map.get(sortedList.get(i).getId()).setBottomDoc(true);
-            } else {
-                map.get(sortedList.get(i).getId()).setBottomDoc(false);
-            }
+        binding?.recyclerView?.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(context, 4)
+            addItemDecoration(ItemOffsetDecoration(context, R.dimen.dp_10))
+            toolsAdapter = ToolPositioningAdapter(
+                this@ToolPositioningActivity,
+                items,
+                this@ToolPositioningActivity,
+                this@ToolPositioningActivity,
+                CoreApplication.getInstance().isHideIconBranding
+            )
+            val callback: ItemTouchHelper.Callback = SimpleItemTouchHelperCallback(toolsAdapter, context)
+            mItemTouchHelper = ItemTouchHelper(callback)
+            mItemTouchHelper?.attachToRecyclerView(this)
+            adapter = toolsAdapter
         }
 
-        String hashMapToolSettings = new Gson().toJson(map);
-        PrefSiempo.getInstance(this).write(PrefSiempo.TOOLS_SETTING, hashMapToolSettings);
-        new LoadToolPane().execute();
-        FirebaseHelper.getInstance().logScreenUsageTime(this.getClass().getSimpleName(), startTime);
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    private void initView() {
-
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.editing_tools);
-        setSupportActionBar(toolbar);
-        items = new ArrayList<>();
-        new MainListItemLoader().loadItemsDefaultApp(items);
-        items = PackageUtil.getToolsMenuData(this, items);
-        recyclerView = findViewById(R.id.recyclerView);
-        txtSelectTools = findViewById(R.id.txtSelectTools);
-        recyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(this, 4);
-
-        recyclerView.setLayoutManager(mLayoutManager);
-        if (itemDecoration != null) {
-            recyclerView.removeItemDecoration(itemDecoration);
+        binding?.txtSelectTools?.setOnClickListener {
+            val intent = Intent(this@ToolPositioningActivity, ToolSelectionActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
         }
-        itemDecoration = new ItemOffsetDecoration(this, R.dimen.dp_10);
-        recyclerView.addItemDecoration(itemDecoration);
-        mAdapter = new ToolPositioningAdapter(this, items, this, this, CoreApplication.getInstance().isHideIconBranding());
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter, this);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(recyclerView);
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        txtSelectTools.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ToolPositioningActivity.this, ToolSelectionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                intent.putExtra("TopList", topItems);
-//                intent.putExtra("BottomList", bottomItems);
-                startActivity(intent);
-            }
-        });
-        linearTop = findViewById(R.id.linearTop);
-        linearTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        relTop = findViewById(R.id.relTop);
-        relTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
+        binding?.linearTop?.setOnClickListener { finish() }
+        binding?.relTop?.setOnClickListener { finish() }
     }
 
-    @Override
-    public void onToolItemListChanged(ArrayList<MainListItem> customers, int toposition) {
-        ArrayList<Long> listOfSortedCustomerId = new ArrayList<>();
-        for (MainListItem customer : customers) {
-            listOfSortedCustomerId.add((long) customer.getId());
+    override fun onToolItemListChanged(customers: ArrayList<MainListItem>, toposition: Int) {
+        val listOfSortedCustomerId = ArrayList<Long>()
+        for (customer in customers) {
+            listOfSortedCustomerId.add(customer.id.toLong())
         }
-        sortedList = customers;
-        Gson gson = new Gson();
-        String jsonListOfSortedCustomerIds = gson.toJson(listOfSortedCustomerId);
-        PrefSiempo.getInstance(this).write(PrefSiempo.SORTED_MENU, jsonListOfSortedCustomerIds);
+        sortedList = customers
+        val gson = Gson()
+        val jsonListOfSortedCustomerIds = gson.toJson(listOfSortedCustomerId)
+        PrefSiempo.getInstance(this).write(PrefSiempo.SORTED_MENU, jsonListOfSortedCustomerIds)
     }
 
-
-    @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
+    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+        mItemTouchHelper?.startDrag(viewHolder)
     }
-
 }
