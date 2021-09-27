@@ -74,7 +74,7 @@ class FavoritesSelectionActivity : CoreActivity(), AdapterView.OnItemClickListen
         binding?.edtSearch?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    junkfoodFlaggingAdapter?.filter?.filter(s.toString())
+                junkfoodFlaggingAdapter?.filter?.filter(s.toString())
                 if (s.toString().isNotEmpty()) {
                     binding?.imgClear?.visibility = View.VISIBLE
                 } else {
@@ -199,15 +199,15 @@ class FavoritesSelectionActivity : CoreActivity(), AdapterView.OnItemClickListen
     /**
      * show pop dialog on List item click for flag/un-flag and application information.
      */
-    fun showPopUp(view: View?, packagename: String, isFlagApp: Boolean) {
+    fun showPopUp(view: View, packagename: String, isFlagApp: Boolean) {
         popup?.dismiss()
-        popup = PopupMenu(this@FavoritesSelectionActivity, view!!, Gravity.END)
+        popup = PopupMenu(this@FavoritesSelectionActivity, view, Gravity.END)
         popup?.menuInflater?.inflate(R.menu.junkfood_popup, popup?.menu)
         val menuItem = popup?.menu?.findItem(R.id.item_Unflag)
         if (isFlagApp) {
             menuItem?.isVisible = favoriteList?.size != 2
         } else {
-            menuItem?.isVisible = favoriteList != null && favoriteList!!.size < 13
+            menuItem?.isVisible = favoriteList != null && favoriteList?.size?.let { it < 13 } == true
         }
         menuItem?.title = if (isFlagApp) getString(R.string.favorite_menu_unselect)
         else getString(R.string.favorite_menu_select)
@@ -291,7 +291,7 @@ class FavoritesSelectionActivity : CoreActivity(), AdapterView.OnItemClickListen
 
         override fun doInBackground(vararg params: String?): ArrayList<AppListInfo> {
             try {
-                for (resolveInfo in installedPackageList!!) {
+                for (resolveInfo in installedPackageList.orEmpty()) {
                     if (!resolveInfo.equals(packageName, ignoreCase = true)) {
                         val isEnable = UIUtils.isAppInstalledAndEnabled(this@FavoritesSelectionActivity, resolveInfo)
                         if (isEnable) {

@@ -68,12 +68,12 @@ open class AlphaSettingsActivity : CoreActivity() {
                     && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 ) {
                     //If GPS turned OFF show Location Dialog
-                    if (dialog != null && dialog!!.isShowing) {
-                        dialog!!.dismiss()
+                    if (dialog?.isShowing == true) {
+                        dialog?.dismiss()
                     }
                     binding?.switchLocation?.isChecked = false
-                    binding?.longitude!!.visibility = View.GONE
-                    binding?.latitude!!.visibility = View.GONE
+                    binding?.longitude?.visibility = View.GONE
+                    binding?.latitude?.visibility = View.GONE
                     PrefSiempo.getInstance(context).write(
                         PrefSiempo.LOCATION_STATUS,
                         false
@@ -144,8 +144,8 @@ open class AlphaSettingsActivity : CoreActivity() {
         binding?.relLocation?.setOnClickListener {
             if (binding?.switchLocation?.isChecked == true) {
                 binding?.switchLocation?.isChecked = false
-                binding?.longitude!!.visibility = View.GONE
-                binding?.latitude!!.visibility = View.GONE
+                binding?.longitude?.visibility = View.GONE
+                binding?.latitude?.visibility = View.GONE
                 PrefSiempo.getInstance(this).write(
                     PrefSiempo.LOCATION_STATUS,
                     false
@@ -187,21 +187,21 @@ open class AlphaSettingsActivity : CoreActivity() {
             || locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) == false
             && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         ) {
-            if (dialog != null && dialog!!.isShowing) {
-                dialog!!.dismiss()
+            if (dialog?.isShowing == true) {
+                dialog?.dismiss()
             }
             binding?.switchLocation?.isChecked = false
             EventBus.getDefault().post(StartLocationEvent(false))
             PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, false)
             EventBus.getDefault().post(StartLocationEvent(false))
-            binding?.longitude!!.visibility = View.GONE
-            binding?.latitude!!.visibility = View.GONE
+            binding?.longitude?.visibility = View.GONE
+            binding?.latitude?.visibility = View.GONE
         }
     }
 
     //For Checking Location Permission
     private fun checkPermissionAndFindLocation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !permissionUtil!!.hasGiven(PermissionUtil.LOCATION_PERMISSION)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && permissionUtil?.hasGiven(PermissionUtil.LOCATION_PERMISSION) == false) {
             try {
                 TedPermission.with(this)
                     .setPermissionListener(object : PermissionListener {
@@ -239,9 +239,9 @@ open class AlphaSettingsActivity : CoreActivity() {
             .checkLocationSettings(settingsRequest)
         task.addOnSuccessListener(this) {
             if (dialog != null) {
-                dialog!!.show()
-                dialog!!.setMessage("Fetching Location")
-                dialog!!.setCancelable(false)
+                dialog?.show()
+                dialog?.setMessage("Fetching Location")
+                dialog?.setCancelable(false)
             }
             EventBus.getDefault().post(StartLocationEvent(true))
         }
@@ -266,18 +266,20 @@ open class AlphaSettingsActivity : CoreActivity() {
     //Updating Location Lat,Long values
     @Subscribe(sticky = true)
     fun LocationUpdateEvent(event: LocationUpdateEvent?) {
-        val switch_status = PrefSiempo.getInstance(this).read(PrefSiempo.LOCATION_STATUS, false)
-        if (switch_status) {
-            if (dialog != null && dialog!!.isShowing && event != null) {
-                dialog!!.dismiss()
+        val switchStatus = PrefSiempo.getInstance(this).read(PrefSiempo.LOCATION_STATUS, false)
+        if (switchStatus) {
+            if (dialog?.isShowing == true && event != null) {
+                dialog?.dismiss()
             }
-            binding?.longitude!!.text = "longitude: " + event!!.longitude
-            binding?.latitude!!.text = "latitude: " + event.latitude
+            binding?.longitude?.text = "longitude: " + (event?.longitude ?: "")
+            binding?.latitude?.text = "latitude: " + (event?.latitude ?: "")
             val userEmail = PrefSiempo.getInstance(this).read(PrefSiempo.USER_EMAILID, "")
-            storeDataToFirebase(CoreApplication.getInstance().deviceId, userEmail, event.latitude, event.longitude)
+            if (event != null) {
+                storeDataToFirebase(CoreApplication.getInstance().deviceId, userEmail, event.latitude, event.longitude)
+            }
             binding?.switchLocation?.isChecked = true
-            binding?.longitude!!.visibility = View.VISIBLE
-            binding?.latitude!!.visibility = View.VISIBLE
+            binding?.longitude?.visibility = View.VISIBLE
+            binding?.latitude?.visibility = View.VISIBLE
         }
         EventBus.getDefault().removeStickyEvent(event)
     }
@@ -325,8 +327,8 @@ open class AlphaSettingsActivity : CoreActivity() {
                     showLocation()
                 }
                 RESULT_CANCELED -> {
-                    if (dialog != null && dialog!!.isShowing) {
-                        dialog!!.dismiss()
+                    if (dialog?.isShowing == true) {
+                        dialog?.dismiss()
                     }
                     binding?.switchLocation?.isChecked = false
                     PrefSiempo.getInstance(this).write(PrefSiempo.LOCATION_STATUS, false)
