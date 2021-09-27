@@ -70,7 +70,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
                 binding?.bodyEdit?.requestFocus()
                 binding?.bodyEdit?.setSelection(binding?.bodyEdit?.text?.length ?: 0)
                 // Force show keyboard
-                imm!!.toggleSoftInput(
+                imm?.toggleSoftInput(
                     InputMethodManager.SHOW_FORCED,
                     InputMethodManager.HIDE_IMPLICIT_ONLY
                 )
@@ -80,22 +80,23 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
         })
 
         bundle = intent.extras
+        val bundle = bundle
         if (bundle != null) {
-            Tracer.i("Notes Edit" + bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE))
-            if (bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE) != DataUtils.NEW_NOTE_REQUEST) {
-                colour = bundle!!.getString(DataUtils.NOTE_COLOUR)
+            Tracer.i("Notes Edit" + bundle.getInt(DataUtils.NOTE_REQUEST_CODE))
+            if (bundle.getInt(DataUtils.NOTE_REQUEST_CODE) != DataUtils.NEW_NOTE_REQUEST) {
+                colour = bundle.getString(DataUtils.NOTE_COLOUR)
                 if (TextUtils.isEmpty(colour)) {
                     colour = "#FFFFFF"
                 }
-                fontSize = bundle!!.getInt(DataUtils.NOTE_FONT_SIZE)
-                hideBody = bundle!!.getBoolean(DataUtils.NOTE_HIDE_BODY)
-                binding?.titleEdit?.setText(bundle!!.getString(DataUtils.NOTE_TITLE))
-                binding?.bodyEdit?.setText(bundle!!.getString(DataUtils.NOTE_BODY))
+                fontSize = bundle.getInt(DataUtils.NOTE_FONT_SIZE)
+                hideBody = bundle.getBoolean(DataUtils.NOTE_HIDE_BODY)
+                binding?.titleEdit?.setText(bundle.getString(DataUtils.NOTE_TITLE))
+                binding?.bodyEdit?.setText(bundle.getString(DataUtils.NOTE_BODY))
                 binding?.bodyEdit?.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize.toFloat())
-                if (hideBody) menuHideBody!!.setTitle(R.string.label_showNoteBody)
-            } else if (bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE) == DataUtils.NEW_NOTE_REQUEST) {
+                if (hideBody) menuHideBody?.setTitle(R.string.label_showNoteBody)
+            } else if (bundle.getInt(DataUtils.NOTE_REQUEST_CODE) == DataUtils.NEW_NOTE_REQUEST) {
                 binding?.titleEdit?.requestFocus()
-                imm!!.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+                imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
 
 
@@ -137,7 +138,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
             for (aColour in colourArr) if (aColour == selectedColourAsString) colour = aColour
 
             // Re-set background colour
-            binding?.relativeLayoutEdit!!.setBackgroundColor(Color.parseColor(colour))
+            binding?.relativeLayoutEdit?.setBackgroundColor(Color.parseColor(colour))
         }
 
 
@@ -160,13 +161,13 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
                 if (!isEmpty(binding?.titleEdit)) saveChanges() else toastEditTextCannotBeEmpty()
             }
             .setNegativeButton(R.string.label_no) { dialog, which -> // If 'No' clicked in new note -> put extra 'discard' to show toast
-                if (bundle != null && bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE) ==
+                if (bundle != null && bundle?.getInt(DataUtils.NOTE_REQUEST_CODE) ==
                     DataUtils.NEW_NOTE_REQUEST
                 ) {
                     val intent = Intent()
                     intent.putExtra("request", "discard")
                     setResult(RESULT_CANCELED, intent)
-                    imm!!.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
+                    imm?.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
                     dialog.dismiss()
                     finish()
                     overridePendingTransition(0, 0)
@@ -186,13 +187,13 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
 
         // Note colour menu item clicked -> show colour picker dialog
         if (id == R.id.action_note_colour) {
-            colorPickerDialog!!.show(fragmentManager, "colourPicker")
+            colorPickerDialog?.show(fragmentManager, "colourPicker")
             return true
         }
 
         // Font size menu item clicked -> show font picker dialog
         if (id == R.id.action_font_size) {
-            fontDialog!!.show()
+            fontDialog?.show()
             return true
         }
 
@@ -201,7 +202,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
             // If hideBody false -> set to true and change menu item text to 'Show note body in list'
             if (!hideBody) {
                 hideBody = true
-                menuHideBody!!.setTitle(R.string.label_showNoteBody)
+                menuHideBody?.setTitle(R.string.label_showNoteBody)
 
                 // Toast note body will be hidden
                 val toast = Toast.makeText(
@@ -212,7 +213,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
                 toast.show()
             } else {
                 hideBody = false
-                menuHideBody!!.setTitle(R.string.label_hideNoteBody)
+                menuHideBody?.setTitle(R.string.label_hideNoteBody)
 
                 // Toast note body will be shown
                 val toast = Toast.makeText(
@@ -241,7 +242,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
         intent.putExtra(DataUtils.NOTE_FONT_SIZE, fontSize)
         intent.putExtra(DataUtils.NOTE_HIDE_BODY, hideBody)
         setResult(RESULT_OK, intent)
-        imm!!.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
+        imm?.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
         finish()
         overridePendingTransition(0, 0)
     }
@@ -252,26 +253,23 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
     override fun onBackPressed() {
         // New note -> show 'Save changes?' dialog
         try {
-            if (bundle != null && bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE) == DataUtils.NEW_NOTE_REQUEST) saveChangesDialog!!.show() else {
-                /*
-             * If title is not empty -> Check if note changed
-             *  If yes -> saveChanges
-             *  If not -> hide keyboard if showing and finish
-             */
+            val bundle = bundle ?: return
+            if (bundle.getInt(DataUtils.NOTE_REQUEST_CODE) == DataUtils.NEW_NOTE_REQUEST) {
+                saveChangesDialog?.show()
+            } else {
                 if (!isEmpty(binding?.titleEdit)) {
-                    if (bundle != null && bundle!!.containsKey(DataUtils.NOTE_TITLE) && binding?.titleEdit?.text.toString() != bundle!!.getString(
-                            DataUtils.NOTE_TITLE
-                        ) ||
-                        bundle!!.containsKey(DataUtils.NOTE_BODY) && binding?.bodyEdit?.text.toString() != bundle!!.getString(
-                            DataUtils.NOTE_BODY
-                        ) ||
-                        bundle!!.containsKey(DataUtils.NOTE_BODY) && colour != bundle!!.getString(DataUtils.NOTE_COLOUR) || fontSize != bundle!!.getInt(
-                            DataUtils.NOTE_FONT_SIZE
-                        ) || hideBody != bundle!!.getBoolean(DataUtils.NOTE_HIDE_BODY)
+                    if (bundle.containsKey(DataUtils.NOTE_TITLE)
+                        && binding?.titleEdit?.text.toString() != bundle.getString(DataUtils.NOTE_TITLE)
+                        || bundle.containsKey(DataUtils.NOTE_BODY)
+                        && binding?.bodyEdit?.text.toString() != bundle.getString(DataUtils.NOTE_BODY)
+                        || bundle.containsKey(DataUtils.NOTE_BODY)
+                        && colour != bundle.getString(DataUtils.NOTE_COLOUR)
+                        || fontSize != bundle.getInt(DataUtils.NOTE_FONT_SIZE)
+                        || hideBody != bundle.getBoolean(DataUtils.NOTE_HIDE_BODY)
                     ) {
                         saveChanges()
                     } else {
-                        imm!!.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
+                        imm?.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
                         finish()
                         overridePendingTransition(0, 0)
                     }
@@ -289,7 +287,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
      * @return true if empty, false otherwise
      */
     protected fun isEmpty(editText: EditText?): Boolean {
-        return editText!!.text.toString().trim { it <= ' ' }.length == 0
+        return editText?.text.toString().trim { it <= ' ' }.isEmpty()
     }
 
     /**
@@ -311,7 +309,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
      */
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (!hasFocus) if (imm != null && binding?.titleEdit != null) imm!!.hideSoftInputFromWindow(
+        if (!hasFocus) if (imm != null && binding?.titleEdit != null) imm?.hideSoftInputFromWindow(
             binding?.titleEdit?.windowToken,
             0
         )
@@ -324,9 +322,9 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
      * @param newConfig Configuration passed by system
      */
     override fun onConfigurationChanged(newConfig: Configuration) {
-        if (colorPickerDialog != null && colorPickerDialog!!.isDialogShowing) colorPickerDialog!!.dismiss()
-        if (fontDialog != null && fontDialog!!.isShowing) fontDialog!!.dismiss()
-        if (saveChangesDialog != null && saveChangesDialog!!.isShowing) saveChangesDialog!!.dismiss()
+        if (colorPickerDialog != null && colorPickerDialog?.isDialogShowing == true) colorPickerDialog?.dismiss()
+        if (fontDialog != null && fontDialog?.isShowing == true) fontDialog?.dismiss()
+        if (saveChangesDialog != null && saveChangesDialog?.isShowing == true) saveChangesDialog?.dismiss()
         super.onConfigurationChanged(newConfig)
     }
 
@@ -340,7 +338,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
                     val intent = Intent()
                     intent.putExtra("request", "HOME")
                     setResult(RESULT_CANCELED, intent)
-                    imm!!.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
+                    imm?.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
                     finish()
                     overridePendingTransition(0, 0)
                 } else {
@@ -352,7 +350,7 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
                     val intent = Intent()
                     intent.putExtra("request", "")
                     setResult(RESULT_CANCELED, intent)
-                    imm!!.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
+                    imm?.hideSoftInputFromWindow(binding?.titleEdit?.windowToken, 0)
                     finish()
                     overridePendingTransition(0, 0)
                 }
@@ -364,74 +362,73 @@ class NotesEditActivity : CoreActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun saveChanges1() {
-        if (bundle != null) {
-            Tracer.i("Notes Edit  1" + bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE))
-            var notes = JSONArray()
-            val tempNotes = DataUtils.retrieveData(localPath)
-            // If not null -> equal main notes to retrieved notes
-            if (tempNotes != null) notes = tempNotes
-            // If current note is not new -> initialize colour, font, hideBody and EditTexts
-            if (bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE) != DataUtils.NEW_NOTE_REQUEST) {
-                run {
-                    var newNoteObject: JSONObject? = null
-                    try {
-
-                        // Update array item with new note data
-                        newNoteObject = notes.getJSONObject(bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE))
-                        newNoteObject?.put(DataUtils.NOTE_TITLE, binding?.titleEdit?.text?.toString() ?: "")
-                        newNoteObject?.put(DataUtils.NOTE_BODY, binding?.bodyEdit?.text.toString())
-                        newNoteObject?.put(DataUtils.NOTE_COLOUR, colour)
-                        newNoteObject?.put(DataUtils.NOTE_FONT_SIZE, fontSize)
-                        newNoteObject?.put(DataUtils.NOTE_HIDE_BODY, hideBody)
-
-                        // Update note at position 'requestCode'
-                        notes.put(bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE), newNoteObject)
-                    } catch (e: JSONException) {
-                        CoreApplication.getInstance().logException(e)
-                        e.printStackTrace()
-                    }
-
-                    // If newNoteObject not null -> save notes array to local file and notify adapter
-                    if (newNoteObject != null) {
-                        val saveSuccessful = DataUtils.saveData(localPath, notes)
-                        if (saveSuccessful) {
-                            val toast = Toast.makeText(
-                                applicationContext,
-                                resources.getString(R.string.msg_noteSaved),
-                                Toast.LENGTH_SHORT
-                            )
-                            toast.show()
-                        }
-                    }
-                }
-            } else if (bundle!!.getInt(DataUtils.NOTE_REQUEST_CODE) == DataUtils.NEW_NOTE_REQUEST) {
+        val bundle = bundle ?: return
+        Tracer.i("Notes Edit  1" + bundle.getInt(DataUtils.NOTE_REQUEST_CODE))
+        var notes = JSONArray()
+        val tempNotes = DataUtils.retrieveData(localPath)
+        // If not null -> equal main notes to retrieved notes
+        if (tempNotes != null) notes = tempNotes
+        // If current note is not new -> initialize colour, font, hideBody and EditTexts
+        if (bundle.getInt(DataUtils.NOTE_REQUEST_CODE) != DataUtils.NEW_NOTE_REQUEST) {
+            run {
                 var newNoteObject: JSONObject? = null
                 try {
-                    // Add new note to array
-                    newNoteObject = JSONObject()
-                    newNoteObject!!.put(DataUtils.NOTE_TITLE, binding?.titleEdit?.text?.toString() ?: "")
-                    newNoteObject!!.put(DataUtils.NOTE_BODY, binding?.bodyEdit?.text.toString())
-                    newNoteObject!!.put(DataUtils.NOTE_COLOUR, colour)
-                    newNoteObject!!.put(DataUtils.NOTE_FAVOURED, false)
-                    newNoteObject!!.put(DataUtils.NOTE_FONT_SIZE, fontSize)
-                    newNoteObject!!.put(DataUtils.NOTE_HIDE_BODY, hideBody)
-                    notes.put(newNoteObject)
+
+                    // Update array item with new note data
+                    newNoteObject = notes.getJSONObject(bundle.getInt(DataUtils.NOTE_REQUEST_CODE))
+                    newNoteObject?.put(DataUtils.NOTE_TITLE, binding?.titleEdit?.text?.toString() ?: "")
+                    newNoteObject?.put(DataUtils.NOTE_BODY, binding?.bodyEdit?.text.toString())
+                    newNoteObject?.put(DataUtils.NOTE_COLOUR, colour)
+                    newNoteObject?.put(DataUtils.NOTE_FONT_SIZE, fontSize)
+                    newNoteObject?.put(DataUtils.NOTE_HIDE_BODY, hideBody)
+
+                    // Update note at position 'requestCode'
+                    notes.put(bundle.getInt(DataUtils.NOTE_REQUEST_CODE), newNoteObject)
                 } catch (e: JSONException) {
                     CoreApplication.getInstance().logException(e)
                     e.printStackTrace()
                 }
 
                 // If newNoteObject not null -> save notes array to local file and notify adapter
-                val saveSuccessful = DataUtils.saveData(localPath, notes)
-                EvernoteManager().createNote(newNoteObject)
-                if (saveSuccessful) {
-                    val toast = Toast.makeText(
-                        applicationContext,
-                        resources.getString(R.string.msg_noteCreated),
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                if (newNoteObject != null) {
+                    val saveSuccessful = DataUtils.saveData(localPath, notes)
+                    if (saveSuccessful) {
+                        val toast = Toast.makeText(
+                            applicationContext,
+                            resources.getString(R.string.msg_noteSaved),
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    }
                 }
+            }
+        } else if (bundle.getInt(DataUtils.NOTE_REQUEST_CODE) == DataUtils.NEW_NOTE_REQUEST) {
+            var newNoteObject: JSONObject? = null
+            try {
+                // Add new note to array
+                newNoteObject = JSONObject()
+                newNoteObject?.put(DataUtils.NOTE_TITLE, binding?.titleEdit?.text?.toString() ?: "")
+                newNoteObject?.put(DataUtils.NOTE_BODY, binding?.bodyEdit?.text.toString())
+                newNoteObject?.put(DataUtils.NOTE_COLOUR, colour)
+                newNoteObject?.put(DataUtils.NOTE_FAVOURED, false)
+                newNoteObject?.put(DataUtils.NOTE_FONT_SIZE, fontSize)
+                newNoteObject?.put(DataUtils.NOTE_HIDE_BODY, hideBody)
+                notes.put(newNoteObject)
+            } catch (e: JSONException) {
+                CoreApplication.getInstance().logException(e)
+                e.printStackTrace()
+            }
+
+            // If newNoteObject not null -> save notes array to local file and notify adapter
+            val saveSuccessful = DataUtils.saveData(localPath, notes)
+            EvernoteManager().createNote(newNoteObject)
+            if (saveSuccessful) {
+                val toast = Toast.makeText(
+                    applicationContext,
+                    resources.getString(R.string.msg_noteCreated),
+                    Toast.LENGTH_SHORT
+                )
+                toast.show()
             }
         }
     }

@@ -55,7 +55,7 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
 
         // Get note at position and store in newFavourite
         try {
-            newFavourite = notes!!.getJSONObject(position)
+            newFavourite = notes?.getJSONObject(position)
         } catch (e: JSONException) {
             CoreApplication.getInstance().logException(e)
             e.printStackTrace()
@@ -82,10 +82,10 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                     }
 
                     // Copy contents to new sorted array without favoured element
-                    for (i in 0 until notes!!.length()) {
+                    for (i in 0 until (notes?.length() ?: 0)) {
                         if (i != position) {
                             try {
-                                newArray.put(notes!![i])
+                                notes?.get(i)?.let { newArray.put(it) }
                             } catch (e: JSONException) {
                                 CoreApplication.getInstance().logException(e)
                                 e.printStackTrace()
@@ -102,26 +102,26 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                     }
                 } else {
                     try {
-                        notes!!.put(position, newFavourite)
+                        notes?.put(position, newFavourite)
                     } catch (e: JSONException) {
                         CoreApplication.getInstance().logException(e)
                         e.printStackTrace()
                     }
-                    notesAdapter!!.notifyDataSetChanged()
+                    notesAdapter?.notifyDataSetChanged()
                 }
             } else {
                 try {
                     newFavourite.put(DataUtils.NOTE_FAVOURED, false)
-                    notes!!.put(position, newFavourite)
+                    notes?.put(position, newFavourite)
                     val newArrFav = JSONArray()
                     val newArrunFAv = JSONArray()
-                    for (i in 0 until notes!!.length()) {
-                        val note = notes!!.getJSONObject(i)
-                        val `val` = note[DataUtils.NOTE_FAVOURED].toString()
-                        if (`val`.equals("true", ignoreCase = true)) {
-                            newArrFav.put(notes!![i])
+                    for (i in 0 until (notes?.length() ?: 0)) {
+                        val note = notes?.getJSONObject(i)
+                        val value = note?.get(DataUtils.NOTE_FAVOURED)?.toString() ?: ""
+                        if (value.equals("true", ignoreCase = true)) {
+                            notes?.get(i)?.let { newArrFav.put(it) }
                         } else {
-                            newArrunFAv.put(notes!![i])
+                            notes?.get(i)?.let { newArrunFAv.put(it) }
                         }
                     }
                     try {
@@ -133,8 +133,8 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                         e.printStackTrace()
                     }
                     notes = newArrFav
-                    notesAdapter!!.setAdapterData(notes)
-                    notesAdapter!!.notifyDataSetChanged()
+                    notesAdapter?.setAdapterData(notes)
+                    notesAdapter?.notifyDataSetChanged()
                 } catch (e: JSONException) {
                     CoreApplication.getInstance().logException(e)
                     e.printStackTrace()
@@ -219,7 +219,9 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         else binding?.noNotes?.visibility = View.INVISIBLE
         initDialogs(this)
         if (intent.getBooleanExtra(EXTRA_OPEN_LATEST, false)) {
-            openEditActivity(notesAdapter!!.count - 1)
+            notesAdapter?.count?.also {
+                openEditActivity(it - 1)
+            }
         }
     }
 
@@ -234,8 +236,8 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         // If not null -> equal main notes to retrieved notes
         if (tempNotes != null) {
             notes = tempNotes
-            notesAdapter!!.setAdapterData(notes)
-            notesAdapter!!.notifyDataSetChanged()
+            notesAdapter?.setAdapterData(notes)
+            notesAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -259,53 +261,39 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
             if (searchMenu != null) {
                 // If the item menu not null -> get it's support action view
                 val searchView = MenuItemCompat.getActionView(searchMenu) as SearchView
-                if (searchView != null) {
-                    // If searchView not null -> set query hint and open/query/close listeners
-                    searchView.queryHint = getString(R.string.label_search)
-                    searchView.setOnQueryTextListener(this@NoteListActivity)
-                    MenuItemCompat.setOnActionExpandListener(searchMenu,
-                        object : MenuItemCompat.OnActionExpandListener {
-                            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                                searchActive = true
-                                newNoteButtonVisibility(false)
-                                // Disable long-click on listView to prevent deletion
-                                binding?.listView?.isLongClickable = false
+                // If searchView not null -> set query hint and open/query/close listeners
+                searchView.queryHint = getString(R.string.label_search)
+                searchView.setOnQueryTextListener(this@NoteListActivity)
+                MenuItemCompat.setOnActionExpandListener(searchMenu,
+                    object : MenuItemCompat.OnActionExpandListener {
+                        override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                            searchActive = true
+                            newNoteButtonVisibility(false)
+                            // Disable long-click on listView to prevent deletion
+                            binding?.listView?.isLongClickable = false
 
-                                // Init realIndexes array
-                                realIndexesOfSearchResults = ArrayList()
-                                for (i in 0 until notes!!.length()) realIndexesOfSearchResults!!.add(i)
-                                notesAdapter!!.notifyDataSetChanged()
-                                return true
-                            }
+                            // Init realIndexes array
+                            realIndexesOfSearchResults = ArrayList()
+                            for (i in 0 until (notes?.length() ?: 0)) realIndexesOfSearchResults?.add(i)
+                            notesAdapter?.notifyDataSetChanged()
+                            return true
+                        }
 
-                            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                                searchEnded()
-                                return true
-                            }
-                        })
-                }
+                        override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                            searchEnded()
+                            return true
+                        }
+                    })
             }
         }
     }
 
-    /**
-     * Implementation of AlertDialogs such as
-     * - backupCheckDialog, backupOKDialog, restoreCheckDialog, restoreFailedDialog -
-     *
-     * @param context The Activity context of the dialogs; in this case DashboardActivity context
-     */
     protected fun initDialogs(context: Context?) {
-        /*
-         * Backup check dialog
-         *  If not sure -> dismiss
-         *  If yes -> check if notes length > 0
-         *    If yes -> save current notes to backup file in backupPath
-         */
         backupCheckDialog = AlertDialog.Builder(context)
             .setTitle(R.string.label_backup)
             .setMessage(R.string.prompt_backup)
             .setPositiveButton(R.string.label_yes) { dialog, which -> // If note array not empty -> continue
-                if (notes!!.length() > 0) {
+                if ((notes?.length() ?: 0) > 0) {
                     val backupSuccessful = DataUtils.saveData(backupPath, notes)
                     if (backupSuccessful) showBackupSuccessfulDialog() else {
                         val toast = Toast.makeText(
@@ -339,19 +327,12 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
             .create()
 
 
-        /*
-         * Restore check dialog
-         *  If not sure -> dismiss
-         *  If yes -> check if backup notes exists
-         *    If not -> display restore failed dialog
-         *    If yes -> retrieve notes from backup file and store into local file
-         */restoreCheckDialog = AlertDialog.Builder(context)
+        restoreCheckDialog = AlertDialog.Builder(context)
             .setTitle(R.string.label_restore)
             .setMessage(R.string.prompt_restore)
             .setPositiveButton(R.string.label_yes) { dialog, which ->
                 val tempNotes = DataUtils.retrieveData(backupPath)
 
-                // If backup file exists -> copy backup notes to local file
                 if (tempNotes != null) {
                     val restoreSuccessful = DataUtils.saveData(localPath, tempNotes)
                     if (restoreSuccessful) {
@@ -365,8 +346,7 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                         )
                         toast.show()
 
-                        // If no notes -> show 'Press + to add new note' text, invisible otherwise
-                        if (notes?.length() == 0) binding?.noNotes?.visibility = View.VISIBLE
+                        if ((notes?.length() ?: 0) == 0) binding?.noNotes?.visibility = View.VISIBLE
                         else binding?.noNotes?.visibility = View.INVISIBLE
                     } else {
                         val toast = Toast.makeText(
@@ -382,7 +362,6 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
             .create()
 
 
-        // Dialog to display restore failed when no backup file found
         restoreFailedDialog = AlertDialog.Builder(context)
             .setTitle(R.string.title_restoreFailed)
             .setMessage(R.string.msg_restoreFailed)
@@ -390,96 +369,66 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
             .create()
     }
 
-    // Method to dismiss backup check and show backup successful dialog
     protected fun showBackupSuccessfulDialog() {
-        backupCheckDialog!!.dismiss()
-        backupOKDialog!!.show()
+        backupCheckDialog?.dismiss()
+        backupOKDialog?.show()
     }
 
-    // Method to dismiss restore check and show restore failed dialog
     protected fun showRestoreFailedDialog() {
-        restoreCheckDialog!!.dismiss()
-        restoreFailedDialog!!.show()
+        restoreCheckDialog?.dismiss()
+        restoreFailedDialog?.show()
     }
 
-    /**
-     * If item clicked in list view -> Start NotesEditActivity intent with position as requestCode
-     */
     override fun onItemClick(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
         openEditActivity(position)
     }
 
     private fun openEditActivity(position: Int) {
+        val notes = notes ?: return
+        val realIndexesOfSearchResults = realIndexesOfSearchResults ?: return
         try {
-            if (realIndexesOfSearchResults != null) {
-                val intent = Intent(this, NotesEditActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            val intent = Intent(this, NotesEditActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 
-                // If search is active -> use position from realIndexesOfSearchResults for NotesEditActivity
-                if (searchActive && null != realIndexesOfSearchResults) {
-                    val newPosition = realIndexesOfSearchResults!![position]
-                    try {
-                        // Package selected note content and send to NotesEditActivity
-                        intent.putExtra(
-                            DataUtils.NOTE_TITLE,
-                            notes!!.getJSONObject(newPosition).getString(DataUtils.NOTE_TITLE)
-                        )
-                        intent.putExtra(
-                            DataUtils.NOTE_BODY,
-                            notes!!.getJSONObject(newPosition).getString(DataUtils.NOTE_BODY)
-                        )
-                        intent.putExtra(
-                            DataUtils.NOTE_COLOUR,
-                            notes!!.getJSONObject(newPosition).getString(DataUtils.NOTE_COLOUR)
-                        )
-                        intent.putExtra(
-                            DataUtils.NOTE_FONT_SIZE,
-                            notes!!.getJSONObject(newPosition).getInt(DataUtils.NOTE_FONT_SIZE)
-                        )
-                        if (notes!!.getJSONObject(newPosition).has(DataUtils.NOTE_HIDE_BODY)) {
-                            intent.putExtra(
-                                DataUtils.NOTE_HIDE_BODY,
-                                notes!!.getJSONObject(newPosition).getBoolean(DataUtils.NOTE_HIDE_BODY)
-                            )
-                        } else intent.putExtra(DataUtils.NOTE_HIDE_BODY, false)
-                    } catch (e: JSONException) {
-                        CoreApplication.getInstance().logException(e)
-                        e.printStackTrace()
+            if (searchActive) {
+                val newPosition = realIndexesOfSearchResults[position]
+                try {
+                    // Package selected note content and send to NotesEditActivity
+                    val jsonObject = notes.getJSONObject(newPosition)
+                    intent.putExtra(DataUtils.NOTE_TITLE, jsonObject.getString(DataUtils.NOTE_TITLE))
+                    intent.putExtra(DataUtils.NOTE_BODY, jsonObject.getString(DataUtils.NOTE_BODY))
+                    intent.putExtra(DataUtils.NOTE_COLOUR, jsonObject.getString(DataUtils.NOTE_COLOUR))
+                    intent.putExtra(DataUtils.NOTE_FONT_SIZE, jsonObject.getInt(DataUtils.NOTE_FONT_SIZE))
+                    if (jsonObject.has(DataUtils.NOTE_HIDE_BODY)) {
+                        intent.putExtra(DataUtils.NOTE_HIDE_BODY, jsonObject.getBoolean(DataUtils.NOTE_HIDE_BODY))
+                    } else {
+                        intent.putExtra(DataUtils.NOTE_HIDE_BODY, false)
                     }
-                    intent.putExtra(DataUtils.NOTE_REQUEST_CODE, newPosition)
-                    startActivityForResult(intent, newPosition)
-                } else {
-                    try {
-                        // Package selected note content and send to NotesEditActivity
-                        intent.putExtra(
-                            DataUtils.NOTE_TITLE,
-                            notes!!.getJSONObject(position).getString(DataUtils.NOTE_TITLE)
-                        )
-                        intent.putExtra(
-                            DataUtils.NOTE_BODY,
-                            notes!!.getJSONObject(position).getString(DataUtils.NOTE_BODY)
-                        )
-                        intent.putExtra(
-                            DataUtils.NOTE_COLOUR,
-                            notes!!.getJSONObject(position).getString(DataUtils.NOTE_COLOUR)
-                        )
-                        intent.putExtra(
-                            DataUtils.NOTE_FONT_SIZE,
-                            notes!!.getJSONObject(position).getInt(DataUtils.NOTE_FONT_SIZE)
-                        )
-                        if (notes!!.getJSONObject(position).has(DataUtils.NOTE_HIDE_BODY)) {
-                            intent.putExtra(
-                                DataUtils.NOTE_HIDE_BODY,
-                                notes!!.getJSONObject(position).getBoolean(DataUtils.NOTE_HIDE_BODY)
-                            )
-                        } else intent.putExtra(DataUtils.NOTE_HIDE_BODY, false)
-                    } catch (e: JSONException) {
-                        CoreApplication.getInstance().logException(e)
-                        e.printStackTrace()
-                    }
-                    intent.putExtra(DataUtils.NOTE_REQUEST_CODE, position)
-                    startActivityForResult(intent, position)
+                } catch (e: JSONException) {
+                    CoreApplication.getInstance().logException(e)
+                    e.printStackTrace()
                 }
+                intent.putExtra(DataUtils.NOTE_REQUEST_CODE, newPosition)
+                startActivityForResult(intent, newPosition)
+            } else {
+                try {
+                    // Package selected note content and send to NotesEditActivity
+                    val jsonObject = notes.getJSONObject(position)
+                    intent.putExtra(DataUtils.NOTE_TITLE, jsonObject.getString(DataUtils.NOTE_TITLE))
+                    intent.putExtra(DataUtils.NOTE_BODY, jsonObject.getString(DataUtils.NOTE_BODY))
+                    intent.putExtra(DataUtils.NOTE_COLOUR, jsonObject.getString(DataUtils.NOTE_COLOUR))
+                    intent.putExtra(DataUtils.NOTE_FONT_SIZE, jsonObject.getInt(DataUtils.NOTE_FONT_SIZE))
+                    if (jsonObject.has(DataUtils.NOTE_HIDE_BODY)) {
+                        intent.putExtra(DataUtils.NOTE_HIDE_BODY, jsonObject.getBoolean(DataUtils.NOTE_HIDE_BODY))
+                    } else {
+                        intent.putExtra(DataUtils.NOTE_HIDE_BODY, false)
+                    }
+                } catch (e: JSONException) {
+                    CoreApplication.getInstance().logException(e)
+                    e.printStackTrace()
+                }
+                intent.putExtra(DataUtils.NOTE_REQUEST_CODE, position)
+                startActivityForResult(intent, position)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -488,16 +437,12 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         val id = menuItem.itemId
-
-        // 'Backup notes' pressed -> show backupCheckDialog
         if (id == R.id.action_backup) {
-            backupCheckDialog!!.show()
+            backupCheckDialog?.show()
             return true
         }
-
-        // 'Restore notes' pressed -> show restoreCheckDialog
         if (id == R.id.action_restore) {
-            restoreCheckDialog!!.show()
+            restoreCheckDialog?.show()
             return true
         }
         if (id == R.id.action_evernote) {
@@ -512,58 +457,30 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         return false
     }
 
-    /**
-     * During multi-choice menu_delete selection mode, callback method if items checked changed
-     *
-     * @param mode     ActionMode of selection
-     * @param position Position checked
-     * @param id       ID of item, if exists
-     * @param checked  true if checked, false otherwise
-     */
     override fun onItemCheckedStateChanged(mode: ActionMode, position: Int, id: Long, checked: Boolean) {
-        // If item checked -> add to array
         if (checked) checkedArray.add(position) else {
             var index = -1
-
-            // Loop through array and find currentIndexDashboard of item unchecked
             for (i in checkedArray.indices) {
                 if (position == checkedArray[i]) {
                     index = i
                     break
                 }
             }
-
-            // If currentIndexDashboard was found -> remove the item
             if (index != -1) checkedArray.removeAt(index)
         }
-
-        // Set Toolbar title to 'x Selected'
         mode.title = checkedArray.size.toString() + " " + getString(R.string.label_selected)
-        notesAdapter!!.notifyDataSetChanged()
+        notesAdapter?.notifyDataSetChanged()
     }
 
-    /**
-     * Callback method when 'Delete' icon pressed
-     *
-     * @param mode ActionMode of selection
-     * @param item MenuItem clicked, in our case just action_delete
-     * @return true if clicked, false otherwise
-     */
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         if (item.itemId == R.id.action_delete) {
             AlertDialog.Builder(this)
                 .setMessage(R.string.title_notesDelete)
-                .setPositiveButton(android.R.string.ok) { dialog, which -> // Pass notes and checked items for deletion array to 'deleteNotes'
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     notes = DataUtils.deleteNotes(notes, checkedArray)
-
-                    // Create and set new adapter with new notes array
                     notesAdapter = NoteAdapter(this@NoteListActivity, notes)
                     binding?.listView?.adapter = notesAdapter
-
-                    // Attempt to save notes to local file
                     val saveSuccessful = DataUtils.saveData(localPath, notes)
-
-                    // If save successful -> toast successfully deleted
                     if (saveSuccessful) {
                         val toast = Toast.makeText(
                             applicationContext,
@@ -572,12 +489,8 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                         )
                         toast.show()
                     }
-
-                    // Smooth scroll to top
                     binding?.listView?.post { binding?.listView?.smoothScrollToPosition(0) }
-
-                    // If no notes -> show 'Press + to add new note' text, invisible otherwise
-                    if (notes?.length() == 0) binding?.noNotes?.visibility = View.VISIBLE
+                    if ((notes?.length() ?: 0) == 0) binding?.noNotes?.visibility = View.VISIBLE
                     else binding?.noNotes?.visibility = View.INVISIBLE
                     mode.finish()
                 }
@@ -588,21 +501,19 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         return false
     }
 
-    // Long click detected on ListView item -> start selection ActionMode (delete mode)
     override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-        mode.menuInflater.inflate(R.menu.menu_delete, menu) // Inflate 'menu_delete' menu
-        deleteActive = true // Set deleteActive to true as we entered delete mode
-        newNoteButtonVisibility(false) // Hide newNote button
-        notesAdapter!!.notifyDataSetChanged() // Notify adapter to hide favourite buttons
+        mode.menuInflater.inflate(R.menu.menu_delete, menu)
+        deleteActive = true
+        newNoteButtonVisibility(false)
+        notesAdapter?.notifyDataSetChanged()
         return true
     }
 
-    // Selection ActionMode finished (delete mode ended)
     override fun onDestroyActionMode(mode: ActionMode) {
-        checkedArray = ArrayList() // Reset checkedArray
-        deleteActive = false // Set deleteActive to false as we finished delete mode
-        newNoteButtonVisibility(true) // Show newNote button
-        notesAdapter!!.notifyDataSetChanged() // Notify adapter to show favourite buttons
+        checkedArray = ArrayList()
+        deleteActive = false
+        newNoteButtonVisibility(true)
+        notesAdapter?.notifyDataSetChanged()
     }
 
     override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -621,43 +532,28 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         }
     }
 
-    /**
-     * Callback method for 'searchView' menu item widget text change
-     *
-     * @param s String which changed
-     * @return true if text changed and logic finished, false otherwise
-     */
     override fun onQueryTextChange(s: String): Boolean {
         var s = s
-        s = s.toLowerCase() // Turn string into lowercase
+        s = s.toLowerCase()
 
-        // If query text length longer than 0
-        if (s.length > 0) {
-            // Create new JSONArray and reset realIndexes array
+        if (s.isNotEmpty()) {
             val notesFound = JSONArray()
             realIndexesOfSearchResults = ArrayList()
-
-            // Loop through main notes list
-            for (i in 0 until notes!!.length()) {
+            for (i in 0 until (notes?.length() ?: 0)) {
                 var note: JSONObject? = null
-
-                // Get note at position i
                 try {
-                    note = notes!!.getJSONObject(i)
+                    note = notes?.getJSONObject(i)
                 } catch (e: JSONException) {
                     CoreApplication.getInstance().logException(e)
                     e.printStackTrace()
                 }
-
-                // If note not null and title/body contain query text
-                // -> Put in new notes array and add i to realIndexes array
                 if (note != null) {
                     try {
                         if (note.getString(DataUtils.NOTE_TITLE).toLowerCase().contains(s) ||
                             note.getString(DataUtils.NOTE_BODY).toLowerCase().contains(s)
                         ) {
                             notesFound.put(note)
-                            realIndexesOfSearchResults!!.add(i)
+                            realIndexesOfSearchResults?.add(i)
                         }
                     } catch (e: JSONException) {
                         CoreApplication.getInstance().logException(e)
@@ -665,13 +561,11 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                     }
                 }
             }
-
-            // Create and set adapter with notesFound to refresh ListView
             val searchAdapter = NoteAdapter(this@NoteListActivity, notesFound)
             binding?.listView?.adapter = searchAdapter
         } else {
             realIndexesOfSearchResults = ArrayList()
-            for (i in 0 until notes!!.length()) realIndexesOfSearchResults!!.add(i)
+            for (i in 0 until (notes?.length() ?: 0)) realIndexesOfSearchResults?.add(i)
             notesAdapter = NoteAdapter(this@NoteListActivity, notes)
             binding?.listView?.adapter = notesAdapter
         }
@@ -682,11 +576,6 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         return false
     }
 
-    /**
-     * When search mode is finished
-     * Collapse searchView widget, searchActive to false, reset adapter, enable listView long clicks
-     * and show newNote button
-     */
     protected fun searchEnded() {
         searchActive = false
         notesAdapter = NoteAdapter(this@NoteListActivity, notes)
@@ -695,19 +584,9 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         newNoteButtonVisibility(true)
     }
 
-    /**
-     * Callback method when NotesEditActivity finished adding new note or editing existing note
-     *
-     * @param requestCode requestCode for intent sent, in our case either NEW_NOTE_REQUEST or position
-     * @param resultCode  resultCode from activity, either RESULT_OK or RESULT_CANCELED
-     * @param data        Data bundle passed back from NotesEditActivity
-     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
-            // If search was active -> call 'searchEnded' method
-            if (searchActive && searchMenu != null) searchMenu!!.collapseActionView()
-
-            // Get extras
+            if (searchActive && searchMenu != null) searchMenu?.collapseActionView()
             var mBundle: Bundle? = null
             if (data != null) mBundle = data.extras
             if (mBundle != null) {
@@ -715,7 +594,6 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                 if (requestCode == DataUtils.NEW_NOTE_REQUEST) {
                     var newNoteObject: JSONObject? = null
                     try {
-                        // Add new note to array
                         newNoteObject = JSONObject()
                         newNoteObject.put(DataUtils.NOTE_TITLE, mBundle.getString(DataUtils.NOTE_TITLE))
                         newNoteObject.put(DataUtils.NOTE_BODY, mBundle.getString(DataUtils.NOTE_BODY))
@@ -723,15 +601,13 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                         newNoteObject.put(DataUtils.NOTE_FAVOURED, false)
                         newNoteObject.put(DataUtils.NOTE_FONT_SIZE, mBundle.getInt(DataUtils.NOTE_FONT_SIZE))
                         newNoteObject.put(DataUtils.NOTE_HIDE_BODY, mBundle.getBoolean(DataUtils.NOTE_HIDE_BODY))
-                        notes!!.put(newNoteObject)
+                        notes?.put(newNoteObject)
                     } catch (e: JSONException) {
                         CoreApplication.getInstance().logException(e)
                         e.printStackTrace()
                     }
-
-                    // If newNoteObject not null -> save notes array to local file and notify adapter
                     if (newNoteObject != null) {
-                        notesAdapter!!.notifyDataSetChanged()
+                        notesAdapter?.notifyDataSetChanged()
                         val saveSuccessful = DataUtils.saveData(localPath, notes)
                         EvernoteManager().createNote(newNoteObject)
                         if (saveSuccessful) {
@@ -744,22 +620,22 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                         }
 
                         // If no notes -> show 'Press + to add new note' text, invisible otherwise
-                        if (notes!!.length() == 0) binding?.noNotes?.visibility = View.VISIBLE
+                        if (notes?.length() == 0) binding?.noNotes?.visibility = View.VISIBLE
                         else binding?.noNotes?.visibility = View.INVISIBLE
                     }
                 } else {
                     var newNoteObject: JSONObject? = null
                     try {
                         // Update array item with new note data
-                        newNoteObject = notes!!.getJSONObject(requestCode)
-                        newNoteObject.put(DataUtils.NOTE_TITLE, mBundle.getString(DataUtils.NOTE_TITLE))
-                        newNoteObject.put(DataUtils.NOTE_BODY, mBundle.getString(DataUtils.NOTE_BODY))
-                        newNoteObject.put(DataUtils.NOTE_COLOUR, mBundle.getString(DataUtils.NOTE_COLOUR))
-                        newNoteObject.put(DataUtils.NOTE_FONT_SIZE, mBundle.getInt(DataUtils.NOTE_FONT_SIZE))
-                        newNoteObject.put(DataUtils.NOTE_HIDE_BODY, mBundle.getBoolean(DataUtils.NOTE_HIDE_BODY))
+                        newNoteObject = notes?.getJSONObject(requestCode)
+                        newNoteObject?.put(DataUtils.NOTE_TITLE, mBundle.getString(DataUtils.NOTE_TITLE))
+                        newNoteObject?.put(DataUtils.NOTE_BODY, mBundle.getString(DataUtils.NOTE_BODY))
+                        newNoteObject?.put(DataUtils.NOTE_COLOUR, mBundle.getString(DataUtils.NOTE_COLOUR))
+                        newNoteObject?.put(DataUtils.NOTE_FONT_SIZE, mBundle.getInt(DataUtils.NOTE_FONT_SIZE))
+                        newNoteObject?.put(DataUtils.NOTE_HIDE_BODY, mBundle.getBoolean(DataUtils.NOTE_HIDE_BODY))
 
                         // Update note at position 'requestCode'
-                        notes!!.put(requestCode, newNoteObject)
+                        notes?.put(requestCode, newNoteObject)
                     } catch (e: JSONException) {
                         CoreApplication.getInstance().logException(e)
                         e.printStackTrace()
@@ -767,7 +643,7 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
 
                     // If newNoteObject not null -> save notes array to local file and notify adapter
                     if (newNoteObject != null) {
-                        notesAdapter!!.notifyDataSetChanged()
+                        notesAdapter?.notifyDataSetChanged()
                         val saveSuccessful = DataUtils.saveData(localPath, notes)
                         if (saveSuccessful) {
                             val toast = Toast.makeText(
@@ -783,12 +659,11 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         } else if (resultCode == RESULT_CANCELED) {
             val mBundle: Bundle?
 
-            // If data is not null, has "request" extra and is new note -> get extras to bundle
             if (data != null && data.hasExtra("request") && requestCode == DataUtils.NEW_NOTE_REQUEST) {
                 mBundle = data.extras
 
                 // If new note discarded -> toast empty note discarded
-                if (mBundle != null && mBundle.getString("request") != null && mBundle.getString("request") == "discard") {
+                if (mBundle?.getString("request") != null && mBundle.getString("request") == "discard") {
                     val toast = Toast.makeText(
                         applicationContext,
                         resources.getString(R.string.msg_emptyNoteDiscarded),
@@ -796,15 +671,15 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
                     )
                     toast.show()
                 }
-                if (mBundle != null && mBundle.getString("request") != null && mBundle.getString("request") == "HOME") {
+                if (mBundle?.getString("request") != null && mBundle.getString("request") == "HOME") {
                     val tempNotes = DataUtils.retrieveData(localPath)
                     Tracer.i("All notes: $tempNotes")
 
                     // If not null -> equal main notes to retrieved notes
                     if (tempNotes != null) {
                         notes = tempNotes
-                        notesAdapter!!.setAdapterData(notes)
-                        notesAdapter!!.notifyDataSetChanged()
+                        notesAdapter?.setAdapterData(notes)
+                        notesAdapter?.notifyDataSetChanged()
                     }
                 }
             }
@@ -812,28 +687,19 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    /**
-     * If back button pressed while search is active -> collapse view and end search mode
-     */
     override fun onBackPressed() {
         if (searchActive && searchMenu != null) {
-            searchMenu!!.collapseActionView()
+            searchMenu?.collapseActionView()
             return
         }
         super.onBackPressed()
     }
 
-    /**
-     * Orientation changed callback method
-     * If orientation changed -> If any AlertDialog is showing, dismiss it to prevent WindowLeaks
-     *
-     * @param newConfig New Configuration passed by system
-     */
     override fun onConfigurationChanged(newConfig: Configuration) {
-        if (backupCheckDialog != null && backupCheckDialog!!.isShowing) backupCheckDialog!!.dismiss()
-        if (backupOKDialog != null && backupOKDialog!!.isShowing) backupOKDialog!!.dismiss()
-        if (restoreCheckDialog != null && restoreCheckDialog!!.isShowing) restoreCheckDialog!!.dismiss()
-        if (restoreFailedDialog != null && restoreFailedDialog!!.isShowing) restoreFailedDialog!!.dismiss()
+        if (backupCheckDialog != null && backupCheckDialog?.isShowing == true) backupCheckDialog?.dismiss()
+        if (backupOKDialog != null && backupOKDialog?.isShowing == true) backupOKDialog?.dismiss()
+        if (restoreCheckDialog != null && restoreCheckDialog?.isShowing == true) restoreCheckDialog?.dismiss()
+        if (restoreFailedDialog != null && restoreFailedDialog?.isShowing == true) restoreFailedDialog?.dismiss()
         super.onConfigurationChanged(newConfig)
     }
 
@@ -862,11 +728,10 @@ class NoteListActivity : CoreActivity(), AdapterView.OnItemClickListener, Toolba
         var checkedArray = ArrayList<Int>()
 
         @JvmField
-        var deleteActive = false // True if delete mode is active, false otherwise
+        var deleteActive = false
 
         @JvmField
         var searchActive = false
-        private var notes // Main notes array
-                : JSONArray? = null
+        private var notes: JSONArray? = null
     }
 }

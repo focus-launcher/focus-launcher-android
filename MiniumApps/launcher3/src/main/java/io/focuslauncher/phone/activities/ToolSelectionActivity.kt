@@ -98,7 +98,7 @@ class ToolSelectionActivity : CoreActivity() {
         items = ArrayList()
         MainListItemLoader().loadItemsDefaultApp(items)
         for (i in items.indices) {
-            map[items[i].id]!!.isVisible.also { items[i].isVisable = it }
+            map[items[i].id]?.isVisible?.also { items[i].isVisable = it }
         }
 
         //original list which will be edited
