@@ -44,7 +44,7 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
     var isLoadFirstTime = true
     var adapterlist: MutableSet<String> = HashSet()
         private set
-    var favoriteList: MutableSet<String>? = HashSet()
+    var favoriteList: MutableSet<String> = HashSet()
     var junkfoodFlaggingAdapter: JunkfoodFlaggingAdapter? = null
     var installedPackageList: List<String>? = null
     var firstPosition = 0
@@ -72,7 +72,7 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
         initView()
         list = PrefSiempo.getInstance(this).read(PrefSiempo.JUNKFOOD_APPS, HashSet())
         favoriteList = PrefSiempo.getInstance(this).read(PrefSiempo.FAVORITE_APPS, HashSet())
-        favoriteList?.removeAll(list)
+        favoriteList.removeAll(list)
         PrefSiempo.getInstance(this@JunkfoodFlaggingActivity).write(
             PrefSiempo.FAVORITE_APPS,
             favoriteList
@@ -101,12 +101,12 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (junkfoodFlaggingAdapter != null) {
-                    junkfoodFlaggingAdapter!!.filter.filter(s.toString())
+                    junkfoodFlaggingAdapter?.filter?.filter(s.toString())
                 }
                 if (s.toString().isNotEmpty()) {
-                    binding?.imgClear?.setVisibility(View.VISIBLE)
+                    binding?.imgClear?.visibility = View.VISIBLE
                 } else {
-                    binding?.imgClear?.setVisibility(View.INVISIBLE)
+                    binding?.imgClear?.visibility = View.INVISIBLE
                 }
             }
 
@@ -126,10 +126,7 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
         installedPackageList = ArrayList()
         val appList: MutableList<String> = ArrayList(installedPackageListLocal)
         favoriteList = PrefSiempo.getInstance(this).read(PrefSiempo.FAVORITE_APPS, HashSet())
-        val toolsAppList: List<String>? = toolsAppList
-        if (toolsAppList != null && favoriteList != null) {
-            appList.removeAll(favoriteList!!)
-        }
+        appList.removeAll(favoriteList)
         installedPackageList = appList
         bindData()
     }
@@ -171,13 +168,13 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
             dialog.dismiss()
             runOnUiThread(object : Runnable {
                 override fun run() {
-                    favoriteList!!.removeAll(adapterlist)
+                    favoriteList.removeAll(adapterlist)
                     toolsAppList.removeAll(adapterlist)
-                    val newMap = CoreApplication.getInstance().toolsSettings
-                    for (i in 0 until newMap!!.size) {
-                        if (newMap != null && newMap[i] != null && !TextUtils.isEmpty(newMap[i]!!.applicationName)) {
-                            if (adapterlist.contains(newMap[i]!!.applicationName)) {
-                                newMap[i]!!.applicationName = ""
+                    val newMap = CoreApplication.getInstance().toolsSettings.orEmpty()
+                    for (i in 0 until newMap.size) {
+                        if (newMap[i] != null && !TextUtils.isEmpty(newMap[i]?.applicationName)) {
+                            if (adapterlist.contains(newMap[i]?.applicationName)) {
+                                newMap[i]?.applicationName = ""
                             }
                         }
                     }
@@ -235,7 +232,7 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
             bindingList = ArrayList()
             junkfoodFlaggingAdapter = JunkfoodFlaggingAdapter(this, bindingList)
             binding?.listAllApps?.adapter = junkfoodFlaggingAdapter
-            for (resolveInfo in installedPackageList!!) {
+            for (resolveInfo in installedPackageList.orEmpty()) {
                 if (!resolveInfo.equals(packageName, ignoreCase = true)) {
                     val applicationname = CoreApplication.getInstance()
                         .listApplicationName[resolveInfo]
@@ -264,8 +261,8 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
             unflageAppList = Sorting.sortApplication(unflageAppList)
             bindingList.addAll(unflageAppList)
             if (junkfoodFlaggingAdapter != null) {
-                junkfoodFlaggingAdapter!!.setData(bindingList)
-                junkfoodFlaggingAdapter!!.filter.filter(binding?.edtSearch?.text?.toString().orEmpty())
+                junkfoodFlaggingAdapter?.setData(bindingList)
+                junkfoodFlaggingAdapter?.filter?.filter(binding?.edtSearch?.text?.toString().orEmpty())
                 binding?.listAllApps?.setSelection(firstPosition)
             }
         } catch (e: Exception) {
@@ -314,16 +311,16 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
             }
         }
         if (popup != null) {
-            popup!!.dismiss()
+            popup?.dismiss()
         }
         popup = PopupMenu(this@JunkfoodFlaggingActivity, view, Gravity.END)
-        popup!!.setOnMenuItemClickListener { item ->
+        popup?.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.item_Unflag) {
                 try {
                     if (isLoadFirstTime && isFlagApp) {
                         showAlertForFirstTime(positionPopUP, view)
                     } else {
-                        popup!!.dismiss()
+                        popup?.dismiss()
                         runOnUiThread {
                             showEmptyRowBeforeDelete(view)
                             val handler = Handler()
@@ -352,12 +349,12 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
             }
             false
         }
-        popup!!.menuInflater.inflate(R.menu.junkfood_popup, popup!!.menu)
-        val menuItem = popup!!.menu.findItem(R.id.item_Unflag)
-        menuItem.title =
+        popup?.menuInflater?.inflate(R.menu.junkfood_popup, popup?.menu)
+        val menuItem = popup?.menu?.findItem(R.id.item_Unflag)
+        menuItem?.title =
             if (adapterlist.contains(packagename)) getString(R.string.unflagapp) else getString(R.string.flag_app)
-        popup!!.show()
-        popup!!.setOnDismissListener { popup = null }
+        popup?.show()
+        popup?.setOnDismissListener { popup = null }
     }
 
     private fun showEmptyRowBeforeDelete(view: View) {
@@ -413,23 +410,17 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
         loadApps()
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     override fun onStop() {
         super.onStop()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            if (popup != null) {
-                popup!!.dismiss()
-            }
+            popup?.dismiss()
         }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (currentFocus != null) {
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm?.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
         return super.dispatchTouchEvent(ev)
     }
@@ -445,7 +436,7 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
 
         override fun doInBackground(vararg params: String?): ArrayList<AppListInfo> {
             try {
-                for (resolveInfo in installedPackageList!!) {
+                for (resolveInfo in installedPackageList.orEmpty()) {
                     if (!resolveInfo.equals(packageName, ignoreCase = true)) {
                         val applicationname = CoreApplication.getInstance()
                             .listApplicationName[resolveInfo]
@@ -489,7 +480,7 @@ class JunkfoodFlaggingActivity : CoreActivity(), AdapterView.OnItemClickListener
                         bindingList = s
                         onItemClickListener = this@JunkfoodFlaggingActivity
                         if (junkfoodFlaggingAdapter != null) {
-                            junkfoodFlaggingAdapter!!.setData(bindingList)
+                            junkfoodFlaggingAdapter?.setData(bindingList)
                             binding?.edtSearch?.setText("")
                             setSelection(firstPosition)
                         }
