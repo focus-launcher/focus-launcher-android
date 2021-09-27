@@ -59,4 +59,9 @@ open class TempoSettingsFragment : CoreFragment() {
             ActivityHelper(context).openSiempoAlphaSettingsApp()
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
