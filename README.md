@@ -2,6 +2,8 @@
 
 A minimalist Android launcher designed for phone-life balance.
 
+Available on [PlayStore](https://play.google.com/store/apps/details?id=io.focuslauncher)
+
 [Discord](https://discord.gg/GDdCXPnXug) | [Website](http://focuslauncher.io) | [Blog](https://medium.com/@focuslauncher) | [Twitter](https://twitter.com/FocusLauncher)
 
 ![](https://i.imgur.com/gNR2tqc.png)
