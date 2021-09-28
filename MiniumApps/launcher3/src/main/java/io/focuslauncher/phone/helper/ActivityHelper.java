@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
-import io.focuslauncher.phone.activities.AlphaSettingsActivity_;
+import io.focuslauncher.phone.activities.AlphaSettingsActivity;
 import io.focuslauncher.phone.activities.NoteListActivity;
 import io.focuslauncher.phone.activities.SuppressNotificationActivity;
 import io.focuslauncher.phone.app.CoreApplication;
@@ -127,7 +127,7 @@ public class ActivityHelper {
 
     public void openSiempoAlphaSettingsApp() {
         try {
-            AlphaSettingsActivity_.intent(getContext()).start();
+            getContext().startActivity(new Intent(getContext(), AlphaSettingsActivity.class));
         } catch (Exception e) {
             CoreApplication.getInstance().logException(e);
             Tracer.e(e, e.getMessage());

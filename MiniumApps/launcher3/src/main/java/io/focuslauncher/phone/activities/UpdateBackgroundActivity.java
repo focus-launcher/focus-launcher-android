@@ -114,7 +114,7 @@ public class UpdateBackgroundActivity extends CoreActivity {
                             @Override
                             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
                                 startActivity(new Intent(UpdateBackgroundActivity.this,
-                                        SettingsActivity_.class).addFlags(Intent
+                                        SettingsActivity.class).addFlags(Intent
                                         .FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                 finish();
                             }

@@ -1,21 +1,8 @@
 package io.focuslauncher.phone.activities;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.DownloadManager;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.*;
 import android.app.admin.DevicePolicyManager;
-import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -26,36 +13,21 @@ import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.*;
+import android.widget.ImageView;
 import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
-
-import org.androidannotations.annotations.EActivity;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Calendar;
-
+import androidx.viewbinding.ViewBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
 import io.focuslauncher.R;
 import io.focuslauncher.phone.app.Config;
 import io.focuslauncher.phone.app.CoreApplication;
@@ -65,12 +37,12 @@ import io.focuslauncher.phone.helper.Validate;
 import io.focuslauncher.phone.interfaces.NFCInterface;
 import io.focuslauncher.phone.log.Tracer;
 import io.focuslauncher.phone.receivers.ScreenOffAdminReceiver;
-import io.focuslauncher.phone.service.ReminderService;
 import io.focuslauncher.phone.util.AppUtils;
 import io.focuslauncher.phone.utils.PackageUtil;
 import io.focuslauncher.phone.utils.PrefSiempo;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
+import org.androidannotations.annotations.EActivity;
+
+import java.io.*;
 
 /**
  * This activity will be the base activity
@@ -175,61 +147,10 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
         AppUtils.notificationBarManaged(this, null);
     }
 
-    private void startAlarm() {
-        SharedPreferences preferences;
-        SharedPreferences.Editor[] editor;
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String reminder_flag = preferences.getString("reminder_flag_new", "0");
-        if (reminder_flag.equals("0")) {
-            editor = new SharedPreferences.Editor[1];
-            editor[0] = preferences.edit();
-            editor[0].putString("reminder_flag_new", "1");
-            editor[0].apply();
-            AlarmManager alarmManager = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
-            long when = System.currentTimeMillis();         // notification time
-            Calendar cal;
-            cal = Calendar.getInstance();
-            //cal.add(Calendar.HOUR, 24);
-            cal.add(Calendar.MINUTE, 3);
-            Intent intent = new Intent(this, ReminderService.class);
-            intent.putExtra("title", getString(R.string.welcome_dialog_title));
-            intent.putExtra("body", getString(R.string.welcome_dialog_description));
-            intent.putExtra("type", "0");
-            PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
-            alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent);
-//
-            cal = Calendar.getInstance();
-            //cal.add(Calendar.HOUR, 24);
-            cal.add(Calendar.DAY_OF_MONTH, 7);
-            Intent intent1 = new Intent(this, ReminderService.class);
-            intent1.putExtra("title", "Congratulations on sticking with Siempo for a week!");
-            intent1.putExtra("body", "Please considering contributing to Siempo if you have found the experience valuable.");
-            intent1.putExtra("type", "1");
-            PendingIntent pendingIntent1 = PendingIntent.getService(this, 1, intent1, 0);
-            alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent1);
-//        cal = Calendar.getInstance();
-//        cal.set(2019, 5, 19);
-//        Intent intent2 = new Intent(this, ReminderService.class);
-//        intent2.putExtra("title","Special opportunity: how would you like to become an owner in Siempo?");
-//        intent2.putExtra("body","Please consider participating in our crowd equity campaign!");
-//        intent2.putExtra("type","2");
-//        PendingIntent pendingIntent2 = PendingIntent.getService(this, 2, intent2, 0);
-//        alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent2);
-
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         isOnStopCalled = false;
-//        EventBus.getDefault().post(new ReduceOverUsageEvent(false));
-//        try {
-//            Intent intent = new Intent(this, OverlayService.class);
-//            stopService(intent);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         AppUtils.notificationBarManaged(this, null);
     }
 
@@ -238,12 +159,6 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
         boolean read = PrefSiempo.getInstance(this).read(PrefSiempo.IS_DARK_THEME, false);
         setTheme(read ? R.style.SiempoAppThemeDark : R.style.SiempoAppTheme);
         super.onNewIntent(intent);
-//        EventBus.getDefault().post(new ReduceOverUsageEvent(false));
-//        try {
-//            stopService(new Intent(this, OverlayService.class));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void loadDialog() {
@@ -668,7 +583,7 @@ public abstract class CoreActivity extends AppCompatActivity implements NFCInter
         shortcutSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CoreActivity.this, SettingsActivity_.class);
+                Intent intent = new Intent(CoreActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 mBottomSheetDialog.closeOptionsMenu();
                 mBottomSheetDialog.hide();

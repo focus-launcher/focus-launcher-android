@@ -181,7 +181,7 @@ public class NoteAdapter extends BaseAdapter implements ListAdapter {
                 public void onClick(View v) {
                     try {
                         if (context != null) {
-                            ((NoteListActivity) context).setFavourite(context, !finalFavoured, position);
+                            ((NoteListActivity) context).setFavourite(!finalFavoured, position);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

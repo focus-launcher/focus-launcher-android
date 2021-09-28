@@ -128,10 +128,6 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-        <service
-            android:name="io.focuslauncher.phone.service.ReminderService"
-            android:enabled="true"
-            android:exported="false" />
 
         <receiver
             android:name="io.focuslauncher.phone.receivers.CallReceiver"
@@ -157,7 +153,7 @@
             android:name="io.focuslauncher.phone.ui.UpdateActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="io.focuslauncher.phone.activities.AlphaSettingsActivity_"
+            android:name="io.focuslauncher.phone.activities.AlphaSettingsActivity"
             android:screenOrientation="portrait" />
 
         <service
@@ -172,7 +168,7 @@
             android:name="io.focuslauncher.phone.activities.SiempoPermissionActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name="io.focuslauncher.phone.activities.SettingsActivity_"
+            android:name="io.focuslauncher.phone.activities.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="io.focuslauncher.phone.activities.NotificationActivity"
@@ -314,10 +310,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="io.focuslauncher.phone.activities.EnableTempoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="io.focuslauncher.phone.activities.ChooseBackgroundActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="io.focuslauncher.phone.activities.UpdateBackgroundActivity"
