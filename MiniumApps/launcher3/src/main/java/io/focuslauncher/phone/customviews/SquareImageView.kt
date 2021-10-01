@@ -1,25 +1,16 @@
-package io.focuslauncher.phone.customviews;
+package io.focuslauncher.phone.customviews
 
-import android.content.Context;
-import androidx.appcompat.widget.AppCompatImageView;
-import android.util.AttributeSet;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 
-public class SquareImageView extends AppCompatImageView {
-    public SquareImageView(Context context) {
-        super(context);
-    }
+class SquareImageView : AppCompatImageView {
+    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
 
-    public SquareImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public SquareImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth()); //Snap to width
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        setMeasuredDimension(measuredWidth, measuredWidth) // Snap to width
     }
 }

@@ -1,33 +1,26 @@
-package io.focuslauncher.phone.customviews;
+package io.focuslauncher.phone.customviews
 
-import android.content.Context;
-import android.graphics.Typeface;
-import androidx.appcompat.widget.AppCompatTextView;
-import android.util.AttributeSet;
+import android.content.Context
+import android.graphics.Typeface
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
 
-public class RobotoCondensedTextView extends AppCompatTextView {
-    public RobotoCondensedTextView(Context context) {
-        super(context);
-        init(null);
+class RobotoCondensedTextView : AppCompatTextView {
+    constructor(context: Context?) : super(context!!) {
+        init(null)
     }
 
-    public RobotoCondensedTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context!!, attrs, defStyleAttr) {}
 
-    public RobotoCondensedTextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    private void init(AttributeSet attrs) {
+    private fun init(attrs: AttributeSet?) {
         if (attrs != null) {
             try {
-                Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/robotocondensedregular.ttf");
-                setTypeface(myTypeface);
-            } catch (Exception e) {
-                e.printStackTrace();
+                val myTypeface = Typeface.createFromAsset(context.assets, "fonts/robotocondensedregular.ttf")
+                typeface = myTypeface
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
         }
     }
 }

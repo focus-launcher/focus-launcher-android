@@ -1,236 +1,182 @@
-package io.focuslauncher.phone.customviews;
+package io.focuslauncher.phone.customviews
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.os.Handler;
-import androidx.cardview.widget.CardView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.ImageView;
-
-import com.eyeem.chips.BubbleStyle;
-import com.eyeem.chips.ChipsEditText;
-
-import io.focuslauncher.R;
-import io.focuslauncher.phone.activities.DashboardActivity;
-import io.focuslauncher.phone.event.SearchLayoutEvent;
-import io.focuslauncher.phone.token.TokenCompleteType;
-import io.focuslauncher.phone.token.TokenItem;
-import io.focuslauncher.phone.token.TokenManager;
-import io.focuslauncher.phone.token.TokenUpdateEvent;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-
+import android.content.Context
+import android.content.SharedPreferences
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
+import com.eyeem.chips.BubbleStyle
+import com.eyeem.chips.ChipsEditText
+import de.greenrobot.event.EventBus
+import de.greenrobot.event.Subscribe
+import io.focuslauncher.R
+import io.focuslauncher.phone.activities.DashboardActivity
+import io.focuslauncher.phone.event.SearchLayoutEvent
+import io.focuslauncher.phone.token.TokenCompleteType
+import io.focuslauncher.phone.token.TokenManager
+import io.focuslauncher.phone.token.TokenUpdateEvent
 
 /**
  * Created by Shahab on 2/16/2017.
  */
-public class SearchLayout extends CardView {
+class SearchLayout : CardView {
+    @JvmField
+    var txtSearchBox: ChipsEditText? = null
+    var btnClear: ImageView? = null
+    private val launcherPrefs: SharedPreferences? = null
+    private lateinit var inflateLayout: View
+    private val formattedTxt = StringBuilder()
+    private var isWatching = true
 
-    private static final String TAG = "SearchLayout";
-    public ChipsEditText txtSearchBox;
-    ImageView btnClear;
-    private SharedPreferences launcherPrefs;
-    private View inflateLayout;
-    private StringBuilder formattedTxt = new StringBuilder();
-    private boolean isWatching = true;
-    private Handler handler;
-
-    public SearchLayout(Context context) {
-        super(context);
-        init(context);
+    constructor(context: Context) : super(context) {
+        init(context)
     }
 
-    public SearchLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init(context)
     }
 
-    public SearchLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init(context)
     }
 
-    public ChipsEditText getTxtSearchBox() {
-        return txtSearchBox;
+    private fun init(context: Context) {
+        isWatching = true
+        inflateLayout = inflate(context, R.layout.search_layout, this)
+        txtSearchBox = inflateLayout.findViewById(R.id.txtSearchBox)
+        btnClear = inflateLayout.findViewById(R.id.btnClear)
+        btnClear?.setOnClickListener(OnClickListener { txtSearchBox?.setText("") })
+        cardElevation = 4.0f
+        val typedValue = TypedValue()
+        val theme = context.theme
+        theme.resolveAttribute(R.attr.theme_base_color, typedValue, true)
+        val color = typedValue.data
+        setCardBackgroundColor(color)
     }
 
-    public ImageView getBtnClear() {
-        return btnClear;
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        setupViews()
     }
 
-    private void init(Context context) {
-        isWatching = true;
-        inflateLayout = inflate(context, R.layout.search_layout, this);
-
-        txtSearchBox = inflateLayout.findViewById(R.id.txtSearchBox);
-        btnClear = inflateLayout.findViewById(R.id.btnClear);
-        btnClear.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                txtSearchBox.setText("");
-            }
-        });
-
-        setCardElevation(4.0f);
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.theme_base_color, typedValue, true);
-        int color = typedValue.data;
-        setCardBackgroundColor(color);
-        handler = new Handler();
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        EventBus.getDefault().register(this)
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        setupViews();
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        EventBus.getDefault().unregister(this)
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
-    }
-
-    void setupViews() {
-        txtSearchBox.addTextChangedListener(new TextWatcherExtended() {
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count, boolean backSpace) {
-                if (start <= 2 && s.toString().equals("@") && backSpace) {
-
-                } else if (s.toString().length() == 1 && s.toString().equals("@") && backSpace) {
-                    txtSearchBox.setText("");
+    fun setupViews() {
+        txtSearchBox!!.addTextChangedListener(object : TextWatcherExtended() {
+            override fun afterTextChanged(s: Editable) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int, backSpace: Boolean) {
+                if (start <= 2 && s.toString() == "@" && backSpace) {
+                } else if (s.toString().length == 1 && s.toString() == "@" && backSpace) {
+                    txtSearchBox!!.setText("")
                 } else {
-                    handleAfterTextChanged(s.toString());
+                    handleAfterTextChanged(s.toString())
                 }
-                DashboardActivity.isTextLenghGreater = s.toString();
+                DashboardActivity.isTextLenghGreater = s.toString()
             }
-        });
+        })
     }
 
-
-    public void askFocus() {
-
-        if (DashboardActivity.isTextLenghGreater.length() > 0) {
-            DashboardActivity.isTextLenghGreater = DashboardActivity.isTextLenghGreater.trim();
-            handleAfterTextChanged(DashboardActivity.isTextLenghGreater);
+    fun askFocus() {
+        if (DashboardActivity.isTextLenghGreater.length > 0) {
+            DashboardActivity.isTextLenghGreater = DashboardActivity.isTextLenghGreater.trim { it <= ' ' }
+            handleAfterTextChanged(DashboardActivity.isTextLenghGreater)
         } else {
-            if (launcherPrefs.getBoolean("isKeyBoardDisplay", false) && txtSearchBox != null)
-                txtSearchBox.requestFocus();
-            if (btnClear != null)
-                btnClear.setVisibility(INVISIBLE);
-            if (txtSearchBox != null)
-                txtSearchBox.setText("");
+            if (launcherPrefs!!.getBoolean("isKeyBoardDisplay", false) && txtSearchBox != null) txtSearchBox!!.requestFocus()
+            if (btnClear != null) btnClear!!.visibility = INVISIBLE
+            if (txtSearchBox != null) txtSearchBox!!.setText("")
         }
-
     }
 
-    private void handleAfterTextChanged(String s) {
+    private fun handleAfterTextChanged(s: String) {
         if (isWatching) {
-            EventBus.getDefault().post(new SearchLayoutEvent(s));
+            EventBus.getDefault().post(SearchLayoutEvent(s))
         }
     }
-
 
     @Subscribe
-    public void tokenManagerEvent(TokenUpdateEvent event) {
-        buildFormattedText();
-        updateSearchField();
+    fun tokenManagerEvent(event: TokenUpdateEvent?) {
+        buildFormattedText()
+        updateSearchField()
     }
 
-
-    private void updateSearchField() {
-        String[] splits = formattedTxt.toString().split("\\|");
-
-        StringBuilder newText = new StringBuilder();
-        boolean space = false;
-        for (String s : splits) {
+    private fun updateSearchField() {
+        val splits = formattedTxt.toString().split("\\|").toTypedArray()
+        val newText = StringBuilder()
+        var space = false
+        for (s in splits) {
             if (space) {
-                if (!s.startsWith(" "))
-                    newText.append(" ");
+                if (!s.startsWith(" ")) newText.append(" ")
             }
-            space = true;
-            newText.append(s.replaceAll("\\^", "").replaceAll("~", ""));
+            space = true
+            newText.append(s.replace("\\^".toRegex(), "").replace("~".toRegex(), ""))
         }
-
-        if (formattedTxt.toString().endsWith("|")) newText.append(" ");
-
-        isWatching = false;
-        txtSearchBox.setText(newText.toString());
-        isWatching = true;
-
-        int startPos = 0;
-        int endPos = 0;
-        for (String s : splits) {
-            endPos += s.length();
+        if (formattedTxt.toString().endsWith("|")) newText.append(" ")
+        isWatching = false
+        txtSearchBox!!.setText(newText.toString())
+        isWatching = true
+        var startPos = 0
+        var endPos = 0
+        for (s in splits) {
+            endPos += s.length
             if (s.startsWith("^")) {
-                txtSearchBox.setCurrentBubbleStyle(BubbleStyle.build(getContext(), R.style.bubble_style_selected));
-                txtSearchBox.makeChip(startPos, endPos - 1, false, null);
+                txtSearchBox!!.currentBubbleStyle = BubbleStyle.build(context, R.style.bubble_style_selected)
+                txtSearchBox!!.makeChip(startPos, endPos - 1, false, null)
             } else if (s.startsWith("~")) {
-                txtSearchBox.setCurrentBubbleStyle(BubbleStyle.build(getContext(), R.style.bubble_style_empty));
-                txtSearchBox.makeChip(startPos, endPos - 1, false, null);
+                txtSearchBox!!.currentBubbleStyle = BubbleStyle.build(context, R.style.bubble_style_empty)
+                txtSearchBox!!.makeChip(startPos, endPos - 1, false, null)
             } else {
-                endPos++; // space
+                endPos++ // space
             }
-
-            startPos = endPos;
+            startPos = endPos
         }
-        txtSearchBox.setSelection(newText.length());
+        txtSearchBox!!.setSelection(newText.length)
     }
 
-    private void buildFormattedText() {
-        formattedTxt .append("");
-
-        for (TokenItem item : TokenManager.getInstance().getItems()) {
-            if (item.getCompleteType() == TokenCompleteType.FULL) {
+    private fun buildFormattedText() {
+        formattedTxt.append("")
+        for (item in TokenManager.getInstance().items) {
+            if (item.completeType == TokenCompleteType.FULL) {
                 if (item.isChipable()) {
-                    formattedTxt.append("^");
+                    formattedTxt.append("^")
                 }
-
-                formattedTxt.append(item.getTitle()).append("|");
-            } else if (item.getCompleteType() == TokenCompleteType.HALF) {
+                formattedTxt.append(item.title).append("|")
+            } else if (item.completeType == TokenCompleteType.HALF) {
                 if (item.isChipable()) {
-                    formattedTxt.append("~");
+                    formattedTxt.append("~")
                 }
-                formattedTxt.append(item.getTitle()).append("|");
-
+                formattedTxt.append(item.title).append("|")
             } else {
-                formattedTxt.append(item.getTitle());
+                formattedTxt.append(item.title)
             }
         }
     }
 
-    public abstract class TextWatcherExtended implements TextWatcher {
-        private int lastLength;
-
-        public abstract void onTextChanged(CharSequence charSequence, int start, int before, int count, boolean backSpace);
-
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            lastLength = s.length();
+    abstract inner class TextWatcherExtended : TextWatcher {
+        private var lastLength = 0
+        abstract fun onTextChanged(charSequence: CharSequence, start: Int, before: Int, count: Int, backSpace: Boolean)
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            lastLength = s.length
         }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            onTextChanged(charSequence, i, i1, i2, lastLength > charSequence.length());
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            onTextChanged(charSequence, i, i1, i2, lastLength > charSequence.length)
         }
+    }
 
+    companion object {
+        private const val TAG = "SearchLayout"
     }
 }

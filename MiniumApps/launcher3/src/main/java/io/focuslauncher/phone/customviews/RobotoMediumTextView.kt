@@ -1,31 +1,25 @@
-package io.focuslauncher.phone.customviews;
+package io.focuslauncher.phone.customviews
 
-import android.content.Context;
-import android.graphics.Typeface;
-import androidx.appcompat.widget.AppCompatTextView;
-import android.util.AttributeSet;
+import android.content.Context
+import android.graphics.Typeface
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
 
-public class RobotoMediumTextView extends AppCompatTextView {
-    public RobotoMediumTextView(Context context) {
-        super(context);
-        init(null);
+class RobotoMediumTextView : AppCompatTextView {
+    constructor(context: Context?) : super(context!!) {
+        init(null)
     }
 
-    public RobotoMediumTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context!!, attrs, defStyleAttr) {}
 
-    public RobotoMediumTextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    private void init(AttributeSet attrs) {
+    private fun init(attrs: AttributeSet?) {
         if (attrs != null) {
             try {
-                Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/robotomedium.ttf");
-                setTypeface(myTypeface);
-            } catch (Exception e) {
-                e.printStackTrace();
+                val myTypeface = Typeface.createFromAsset(context.assets, "fonts/robotomedium.ttf")
+                typeface = myTypeface
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

@@ -356,7 +356,7 @@ public class PaneFragment extends CoreFragment {
         indicator = view.findViewById(R.id.indicator);
         pagerPane = view.findViewById(R.id.pagerPane);
         pagerPane.setAlpha(1);
-        chipsEditText = searchLayout.getTxtSearchBox();
+        chipsEditText = searchLayout.txtSearchBox;
         imageClear = searchLayout.getBtnClear();
         edtSearchToolsRounded.clearFocus();
         chipsEditText.clearFocus();
@@ -1280,8 +1280,8 @@ public class PaneFragment extends CoreFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (router != null && searchLayout != null && searchLayout.getTxtSearchBox() != null) {
-                    mediator.listItemClicked(router, position, searchLayout.getTxtSearchBox().getStrText());
+                if (router != null && searchLayout != null && searchLayout.txtSearchBox != null) {
+                    mediator.listItemClicked(router, position, searchLayout.txtSearchBox.getStrText());
                 }
             }
         });
@@ -1294,7 +1294,7 @@ public class PaneFragment extends CoreFragment {
                     imageClear.setVisibility(View.VISIBLE);
                     blueLineDivider.setVisibility(View.GONE);
                     searchLayout.setVisibility(View.VISIBLE);
-                    searchLayout.getTxtSearchBox().requestFocus();
+                    searchLayout.txtSearchBox.requestFocus();
                     cardViewEdtSearch.setVisibility(View.VISIBLE);
                     relSearchTools.setVisibility(View.GONE);
                     UIUtils.showKeyboard(chipsEditText);
