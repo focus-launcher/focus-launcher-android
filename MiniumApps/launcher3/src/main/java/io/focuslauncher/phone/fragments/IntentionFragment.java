@@ -81,11 +81,15 @@ public class IntentionFragment extends CoreFragment implements View.OnClickListe
         else
             getActivity().startService(myService);
         initView(view);
-
-
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
 
     public void hideView() {
         if (PrefSiempo.getInstance(getActivity()).read(PrefSiempo.TOGGLE_LEFTMENU, 0) >= 3) {
