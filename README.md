@@ -1,7 +1,9 @@
 # Focus Launcher
 Minimize distractions, follow-through on your intentions, and regain control of your phone. Focus Launcher is an Android app that counteracts the addictive design of your phone.
 
-![](https://imgur.com/a/vzpoMW6)
+
+![480x](https://user-images.githubusercontent.com/30163055/145687590-8fe2d7b2-c315-42b2-9365-40b81d88d1f5.png)
+
 
 ## Get the app
 [Download from the PlayStore](https://play.google.com/store/apps/details?id=io.focuslauncher)
