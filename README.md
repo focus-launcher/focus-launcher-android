@@ -1,15 +1,40 @@
 # Focus Launcher
+Minimize distractions, follow-through on your intentions, and regain control of your phone. Focus Launcher is an Android app that counteracts the addictive design of your phone.
 
-A minimalist Android launcher designed for phone-life balance.
+![](https://imgur.com/a/vzpoMW6)
 
-Available on [PlayStore](https://play.google.com/store/apps/details?id=io.focuslauncher)
+## Get the app
+[Download from the PlayStore](https://play.google.com/store/apps/details?id=io.focuslauncher)
 
-[Discord](https://discord.gg/GDdCXPnXug) | [Website](http://focuslauncher.io) | [Blog](https://medium.com/@focuslauncher) | [Twitter](https://twitter.com/FocusLauncher)
+## Top reasons to use Focus Launcher:
+🆓  Free · No ads, no subscriptions.
 
-![](https://i.imgur.com/gNR2tqc.png)
+🧠  Intention reminder · Seeing your intention makes it easier to follow-through on what you care about
 
-# Get Involved
+⚫  Greyscaled · Black and white home screen is less distracting
 
-Our open-source community has three teams: Strategy, Marketing, and Development. To get involved with any of them, just send a note in our [Discord community](https://discord.gg/GDdCXPnXug) and someone will explain how you can help.
+🧰  Unbranded icons · prevent compulsive usage by thinking of your apps as tools
 
-[Review our roadmap](https://github.com/focus-launcher/focus-launcher-android/wiki/Roadmap) to see what we're currently working on.
+🛑  Reduce app usage · Set a timer for how long you want to use certain apps and be gently nudged once you exceed your allotted time
+
+👐  Open source · 100% of our code is here and our communication is public
+
+## About Us
+We're an open-source community that believes our attention is worth protecting. We have deep roots in building humane technology and open-source. Checkout our [About](https://www.focuslauncher.io/about) page to see how far we've come, and review  our [roadmap](https://github.com/focus-launcher/focus-launcher-android/wiki/Roadmap) to see where we're going.
+
+## Get Involved
+How ***EVERYONE*** can help, in order of time commitment:
+1. ⭐  Star this repo - This helps attract contributors and show us that we're on the right path
+2. 📣  Help us grow our audience. Subscribe to [our newsletter](https://www.focuslauncher.io/get-involved), say 'hi' on [Twitter](https://twitter.com/FocusLauncher), or simply tell a friend.
+3. 💬  Join our [Discord community](https://discord.gg/GDdCXPnXug). Introduce yourself and get involved in the discussions
+4. 📝  Document any bugs or issues with the app by [creating an issue](https://github.com/focus-launcher/focus-launcher-android/issues/new/choose)
+5. Join our regular co-working sessions to collaborate and meet others. See the event schedule in Discord.
+
+How ***ANDROID DEVS*** can help:
+- Pick an open task in this repo and start working on it
+- Ask any clarifying questions in the issue or in the #development Discord channel
+
+How designers, copywriters, translators, and ***ANYONE ELSE*** can help:
+- Find an open task on our project board (link to that is coming soon)
+
+
