@@ -37,6 +37,7 @@ How ***ANDROID DEVS*** can help:
 - Ask any clarifying questions in the issue or in the #development Discord channel
 
 How designers, copywriters, translators, and ***ANYONE ELSE*** can help:
-- Find an open task on our project board (link to that is coming soon)
-
+- Find [an open task](https://github.com/focus-launcher/focus-launcher-android/issues)
+- Write a comment in the task with any clarifying questions or suggestions
+- Once you're ready to tackle it, write a comment saying that you're working on it
 
