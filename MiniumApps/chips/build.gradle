@@ -43,7 +43,7 @@ android {
 // SONATYPE DEPLOYMENT
 // in order to deploy, run: gradle uploadArchives
 
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 version = "0.9.6-SNAPSHOT"

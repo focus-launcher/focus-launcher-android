@@ -3,7 +3,7 @@ buildscript {
     ext.kotlin_version = '1.4.10'
     repositories {
         mavenCentral()
-        jcenter()
+        gradlePluginPortal()
         google()
         // NOTE: Global repositories should be placed here
 
@@ -22,11 +22,14 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+plugins {
+  id "nebula.lint" version "17.7.0"
+}
 allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        gradlePluginPortal()
     }
 }
 project.ext {

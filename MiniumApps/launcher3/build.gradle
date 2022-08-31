@@ -62,8 +62,8 @@ android {
     dexOptions {
         jumboMode true
     }
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding true
     }
 
     // workaround for "duplicate files during packaging of APK" issueOnPrefer
