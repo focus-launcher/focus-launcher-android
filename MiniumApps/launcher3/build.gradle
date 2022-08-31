@@ -8,11 +8,6 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 30
 
-    lintOptions {
-        disable 'GoogleAppIndexingApiWarning', 'GradleCompatible', 'IconDensities', 'Registered', 'MissingTranslation', 'SetTextI18n', 'RtlHardcoded', 'SelectableText', 'PermissionImpliesUnsupportedHardware', 'TypographyFractions', 'TypographyQuotes', 'InvalidPackage'
-        ignoreWarnings true
-        abortOnError false
-    }
     defaultConfig {
         applicationId "io.focuslauncher"
         minSdkVersion 21
@@ -65,13 +60,18 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/ASL2.0', 'META-INF/LICENSE', 'META-INF/NOTICE']
+        }
+    }
 
     // workaround for "duplicate files during packaging of APK" issueOnPrefer
     // see https://groups.google.com/d/msg/adt-dev/bl5Rc4Szpzg/wC8cylTWuIEJ
-    packagingOptions {
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
+    lint {
+        abortOnError false
+        disable 'GoogleAppIndexingApiWarning', 'GradleCompatible', 'IconDensities', 'Registered', 'MissingTranslation', 'SetTextI18n', 'RtlHardcoded', 'SelectableText', 'PermissionImpliesUnsupportedHardware', 'TypographyFractions', 'TypographyQuotes', 'InvalidPackage'
+        ignoreWarnings true
     }
 
 }

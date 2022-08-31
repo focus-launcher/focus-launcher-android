@@ -8,7 +8,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:7.2.1'
     }
 }
 
@@ -33,11 +33,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    lintOptions {
-        disable 'GoogleAppIndexingApiWarning','IconDensities','Registered','MissingTranslation','SetTextI18n','RtlHardcoded','SelectableText','PermissionImpliesUnsupportedHardware'
-        ignoreWarnings true
-        abortOnError false
-  }
 }
 
 // SONATYPE DEPLOYMENT
@@ -61,8 +56,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        disable 'GoogleAppIndexingApiWarning', 'IconDensities', 'Registered', 'MissingTranslation', 'SetTextI18n', 'RtlHardcoded', 'SelectableText', 'PermissionImpliesUnsupportedHardware'
+    lint {
+        abortOnError false
+        disable 'GoogleAppIndexingApiWarning', 'IconDensities', 'Registered', 'MissingTranslation', 'SetTextI18n', 'RtlHardcoded', 'SelectableText', 'PermissionImpliesUnsupportedHardware', 'GoogleAppIndexingApiWarning', 'IconDensities', 'Registered', 'MissingTranslation', 'SetTextI18n', 'RtlHardcoded', 'SelectableText', 'PermissionImpliesUnsupportedHardware'
         ignoreWarnings true
     }
 }
