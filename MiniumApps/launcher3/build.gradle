@@ -11,6 +11,7 @@ android {
     lintOptions {
         disable 'GoogleAppIndexingApiWarning', 'GradleCompatible', 'IconDensities', 'Registered', 'MissingTranslation', 'SetTextI18n', 'RtlHardcoded', 'SelectableText', 'PermissionImpliesUnsupportedHardware', 'TypographyFractions', 'TypographyQuotes', 'InvalidPackage'
         ignoreWarnings true
+        abortOnError false
     }
     defaultConfig {
         applicationId "io.focuslauncher"
@@ -88,13 +89,13 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    androidTestImplementation "junit:junit:$junitVersion"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation project(':chips')
 //    implementation project(':core')
-    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$baseRecyclerViewAdapterHelperVersion"
     implementation("com.github.paolorotolo:appintro:$appIntroVersion") {
         exclude module: 'appcompat-v7'
     }

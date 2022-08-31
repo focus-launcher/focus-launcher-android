@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
-    <issue id="AndroidDomInspection" severity="ignore">
-        <ignore path="src/main/AndroidManifest.xml" />
-    </issue>
-    <issue id="AndroidElementNotAllowed" severity="ignore" />
     <issue id="ConvertToWebp">
         <ignore path="src/main/res/drawable-xxhdpi/pause_background.png" />
     </issue>
@@ -12,7 +8,6 @@
         <ignore path="src/main/res/drawable/icon_tempo.png" />
     </issue>
     <issue id="InvalidAnalyticsName" severity="ignore" />
-    <issue id="Layo" severity="ignore" />
     <issue id="Registered" severity="ignore" />
     <issue id="UnusedResources">
         <ignore path="src/main/res/drawable-hdpi/check.png" />

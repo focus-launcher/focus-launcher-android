@@ -36,7 +36,8 @@ android {
     lintOptions {
         disable 'GoogleAppIndexingApiWarning','IconDensities','Registered','MissingTranslation','SetTextI18n','RtlHardcoded','SelectableText','PermissionImpliesUnsupportedHardware'
         ignoreWarnings true
-    }
+        abortOnError false
+  }
 }
 
 // SONATYPE DEPLOYMENT
@@ -52,7 +53,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '29.0.2'
+    buildToolsVersion '30.0.3'
 
     buildTypes {
         release {
